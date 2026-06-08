@@ -1,0 +1,21 @@
+# Table of contents
+# Learn more at https://jupyterbook.org/customize/toc.html
+
+format: jb-book
+root: intro
+parts:
+  - caption: Reference
+    chapters:
+    - file: markdown
+    - file: notebooks
+    - file: markdown-notebooks
+  - caption: Algorithm Architectures 
+    chapters:
+    - file: M2S1/M2S1md
+      title: "Intro to Machine Learning in Healthcare"
+    - file: M2S1/M2S1nb
+      title: "Intro to Machine Learning in Healthcare NB"
+  - caption: End Material
+    chapters:
+    - file: bibliographypage
+      title: References
