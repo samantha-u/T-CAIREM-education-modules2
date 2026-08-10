@@ -15,6 +15,12 @@ parts:
       title: "Intro to Machine Learning in Healthcare"
     - file: M2S1/M2S1nb
       title: "Intro to Machine Learning in Healthcare NB"
+  - caption: Model Evaluation and Interpretation
+    chapters:
+    - file: M2S4/M2S4nb
+      title: "Fairness and Bias in Model Evaluation"
+    - file: M2S5/M2S5nb
+      title: "Explainability"
   - caption: End Material
     chapters:
     - file: bibliographypage
