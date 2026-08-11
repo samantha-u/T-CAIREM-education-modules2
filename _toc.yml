@@ -15,6 +15,10 @@ parts:
       title: "Intro to Machine Learning in Healthcare"
     - file: M2S1/M2S1nb
       title: "Intro to Machine Learning in Healthcare NB"
+    - file: M1S6/M1S6md
+      title: "Image-Based Models"
+    - file: M1S6/M1S6nb
+      title: "Image-Based Models NB"
   - caption: End Material
     chapters:
     - file: bibliographypage
