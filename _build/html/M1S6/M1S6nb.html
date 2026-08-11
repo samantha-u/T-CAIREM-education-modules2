@@ -186,6 +186,11 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="../M2S1/M2S1.html">Approach to Model Development</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../M2S2/M2S2.html">Feature Engineering</a></li>
 </ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Model Evaluation and Interpretation</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../M3S4/M3S4nb.html">Fairness and Bias in Model Evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../M3S5/M3S5nb.html">Explainability</a></li>
+</ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">End Material</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../bibliographypage.html">References</a></li>
@@ -410,7 +415,7 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#inspect-image-dimensions-and-pixel-values">3.2 Inspect image dimensions and pixel values</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Inspect Image Dimensions and Pixel Values</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Inspect Image Dimensions and Pixel Values</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#visualize-examples-from-each-class">Visualize Examples from Each Class</a></li>
 </ul>
 </li>
@@ -505,6 +510,7 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="image-based-models">
 <span id="chap-m1s6"></span><h1>Image-Based Models<a class="headerlink" href="#image-based-models" title="Permalink to this heading">#</a></h1>
+<p><strong>Content creators:</strong> <a class="reference external" href="https://github.com/electronjia">Mahri</a></p>
 <div class="tip admonition">
 <p class="admonition-title">Chapter Overview</p>
 <p>By the end of this module, learners should be able to:</p>
@@ -860,7 +866,7 @@ Answer<div class="sd-summary-down docutils">
 </tr>
 </tbody>
 </table>
-<p>Deep learning has been applied to classification, detection, segmentation, and other tasks across a range of medical imaging modalities [&#64;litjens2017survey].This module introduces all three tasks conceptually, but the practical example focuses on <strong>binary image classification</strong>.</p>
+<p>Deep learning has been applied to classification, detection, segmentation, and other tasks across a range of medical imaging modalities <span id="id1">[<a class="reference internal" href="../bibliographypage.html#id20" title="Geert Litjens, Thijs Kooi, Babak Ehteshami Bejnordi, Arnaud Arindra Adiyoso Setio, Francesco Ciompi, Mohsen Ghafoorian, Jeroen A.W.M. van der Laak, Bram van Ginneken, and Clara I. Sánchez. A survey on deep learning in medical image analysis. Medical Image Analysis, 42:60-88, 2017.">Litjens <em>et al.</em>, 2017</a>]</span>.This module introduces all three tasks conceptually, but the practical example focuses on <strong>binary image classification</strong>.</p>
 <section id="compare-classification-detection-and-segmentation">
 <h3>Compare Classification, Detection, and Segmentation<a class="headerlink" href="#compare-classification-detection-and-segmentation" title="Permalink to this heading">#</a></h3>
 <div class="cell tag_hide-cell docutils container">
@@ -931,7 +937,7 @@ Answer<div class="sd-summary-down docutils">
 </div>
 <section id="load-pneumoniamnist">
 <h3>3.1 Load PneumoniaMNIST<a class="headerlink" href="#load-pneumoniamnist" title="Permalink to this heading">#</a></h3>
-<p><a class="reference external" href="https://medmnist.com/">PneumoniaMNIST</a> is one of the standardized biomedical image-classification datasets included in MedMNIST v2 [&#64;yang2023medmnist]. It was constructed from the pediatric chest X-ray dataset reported by Kermany et al. [&#64;kermany2018identifying].</p>
+<p><a class="reference external" href="https://medmnist.com/">PneumoniaMNIST</a> is one of the standardized biomedical image-classification datasets included in MedMNIST v2 <span id="id2">[<a class="reference internal" href="../bibliographypage.html#id15" title="Jiancheng Yang, Rui Shi, Donglai Wei, Zequan Liu, Lin Zhao, Bilian Ke, Hanspeter Pfister, and Bingbing Ni. Medmnist v2-a large-scale lightweight benchmark for 2d and 3d biomedical image classification. Scientific Data, 10(1):41, 2023.">Yang <em>et al.</em>, 2023</a>]</span>. It was constructed from the pediatric chest X-ray dataset reported by Kermany et al. <span id="id3">[<a class="reference internal" href="../bibliographypage.html#id16" title="Daniel S. Kermany, Michael Goldbaum, Wenjia Cai, Carolina C. S. Valentim, Huiying Liang, Sally L. Baxter, Alex McKeown, Ge Yang, Xiaokang Wu, Fangbing Yan, Justin Dong, Made K. Prasadha, Jacqueline Pei, Magdalene Y. L. Ting, Jie Zhu, Christina Li, Sierra Hewett, Jason Dong, Ian Ziyar, Alexander Shi, Runze Zhang, Lianghong Zheng, Rui Hou, William Shi, Xin Fu, Yaou Duan, Van Anh Nguyen Huu, Cindy Wen, Edward D. Zhang, Charlotte L. Zhang, Oulan Li, Xiaobo Wang, Michael A. Singer, Xiaodong Sun, Jie Xu, Ali Tafreshi, M. A. Lewis, Huimin Xia, and Kang Zhang. Identifying medical diagnoses and treatable diseases by image-based deep learning. Cell, 172(5):1122–1131.e9, February 2018.">Kermany <em>et al.</em>, 2018</a>]</span>.</p>
 <p>PneumoniaMNIST includes predefined training, validation, and test splits. The version used in this module contains grayscale images standardized to a resolution of <span class="math notranslate nohighlight">\(28 \times 28\)</span> pixels.</p>
 <p>This low resolution makes the dataset computationally accessible for teaching and benchmarking, but it also removes much of the detail available in the original clinical chest X-rays.</p>
 <section id="review-the-pneumoniamnist-dataset-information">
@@ -1045,8 +1051,8 @@ Description:     The PneumoniaMNIST is based on a prior dataset of 5,856 pediatr
 <section id="inspect-image-dimensions-and-pixel-values">
 <h3>3.2 Inspect image dimensions and pixel values<a class="headerlink" href="#inspect-image-dimensions-and-pixel-values" title="Permalink to this heading">#</a></h3>
 <p>Before training, inspect the dataset rather than assuming that the input has the expected format.</p>
-<section id="id1">
-<h4>Inspect Image Dimensions and Pixel Values<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h4>
+<section id="id4">
+<h4>Inspect Image Dimensions and Pixel Values<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h4>
 <div class="cell tag_hide-input docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -1288,7 +1294,7 @@ Suggested response<div class="sd-summary-down docutils">
 </section>
 <section id="how-convolutional-neural-networks-work">
 <h2>4. How Convolutional Neural Networks Work<a class="headerlink" href="#how-convolutional-neural-networks-work" title="Permalink to this heading">#</a></h2>
-<p>A fully connected layer treats each input value as a separate feature. In contrast, a convolutional layer applies a small, learnable filter to local regions of an image. Early convolutional neural networks demonstrated how local connectivity and shared weights could support image recognition [&#64;lecun1998gradient]. Later work showed that deeper CNNs trained on large image datasets could achieve major improvements in image-classification performance [&#64;krizhevsky2012imagenet]. This provides three important properties:</p>
+<p>A fully connected layer treats each input value as a separate feature. In contrast, a convolutional layer applies a small, learnable filter to local regions of an image. Early convolutional neural networks demonstrated how local connectivity and shared weights could support image recognition <span id="id5">[<a class="reference internal" href="../bibliographypage.html#id17" title="Y. Lecun, L. Bottou, Y. Bengio, and P. Haffner. Gradient-based learning applied to document recognition. Proceedings of the IEEE, 86(11):2278-2324, 1998.">Lecun <em>et al.</em>, 1998</a>]</span>. Later work showed that deeper CNNs trained on large image datasets could achieve major improvements in image-classification performance <span id="id6">[<a class="reference internal" href="../bibliographypage.html#id18" title="Alex Krizhevsky, Ilya Sutskever, and Geoffrey E Hinton. Imagenet classification with deep convolutional neural networks. In F. Pereira, C.J. Burges, L. Bottou, and K. Weinberger, editors, Advances in Neural Information Processing Systems, volume 25. Curran Associates, Inc., 2012.">Krizhevsky <em>et al.</em>, 2012</a>]</span>. This provides three important properties:</p>
 <ol class="arabic simple">
 <li><p><strong>Local connectivity:</strong> Each feature is computed from a local neighbourhood of pixels.</p></li>
 <li><p><strong>Weight sharing:</strong> The same filter is applied across multiple spatial locations.</p></li>
@@ -1451,7 +1457,7 @@ X_{i+m,j+n}K_{m,n} + b\]</div>
 </tr>
 </tbody>
 </table>
-<p>Residual networks introduced skip connections that allow information and gradients to pass more directly through deep networks, making substantially deeper CNN architectures easier to train [&#64;he2016residual]. Architecture choice does not replace careful dataset design, evaluation, and clinical validation.</p>
+<p>Residual networks introduced skip connections that allow information and gradients to pass more directly through deep networks, making substantially deeper CNN architectures easier to train <span id="id7">[<a class="reference internal" href="../bibliographypage.html#id19" title="Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun. Deep residual learning for image recognition. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition (CVPR). June 2016.">He <em>et al.</em>, 2016</a>]</span>. Architecture choice does not replace careful dataset design, evaluation, and clinical validation.</p>
 </section>
 <section id="transfer-learning">
 <h2>6. Transfer Learning<a class="headerlink" href="#transfer-learning" title="Permalink to this heading">#</a></h2>
@@ -2279,7 +2285,7 @@ Answer<div class="sd-summary-down docutils">
 </section>
 <section id="interpretation-and-grad-cam">
 <h2>9. Interpretation and Grad-CAM<a class="headerlink" href="#interpretation-and-grad-cam" title="Permalink to this heading">#</a></h2>
-<p>Grad-CAM uses gradients flowing into a convolutional layer to produce a coarse, class-specific localization map associated with a model output [&#64;selvaraju2017gradcam]. It can be useful for exploratory interpretation and error analysis.</p>
+<p>Grad-CAM uses gradients flowing into a convolutional layer to produce a coarse, class-specific localization map associated with a model output <span id="id8">[<a class="reference internal" href="../bibliographypage.html#id21" title="Ramprasaath R. Selvaraju, Abhishek Das, Ramakrishna Vedantam, Michael Cogswell, Devi Parikh, and Dhruv Batra. Grad-cam: why did you say that? visual explanations from deep networks via gradient-based localization. CoRR, 2016. arXiv:1610.02391.">Selvaraju <em>et al.</em>, 2016</a>]</span>. It can be useful for exploratory interpretation and error analysis.</p>
 <p>However, a Grad-CAM heatmap:</p>
 <ul class="simple">
 <li><p>Is not a validated segmentation mask</p></li>
@@ -2381,8 +2387,8 @@ Answer<div class="sd-summary-down docutils">
 </section>
 <section id="failure-modes-and-clinical-generalizability">
 <h2>10. Failure Modes and Clinical Generalizability<a class="headerlink" href="#failure-modes-and-clinical-generalizability" title="Permalink to this heading">#</a></h2>
-<p>Image-based models can perform well on an internal benchmark and still fail in clinical use.A model may learn shortcuts—patterns that are predictive within the development dataset but do not represent the intended clinical features [&#64;geirhos2020shortcut].</p>
-<p>In chest radiography, pneumonia-detection performance has been shown to vary across institutions, demonstrating that strong internal performance may not transfer to different hospitals, populations, or acquisition environments [&#64;zech2018generalization].</p>
+<p>Image-based models can perform well on an internal benchmark and still fail in clinical use.A model may learn shortcuts—patterns that are predictive within the development dataset but do not represent the intended clinical features <span id="id9">[<a class="reference internal" href="../bibliographypage.html#id23" title="Robert Geirhos, Jörn-Henrik Jacobsen, Claudio Michaelis, Richard Zemel, Wieland Brendel, Matthias Bethge, and Felix A. Wichmann. Shortcut learning in deep neural networks. Nature Machine Intelligence, 2(11):665–673, 2020.">Geirhos <em>et al.</em>, 2020</a>]</span>.</p>
+<p>In chest radiography, pneumonia-detection performance has been shown to vary across institutions, demonstrating that strong internal performance may not transfer to different hospitals, populations, or acquisition environments <span id="id10">[<a class="reference internal" href="../bibliographypage.html#id22" title="John R. Zech, Marcus A. Badgeley, Manway Liu, Anthony B. Costa, Joseph J. Titano, and Eric Karl Oermann. Variable generalization performance of a deep learning model to detect pneumonia in chest radiographs: a cross-sectional study. PLOS Medicine, 15(11):1-17, 11 2018.">Zech <em>et al.</em>, 2018</a>]</span>.</p>
 <table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>Risk</p></th>
@@ -2435,7 +2441,7 @@ Answer<div class="sd-summary-down docutils">
 <li><p><strong>Workflow:</strong> Who will use the output, and how will it affect care?</p></li>
 <li><p><strong>Monitoring:</strong> How will performance and failure modes be monitored after deployment?</p></li>
 </ol>
-<p>Transparent reporting is also necessary for evaluating whether a medical imaging study is reproducible and clinically meaningful. The Checklist for Artificial Intelligence in Medical Imaging, or CLAIM, provides reporting recommendations for artificial-intelligence studies involving medical images [&#64;mongan2020claim].</p>
+<p>Transparent reporting is also necessary for evaluating whether a medical imaging study is reproducible and clinically meaningful. The Checklist for Artificial Intelligence in Medical Imaging, or CLAIM, provides reporting recommendations for artificial-intelligence studies involving medical images <span id="id11">[<a class="reference internal" href="../bibliographypage.html#id24" title="John Mongan, Linda Moy, and Charles E. Kahn. Checklist for artificial intelligence in medical imaging (claim): a guide for authors and reviewers. Radiology: Artificial Intelligence, 2(2):e200029, 2020.">Mongan <em>et al.</em>, 2020</a>]</span>.</p>
 <div class="question admonition">
 <p class="admonition-title">Activity</p>
 <p>Write a two- or three-sentence limitation statement for the model trained in this notebook. It should mention the source population, image resolution, and why the test result does not establish clinical validity.</p>
@@ -2652,7 +2658,7 @@ Example response<div class="sd-summary-down docutils">
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#inspect-image-dimensions-and-pixel-values">3.2 Inspect image dimensions and pixel values</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Inspect Image Dimensions and Pixel Values</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Inspect Image Dimensions and Pixel Values</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#visualize-examples-from-each-class">Visualize Examples from Each Class</a></li>
 </ul>
 </li>
