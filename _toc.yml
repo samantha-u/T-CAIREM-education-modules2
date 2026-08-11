@@ -10,6 +10,8 @@ parts:
       title: "Resources and Healthcare Data"
     - file: M1S1/M1S1nb
       title: "Intro to Machine Learning in Healthcare"
+    - file: M1S6/M1S6nb
+      title: "Image-Based Models"
     - file: M1S4/M1S4
       title: "Deep Learning / Feedforward Neural Networks"
     - file: M1S7/M1S7
