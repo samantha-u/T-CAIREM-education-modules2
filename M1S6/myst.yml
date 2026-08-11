@@ -1,0 +1,14 @@
+# See docs at: https://mystmd.org/guide/frontmatter
+version: 1
+project:
+  id: 0a48a895-bbb2-4475-a3fe-42d8f29bc29a
+  title: T-CAIREM Learning Modules
+  bibliography:
+    - references.bib
+  authors:
+    - name: Mahri Kadyrova
+  toc:
+    - file: T-CAIREM_M1S6_Image_Based_Models.ipynb
+site:
+  template: book-theme
+  title: T-CAIREM Learning Modules
