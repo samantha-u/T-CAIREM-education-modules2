@@ -1,0 +1,1087 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Explainability &#8212; T-CAIREM AI in Medicine</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'M3S5/M3S5nb';</script>
+    <link rel="shortcut icon" href="../_static/tcairem_fav.svg"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="References" href="../bibliographypage.html" />
+    <link rel="prev" title="Fairness and Bias in Model Evaluation" href="../M3S4/M3S4nb.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/tcairem_fav.svg" class="logo__image only-light" alt="T-CAIREM AI in Medicine - Home"/>
+    <script>document.write(`<img src="../_static/tcairem_fav.svg" class="logo__image only-dark" alt="T-CAIREM AI in Medicine - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Welcome to T-CAIREM AI in Medicine Education Modules
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Algorithm Architectures</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../M1S0/M1S0.html">Resources and Healthcare Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../M1S1/M1S1nb.html">Intro to Machine Learning in Healthcare</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../M1S6/M1S6nb.html">Image-Based Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../M1S4/M1S4.html">Deep Learning / Feedforward Neural Networks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../M1S7/M1S7.html">Time Series Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../M1S12/M1S12.html">Generative Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../M1S14/M1S14.html">Agentic AI</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Model Development</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../M2S1/M2S1.html">Approach to Model Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../M2S2/M2S2.html">Feature Engineering</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Model Evaluation and Interpretation</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../M3S4/M3S4nb.html">Fairness and Bias in Model Evaluation</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Explainability</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">End Material</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../bibliographypage.html">References</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2FM3S5/M3S5nb.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/M3S5/M3S5nb.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Explainability</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-started">Getting Started</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setting-up">Setting Up</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretability-vs-explainability">Interpretability vs. Explainability</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#an-interpretable-model-the-decision-tree">An Interpretable Model: The Decision Tree</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#where-we-lose-the-plot-pun-intended">Where We Lose the Plot (pun intended)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#shap-values">SHAP Values</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-idea-behind-shapley-values">The idea behind Shapley values</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#checking-that-the-contributions-really-do-add-up">Checking that the contributions really do add up</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-summary-plot">The summary plot</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#explaining-a-single-patient">Explaining a single patient</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#connecting-back-to-fairness">Connecting Back to Fairness</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-uncomfortable-result">The uncomfortable result</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-explanations-cannot-do">What explanations cannot do</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="explainability">
+<span id="chap-m2s5"></span><h1>Explainability<a class="headerlink" href="#explainability" title="Permalink to this heading">#</a></h1>
+<p><strong>Content creators:</strong> <a class="reference external" href="https://github.com/reneeandreea">Renee</a></p>
+<div class="tip admonition">
+<p class="admonition-title">Chapter Overview</p>
+<ul class="simple">
+<li><p>Some models are <strong>interpretable</strong> by construction</p></li>
+<li><p>Interpretability degrades fast with complexity: a shallow decision tree is readable, a forest of hundreds of trees is not</p></li>
+<li><p><strong>Explainability</strong> methods such as SHAP approximate <em>why</em> an opaque model made a given prediction, after the fact</p></li>
+<li><p>SHAP explains the <strong>model</strong> but it does not explain the <strong>disease</strong>–a confidently explained bad model is still a bad model</p></li>
+<li><p>Explanations are a bias-detection tool, not only a trust-building one</p></li>
+</ul>
+</div>
+<div class="danger admonition">
+<p class="admonition-title">Important: this dataset is synthetic</p>
+<p>This chapter reuses the <strong>synthetic cardiovascular cohort</strong> built in <span class="xref myst">Fairness and Bias in Model Evaluation</span>. No real patients are involved, and the dataset contains a bias we deliberately engineered for teaching purposes.</p>
+<p>None of the risk relationships shown here are epidemiological findings. Do not quote the feature importances, SHAP values, or subgroup differences on this page as facts about cardiovascular disease. See the M2S4 chapter for a full description of how the data was generated and what was built into it.</p>
+</div>
+<section id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this heading">#</a></h2>
+<p>In the previous chapter we found that our cardiovascular risk model performed badly for one subgroup of patients. We diagnosed <em>that</em> it failed, and we understood <em>why</em> only because we had written the data-generating code ourselves.</p>
+<p>In a real model, you will have to analyze predictions. This chapter asks the follow-up question:</p>
+<p><strong>How can we determine how a model makes its predictions?</strong></p>
+<div class="info admonition">
+<p class="admonition-title">Clinical Question</p>
+<ul class="simple">
+<li><p><strong>What are we trying to understand?</strong> Which features drive a model’s risk predictions? We are interested in considering this question for both the whole cohort and for one individual patient.</p></li>
+<li><p><strong>Why does it matter clinically?</strong> A clinician being asked to act on a risk score needs to know what produced it. “The model said so” is not a basis for a treatment decision, and it is not something you can discuss with a patient.</p></li>
+<li><p><strong>Why does it matter for fairness?</strong> As we will see at the end of this chapter, looking inside a model can tell you <em>why</em> it fails a subgroup. Performance metrics alone cannot.</p></li>
+</ul>
+</div>
+</section>
+<section id="setting-up">
+<h2>Setting Up<a class="headerlink" href="#setting-up" title="Permalink to this heading">#</a></h2>
+<p>The cell below loads the libraries for this page. Alongside the usual tools it imports <code class="docutils literal notranslate"><span class="pre">shap</span></code>, the library implementing the explanation method we use later, and scikit-learn’s tree models. Expand the cell for more details.</p>
+<div class="cell tag_hide-cell tag_thebe-init docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">These are imports that help the rest of the code on this page run.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">myst_nb</span><span class="w"> </span><span class="kn">import</span> <span class="n">glue</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">shap</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.ensemble</span><span class="w"> </span><span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.linear_model</span><span class="w"> </span><span class="kn">import</span> <span class="n">LogisticRegression</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">recall_score</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.pipeline</span><span class="w"> </span><span class="kn">import</span> <span class="n">make_pipeline</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">StandardScaler</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.tree</span><span class="w"> </span><span class="kn">import</span> <span class="n">DecisionTreeClassifier</span><span class="p">,</span> <span class="n">export_text</span><span class="p">,</span> <span class="n">plot_tree</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">9</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="ne">----&gt; </span><span class="mi">9</span> <span class="kn">import</span><span class="w"> </span><span class="nn">shap</span>
+<span class="g g-Whitespace">     </span><span class="mi">10</span> <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.ensemble</span><span class="w"> </span><span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+<span class="g g-Whitespace">     </span><span class="mi">11</span> <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.linear_model</span><span class="w"> </span><span class="kn">import</span> <span class="n">LogisticRegression</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;shap&#39;
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<p>The next cell rebuilds the exact synthetic cohort from the fairness chapter, so the two chapters are directly comparable. It is the same generating code, reproduced here so this page runs on its own. Expand it to see how the data are made, or read the <span class="xref myst">fairness chapter</span> for the full explanation of the bias we engineered.</p>
+<div class="cell tag_hide-cell tag_thebe-init docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Rebuilds the synthetic cohort from the M2S4 fairness chapter.</span>
+<span class="sd">This is invented data with a deliberately engineered bias.</span>
+<span class="sd">This code section was written with the support of generative AI.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">21</span><span class="p">)</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">8000</span>
+
+<span class="n">race</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="s2">&quot;White&quot;</span><span class="p">,</span> <span class="s2">&quot;Black&quot;</span><span class="p">,</span> <span class="s2">&quot;South Asian&quot;</span><span class="p">,</span> <span class="s2">&quot;East Asian&quot;</span><span class="p">],</span>
+                  <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="p">[</span><span class="mf">0.70</span><span class="p">,</span> <span class="mf">0.10</span><span class="p">,</span> <span class="mf">0.11</span><span class="p">,</span> <span class="mf">0.09</span><span class="p">])</span>
+<span class="n">sex</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.38</span><span class="p">,</span> <span class="s2">&quot;Female&quot;</span><span class="p">,</span> <span class="s2">&quot;Male&quot;</span><span class="p">)</span>
+
+<span class="n">age</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">58</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">90</span><span class="p">)</span>
+<span class="n">smoker</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">binomial</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.22</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+<span class="n">systolic_bp</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="mi">90</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+<span class="n">cholesterol</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mf">5.2</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="mf">2.5</span><span class="p">,</span> <span class="mf">9.0</span><span class="p">)</span>
+<span class="n">bmi</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mf">27.5</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+
+<span class="c1"># The engineered difference: Black women have lower cholesterol, higher BP,</span>
+<span class="c1"># and their risk is driven by blood pressure rather than cholesterol.</span>
+<span class="n">is_bw</span> <span class="o">=</span> <span class="p">(</span><span class="n">race</span> <span class="o">==</span> <span class="s2">&quot;Black&quot;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">sex</span> <span class="o">==</span> <span class="s2">&quot;Female&quot;</span><span class="p">)</span>
+<span class="n">cholesterol</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">is_bw</span><span class="p">,</span> <span class="p">(</span><span class="n">cholesterol</span> <span class="o">-</span> <span class="mf">1.10</span><span class="p">)</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="mf">2.5</span><span class="p">,</span> <span class="mf">9.0</span><span class="p">),</span> <span class="n">cholesterol</span><span class="p">)</span>
+<span class="n">systolic_bp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">is_bw</span><span class="p">,</span> <span class="p">(</span><span class="n">systolic_bp</span> <span class="o">+</span> <span class="mi">12</span><span class="p">)</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="mi">90</span><span class="p">,</span> <span class="mi">200</span><span class="p">),</span> <span class="n">systolic_bp</span><span class="p">)</span>
+
+<span class="n">logit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+    <span class="n">is_bw</span><span class="p">,</span>
+    <span class="o">-</span><span class="mf">29.6</span> <span class="o">+</span> <span class="mf">0.14</span><span class="o">*</span><span class="n">age</span> <span class="o">+</span> <span class="mf">0.13</span><span class="o">*</span><span class="n">systolic_bp</span> <span class="o">+</span> <span class="mf">0.15</span><span class="o">*</span><span class="n">cholesterol</span> <span class="o">+</span> <span class="mf">0.088</span><span class="o">*</span><span class="n">bmi</span> <span class="o">+</span> <span class="mf">1.40</span><span class="o">*</span><span class="n">smoker</span><span class="p">,</span>
+    <span class="o">-</span><span class="mf">26.6</span> <span class="o">+</span> <span class="mf">0.14</span><span class="o">*</span><span class="n">age</span> <span class="o">+</span> <span class="mf">0.055</span><span class="o">*</span><span class="n">systolic_bp</span> <span class="o">+</span> <span class="mf">1.55</span><span class="o">*</span><span class="n">cholesterol</span> <span class="o">+</span> <span class="mf">0.088</span><span class="o">*</span><span class="n">bmi</span> <span class="o">+</span> <span class="mf">1.40</span><span class="o">*</span><span class="n">smoker</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">patients</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">&quot;age&quot;</span><span class="p">:</span> <span class="n">age</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">),</span> <span class="s2">&quot;sex&quot;</span><span class="p">:</span> <span class="n">sex</span><span class="p">,</span> <span class="s2">&quot;race&quot;</span><span class="p">:</span> <span class="n">race</span><span class="p">,</span>
+    <span class="s2">&quot;systolic_bp&quot;</span><span class="p">:</span> <span class="n">systolic_bp</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="s2">&quot;cholesterol&quot;</span><span class="p">:</span> <span class="n">cholesterol</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+    <span class="s2">&quot;bmi&quot;</span><span class="p">:</span> <span class="n">bmi</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="s2">&quot;smoker&quot;</span><span class="p">:</span> <span class="n">smoker</span><span class="p">,</span>
+    <span class="s2">&quot;cvd_event&quot;</span><span class="p">:</span> <span class="n">rng</span><span class="o">.</span><span class="n">binomial</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">logit</span><span class="p">))),</span>
+<span class="p">})</span>
+
+<span class="n">FEATURES</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;age&quot;</span><span class="p">,</span> <span class="s2">&quot;systolic_bp&quot;</span><span class="p">,</span> <span class="s2">&quot;cholesterol&quot;</span><span class="p">,</span> <span class="s2">&quot;bmi&quot;</span><span class="p">,</span> <span class="s2">&quot;smoker&quot;</span><span class="p">]</span>
+<span class="n">train_set</span><span class="p">,</span> <span class="n">test_set</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">patients</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">stratify</span><span class="o">=</span><span class="n">patients</span><span class="p">[</span><span class="s2">&quot;cvd_event&quot;</span><span class="p">]</span>
+<span class="p">)</span>
+<span class="n">test_set</span> <span class="o">=</span> <span class="n">test_set</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Training patients: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">train_set</span><span class="p">)</span><span class="si">}</span><span class="s2">   Test patients: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">test_set</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+</section>
+<section id="interpretability-vs-explainability">
+<h2>Interpretability vs. Explainability<a class="headerlink" href="#interpretability-vs-explainability" title="Permalink to this heading">#</a></h2>
+<p>These two terms are often used interchangeably, but in fact, they describe different properties.</p>
+<p><strong>Interpretability</strong> is a property of the <strong>model itself</strong>. An interpretable model is transparent by construction–you can inspect it and read out the rule it applies. The logistic regression from the fundamentals chapter is interpretable: its coefficients <em>are</em> the model. A shallow decision tree is interpretable: the tree <em>is</em> the rule.</p>
+<p><strong>Explainability</strong> is a property of an <strong>explanation you attach afterwards</strong>. When a model is too complex to read directly, you can build a second, simpler model (or other tool) that approximates its behaviour, and inspect this instead. SHAP works this way.</p>
+<p>A rough test: if someone asks <em>“why did the model say that?”</em> and you answer by pointing at the model, it is interpretable. If you answer by running another tool first, you are practicing explainability.</p>
+<div class="important admonition">
+<p class="admonition-title">Why do we care about this difference?</p>
+<p>An interpretable model tells you what it does. An explanation tells you what some other tool <em>estimates</em> the model does.</p>
+<p>Post-hoc explanations are approximations, and approximations can be wrong or incomplete. The ethical modelling literature suggests that for high-stakes decisions–including clinical decisions–the right move is to use an inherently interpretable model rather than an opaque model with an explanation bolted onto it <span id="id1">[<a class="reference internal" href="../bibliographypage.html#id14" title="Cynthia Rudin. Stop explaining black box machine learning models for high stakes decisions and use interpretable models instead. Nature Machine Intelligence, 1:206–215, 2019. URL: https://www.nature.com/articles/s42256-019-0048-x, doi:10.1038/s42256-019-0048-x.">Rudin, 2019</a>]</span>.</p>
+<p>This chapter shows you both, and then gives you a concrete reason to aim for interpretability.</p>
+</div>
+</section>
+<section id="an-interpretable-model-the-decision-tree">
+<h2>An Interpretable Model: The Decision Tree<a class="headerlink" href="#an-interpretable-model-the-decision-tree" title="Permalink to this heading">#</a></h2>
+<p>A decision tree splits patients by asking a sequence of yes/no questions. Each patient follows one path from the top of the tree to a leaf, and the leaf gives the prediction.</p>
+<p>We deliberately limit ours to a depth of three, so the whole model fits on a page.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">tree</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train_set</span><span class="p">[</span><span class="n">FEATURES</span><span class="p">],</span> <span class="n">train_set</span><span class="p">[</span><span class="s2">&quot;cvd_event&quot;</span><span class="p">])</span>
+
+<span class="n">test_set</span><span class="p">[</span><span class="s2">&quot;pred_tree&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">test_set</span><span class="p">[</span><span class="n">FEATURES</span><span class="p">])</span>
+<span class="n">tree_accuracy</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">test_set</span><span class="p">[</span><span class="s2">&quot;cvd_event&quot;</span><span class="p">],</span> <span class="n">test_set</span><span class="p">[</span><span class="s2">&quot;pred_tree&quot;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Decision tree accuracy: </span><span class="si">{</span><span class="n">tree_accuracy</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_remove-output docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">plot_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">feature_names</span><span class="o">=</span><span class="n">FEATURES</span><span class="p">,</span> <span class="n">class_names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;No event&quot;</span><span class="p">,</span> <span class="s2">&quot;Event&quot;</span><span class="p">],</span>
+          <span class="n">filled</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">rounded</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;A depth-3 decision tree: the model is the diagram&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">glue</span><span class="p">(</span><span class="s2">&quot;fig_tree&quot;</span><span class="p">,</span> <span class="n">fig</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>You can read this. Start at the top, answer each question about your patient, and arrive at a prediction. Nothing is hidden, and no separate tool is needed.</p>
+<p>The same model prints as text, which is often easier to follow:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">export_text</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">feature_names</span><span class="o">=</span><span class="n">FEATURES</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>This is an interpretable model.</strong> The model <em>is</em> a human-readable rule. If a clinician asks why a patient was flagged, you trace the path: <em>this patient is over 59, their cholesterol is above 5.05, so the model predicts an event.</em></p>
+<p>Notice something else: the tree tells you which features it uses at all. Only three of our five features appear anywhere. This is an easily observable finding.</p>
+</section>
+<section id="where-we-lose-the-plot-pun-intended">
+<h2>Where We Lose the Plot (pun intended)<a class="headerlink" href="#where-we-lose-the-plot-pun-intended" title="Permalink to this heading">#</a></h2>
+<p>Shallow trees are readable but blunt. The standard fix is a <strong>random forest</strong>: train hundreds of trees, each on a different random slice of the data and a random subset of features, then allow for consensus.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">forest</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">forest</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train_set</span><span class="p">[</span><span class="n">FEATURES</span><span class="p">],</span> <span class="n">train_set</span><span class="p">[</span><span class="s2">&quot;cvd_event&quot;</span><span class="p">])</span>
+
+<span class="n">test_set</span><span class="p">[</span><span class="s2">&quot;pred_forest&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">forest</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">test_set</span><span class="p">[</span><span class="n">FEATURES</span><span class="p">])</span>
+<span class="n">forest_accuracy</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">test_set</span><span class="p">[</span><span class="s2">&quot;cvd_event&quot;</span><span class="p">],</span> <span class="n">test_set</span><span class="p">[</span><span class="s2">&quot;pred_forest&quot;</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Decision tree accuracy:  </span><span class="si">{</span><span class="n">tree_accuracy</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Random forest accuracy:  </span><span class="si">{</span><span class="n">forest_accuracy</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+
+<span class="n">depths</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">get_depth</span><span class="p">()</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">forest</span><span class="o">.</span><span class="n">estimators_</span><span class="p">]</span>
+<span class="n">leaves</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">get_n_leaves</span><span class="p">()</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">forest</span><span class="o">.</span><span class="n">estimators_</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Trees in the forest: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">forest</span><span class="o">.</span><span class="n">estimators_</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Average tree depth:  </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">depths</span><span class="p">)</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total leaves across the whole forest: </span><span class="si">{</span><span class="nb">sum</span><span class="p">(</span><span class="n">leaves</span><span class="p">)</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The forest is more accurate, but it is also no longer something a person can read.</p>
+<p>To trace one prediction by hand you would follow a path through <strong>300 separate trees</strong>, each around 22 levels deep, and tally the votes–close to 300,000 leaves in total. The forest still applies a perfectly definite rule, we just cannot expect a single clinician to read, interpret, and explain this rule.</p>
+<div class="note admonition">
+<p class="admonition-title">The trade-off</p>
+<p>Accuracy went up. Interpretability is almost zero.</p>
+<p>This is the tension we are interested in resolving in this chapter, and it is the reason post-hoc explainability tools exist at all. If every good model were readable, we would not need SHAP.</p>
+</div>
+<p>Tree-based models do offer one built-in summary–<strong>feature importance</strong>, which measures roughly how much each feature reduced prediction error across the forest:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">importances</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">&quot;feature&quot;</span><span class="p">:</span> <span class="n">FEATURES</span><span class="p">,</span>
+    <span class="s2">&quot;importance&quot;</span><span class="p">:</span> <span class="n">forest</span><span class="o">.</span><span class="n">feature_importances_</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span>
+<span class="p">})</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;importance&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">importances</span><span class="o">.</span><span class="n">to_string</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>This is a start, but it is underdeveloped. It tells us which features mattered <em>on average, across all patients</em>. It does not tell us:</p>
+<ul class="simple">
+<li><p><strong>Which direction</strong> a feature pushed the prediction. Does high cholesterol raise or lower predicted risk?</p></li>
+<li><p><strong>How much</strong> it pushed, in units we can interpret.</p></li>
+<li><p><strong>Why this particular patient</strong> was flagged in the first place.</p></li>
+</ul>
+<p>For that we need something better.</p>
+</section>
+<section id="shap-values">
+<h2>SHAP Values<a class="headerlink" href="#shap-values" title="Permalink to this heading">#</a></h2>
+<p>SHAP stands for <strong>SHapley Additive exPlanations</strong> <span id="id2">[<a class="reference internal" href="../bibliographypage.html#id13" title="Scott M. Lundberg and Su-In Lee. A unified approach to interpreting model predictions. In Advances in Neural Information Processing Systems 30 (NIPS 2017). 2017. URL: https://papers.nips.cc/paper/7062-a-unified-approach-to-interpreting-model-predictions.">Lundberg and Lee, 2017</a>]</span>. The idea it borrows from is older than machine learning, coming from cooperative game theory.</p>
+<section id="the-idea-behind-shapley-values">
+<h3>The idea behind Shapley values<a class="headerlink" href="#the-idea-behind-shapley-values" title="Permalink to this heading">#</a></h3>
+<p>Imagine a team that works together to produce some outcome. Each member contributed, but they worked jointly, so you cannot simply identify who did what. How do you divide the credit fairly?</p>
+<p>Lloyd Shapley’s (1951) answer follows:</p>
+<p><em>For any one member, consider <strong>every possible order</strong> in which the team could have assembled. Each iteration, measure how much the outcome improved at the moment that member joined. Average this improvement across all possible orderings. This average is their fair share of the credit.</em></p>
+<p>The reason to average over orderings is that contributions are not independent. A member who is valuable to an empty team may add little to a team that already covers their skills. Averaging over every arrangement stops the answer from depending on some arbitrary order.</p>
+<p>SHAP maps this directly onto a prediction:</p>
+<ul class="simple">
+<li><p>The <strong>team</strong> is the set of features</p></li>
+<li><p>The <strong>outcome</strong> is the model’s prediction for one patient</p></li>
+<li><p>The <strong>baseline</strong> is what the model predicts knowing nothing (i.e., roughly the average prediction across the data)</p></li>
+<li><p>Each feature’s <strong>SHAP value</strong> is its fair share of the distance between that baseline and this patient’s actual prediction</p></li>
+</ul>
+<p>This produces the property that makes SHAP useful:</p>
+<blockquote>
+<div><p><strong>baseline prediction + sum of all SHAP values = this patient’s prediction</strong></p>
+</div></blockquote>
+<p>The contributions add up exactly. Nothing is left unexplained, and nothing is double-counted.</p>
+<div class="note admonition">
+<p class="admonition-title">Why we need a special algorithm</p>
+<p>Averaging over every possible ordering is resource-expensive. With 5 features there are only 32 subsets of features to consider, but the work grows as <span class="math notranslate nohighlight">\(2^{k}\)</span> for <span class="math notranslate nohighlight">\(k\)</span> features. A 20-feature model means over a million subsets <strong>per patient</strong>, and a real clinical model may have hundreds of features!</p>
+<p>Computing SHAP values exactly by brute force is therefore not practical. <code class="docutils literal notranslate"><span class="pre">TreeExplainer</span></code> exploits the structure of tree-based models to compute them <strong>exactly</strong> in time that grows polynomially rather than exponentially, making SHAP usable on a forest. For models that are not tree-based, <code class="docutils literal notranslate"><span class="pre">shap</span></code> falls back on sampling-based approximations.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># TreeExplainer computes exact SHAP values for tree-based models</span>
+<span class="n">explainer</span> <span class="o">=</span> <span class="n">shap</span><span class="o">.</span><span class="n">TreeExplainer</span><span class="p">(</span><span class="n">forest</span><span class="p">)</span>
+
+<span class="c1"># Take a sample of the test set</span>
+<span class="n">sample</span> <span class="o">=</span> <span class="n">test_set</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">800</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">shap_values</span> <span class="o">=</span> <span class="n">explainer</span><span class="o">.</span><span class="n">shap_values</span><span class="p">(</span><span class="n">sample</span><span class="p">[</span><span class="n">FEATURES</span><span class="p">])</span>
+
+<span class="c1"># For a binary classifier, keep the contributions toward the positive class</span>
+<span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">shap_values</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+    <span class="n">shap_values</span> <span class="o">=</span> <span class="n">shap_values</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="k">elif</span> <span class="n">shap_values</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+    <span class="n">shap_values</span> <span class="o">=</span> <span class="n">shap_values</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">1</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;SHAP values computed for </span><span class="si">{</span><span class="n">shap_values</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> patients &quot;</span>
+      <span class="sa">f</span><span class="s2">&quot;across </span><span class="si">{</span><span class="n">shap_values</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> features&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="checking-that-the-contributions-really-do-add-up">
+<h3>Checking that the contributions really do add up<a class="headerlink" href="#checking-that-the-contributions-really-do-add-up" title="Permalink to this heading">#</a></h3>
+<p>Before trusting any of this, it is worth verifying the additivity property on a single patient rather than taking it on faith.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">baseline</span> <span class="o">=</span> <span class="n">explainer</span><span class="o">.</span><span class="n">expected_value</span>
+<span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">baseline</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">))</span> <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">baseline</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+    <span class="n">baseline</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">baseline</span><span class="p">)</span><span class="o">.</span><span class="n">ravel</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">baseline</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">baseline</span><span class="p">)</span>
+
+<span class="n">one_patient</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">reconstructed</span> <span class="o">=</span> <span class="n">baseline</span> <span class="o">+</span> <span class="n">shap_values</span><span class="p">[</span><span class="n">one_patient</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">actual</span> <span class="o">=</span> <span class="n">forest</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">sample</span><span class="p">[</span><span class="n">FEATURES</span><span class="p">])[</span><span class="n">one_patient</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Baseline (average prediction):     </span><span class="si">{</span><span class="n">baseline</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Sum of this patient&#39;s SHAP values: </span><span class="si">{</span><span class="n">shap_values</span><span class="p">[</span><span class="n">one_patient</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">:</span><span class="s2">+.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Baseline + SHAP values =           </span><span class="si">{</span><span class="n">reconstructed</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Model&#39;s actual prediction =        </span><span class="si">{</span><span class="n">actual</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>They match. Every unit of predicted risk has been attributed to a specific feature!</p>
+</section>
+<section id="the-summary-plot">
+<h3>The summary plot<a class="headerlink" href="#the-summary-plot" title="Permalink to this heading">#</a></h3>
+<p>Applying this across many patients at once gives us a picture of the model’s overall behaviour that is far richer than the feature-importance table.</p>
+<div class="cell tag_remove-output docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">shap</span><span class="o">.</span><span class="n">summary_plot</span><span class="p">(</span><span class="n">shap_values</span><span class="p">,</span> <span class="n">sample</span><span class="p">[</span><span class="n">FEATURES</span><span class="p">],</span> <span class="n">show</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;SHAP summary: how each feature moves predicted risk&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">glue</span><span class="p">(</span><span class="s2">&quot;fig_shap_summary&quot;</span><span class="p">,</span> <span class="n">fig</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="info admonition">
+<p class="admonition-title">How to read this plot</p>
+<ul class="simple">
+<li><p><strong>Each dot is one patient</strong>, and there is one row per feature.</p></li>
+<li><p><strong>Horizontal position is the SHAP value.</strong> Dots to the right of centre are patients whose predicted risk was pushed <em>up</em> by that feature; dots to the left were pushed <em>down</em>. Distance from centre is how strongly.</p></li>
+<li><p><strong>Colour is the feature’s value</strong> for that patient. Red for high, blue for low.</p></li>
+<li><p><strong>Rows are ordered by overall influence</strong>, most important at the top.</p></li>
+</ul>
+<p>Now read the pattern. For <code class="docutils literal notranslate"><span class="pre">cholesterol</span></code>, the red dots sit on the right and the blue dots on the left: high cholesterol pushes predicted risk up, low cholesterol pushes it down, consistently. This clean colour split indicated a simple increasing relationship.</p>
+<p><strong>Vertical spread carries information too.</strong> Where dots of the same colour fan out horizontally, the same feature value affected different patients by different amounts, meaning the model has learned an <em>interaction</em>, where a feature’s effect depends on the other features. A plain logistic regression cannot represent this kind of interaction.</p>
+</div>
+</section>
+<section id="explaining-a-single-patient">
+<h3>Explaining a single patient<a class="headerlink" href="#explaining-a-single-patient" title="Permalink to this heading">#</a></h3>
+<p>The payoff is per-patient. We can decompose one prediction into its composite parts.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Pick the patient the model considers highest risk</span>
+<span class="n">probabilities</span> <span class="o">=</span> <span class="n">forest</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">sample</span><span class="p">[</span><span class="n">FEATURES</span><span class="p">])[:,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">idx</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">probabilities</span><span class="p">))</span>
+<span class="n">patient</span> <span class="o">=</span> <span class="n">sample</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+
+<span class="n">contributions</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">&quot;feature&quot;</span><span class="p">:</span> <span class="n">FEATURES</span><span class="p">,</span>
+    <span class="s2">&quot;patient_value&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">patient</span><span class="p">[</span><span class="n">f</span><span class="p">]</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">FEATURES</span><span class="p">],</span>
+    <span class="s2">&quot;shap_contribution&quot;</span><span class="p">:</span> <span class="n">shap_values</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span>
+<span class="p">})</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;shap_contribution&quot;</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="nb">abs</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Patient being explained:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  age=</span><span class="si">{</span><span class="n">patient</span><span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">, systolic_bp=</span><span class="si">{</span><span class="n">patient</span><span class="p">[</span><span class="s1">&#39;systolic_bp&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">, &quot;</span>
+      <span class="sa">f</span><span class="s2">&quot;cholesterol=</span><span class="si">{</span><span class="n">patient</span><span class="p">[</span><span class="s1">&#39;cholesterol&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">, bmi=</span><span class="si">{</span><span class="n">patient</span><span class="p">[</span><span class="s1">&#39;bmi&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">, &quot;</span>
+      <span class="sa">f</span><span class="s2">&quot;smoker=</span><span class="si">{</span><span class="n">patient</span><span class="p">[</span><span class="s1">&#39;smoker&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  predicted risk: </span><span class="si">{</span><span class="n">probabilities</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  actual outcome: </span><span class="si">{</span><span class="n">patient</span><span class="p">[</span><span class="s1">&#39;cvd_event&#39;</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">contributions</span><span class="o">.</span><span class="n">to_string</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_remove-output docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The same explanation as a chart</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">ordered</span> <span class="o">=</span> <span class="n">contributions</span><span class="o">.</span><span class="n">iloc</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">bar_colors</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;#c0392b&quot;</span> <span class="k">if</span> <span class="n">v</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;#2c7fb8&quot;</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">ordered</span><span class="p">[</span><span class="s2">&quot;shap_contribution&quot;</span><span class="p">]]</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="n">ordered</span><span class="p">[</span><span class="s2">&quot;feature&quot;</span><span class="p">],</span> <span class="n">ordered</span><span class="p">[</span><span class="s2">&quot;shap_contribution&quot;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">bar_colors</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#333333&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;SHAP contribution to predicted risk&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Why the model flagged this patient (predicted risk </span><span class="si">{</span><span class="n">probabilities</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">glue</span><span class="p">(</span><span class="s2">&quot;fig_one_patient&quot;</span><span class="p">,</span> <span class="n">fig</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>This is the kind of output that a clinician can interpret. It shows a clinician that <em>this patient is high risk</em>, but more importantly, it shows them that <em>this patient is high risk mainly because of their age, with blood pressure and cholesterol adding to the effect, and not being a smoker diminishing the effect.</em></p>
+<p>This is an actionable statement: a clinician can agree with it, challenge it, or act on it otherwise.</p>
+</section>
+</section>
+<section id="connecting-back-to-fairness">
+<h2>Connecting Back to Fairness<a class="headerlink" href="#connecting-back-to-fairness" title="Permalink to this heading">#</a></h2>
+<p>So far we have used explanations to build confidence in the model. Now we can use them for something more interesting.</p>
+<p>In the <span class="xref myst">fairness chapter</span> we found that our logistic regression missed nearly 60% of cardiovascular events among Black women. We knew why only because we had written the data-generating code. Let us see whether SHAP could have told us instead.</p>
+<p>Recall the mechanism we engineered: for most of the cohort risk is driven by <strong>cholesterol</strong>, but for Black women it is driven by <strong>blood pressure</strong>. If the forest has partly learned this, SHAP should show blood pressure doing the heavy lifting for that particular subgroup.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">is_black_woman</span> <span class="o">=</span> <span class="p">(</span><span class="n">sample</span><span class="p">[</span><span class="s2">&quot;race&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Black&quot;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">sample</span><span class="p">[</span><span class="s2">&quot;sex&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Female&quot;</span><span class="p">)</span>
+
+<span class="n">comparison</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">&quot;feature&quot;</span><span class="p">:</span> <span class="n">FEATURES</span><span class="p">,</span>
+    <span class="s2">&quot;mean_abs_shap_black_women&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">shap_values</span><span class="p">[</span><span class="n">is_black_woman</span><span class="o">.</span><span class="n">values</span><span class="p">])</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span>
+    <span class="s2">&quot;mean_abs_shap_everyone_else&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">shap_values</span><span class="p">[</span><span class="o">~</span><span class="n">is_black_woman</span><span class="o">.</span><span class="n">values</span><span class="p">])</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span>
+<span class="p">})</span>
+<span class="n">comparison</span><span class="p">[</span><span class="s2">&quot;ratio&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">comparison</span><span class="p">[</span><span class="s2">&quot;mean_abs_shap_black_women&quot;</span><span class="p">]</span>
+                       <span class="o">/</span> <span class="n">comparison</span><span class="p">[</span><span class="s2">&quot;mean_abs_shap_everyone_else&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Black women in sample: </span><span class="si">{</span><span class="n">is_black_woman</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">}</span><span class="s2">   &quot;</span>
+      <span class="sa">f</span><span class="s2">&quot;Everyone else: </span><span class="si">{</span><span class="p">(</span><span class="o">~</span><span class="n">is_black_woman</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">comparison</span><span class="o">.</span><span class="n">to_string</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Blood pressure carries noticeably more weight for Black women than for everyone else, while the other features are much closer. The forest has partially discovered the pattern we built in, and SHAP surfaced it <strong>without anyone needing to know the ground truth in advance</strong>.</p>
+<p>This is a compelling finding. Subgroup performance metrics tell you <em>that</em> a model fails a group. Explanations can begin to tell you <em>what the model is doing differently</em> for that group, which is the first step toward knowing how to fix it!</p>
+<p>We can look at this finding more directly by plotting how the model responds to blood pressure for each group:</p>
+<div class="cell tag_remove-output docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bp_index</span> <span class="o">=</span> <span class="n">FEATURES</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;systolic_bp&quot;</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">sample</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="o">~</span><span class="n">is_black_woman</span><span class="p">,</span> <span class="s2">&quot;systolic_bp&quot;</span><span class="p">],</span>
+           <span class="n">shap_values</span><span class="p">[</span><span class="o">~</span><span class="n">is_black_woman</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">bp_index</span><span class="p">],</span>
+           <span class="n">s</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.35</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#8fa8bf&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Everyone else&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">sample</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">is_black_woman</span><span class="p">,</span> <span class="s2">&quot;systolic_bp&quot;</span><span class="p">],</span>
+           <span class="n">shap_values</span><span class="p">[</span><span class="n">is_black_woman</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">bp_index</span><span class="p">],</span>
+           <span class="n">s</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#c0392b&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Black women&quot;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#333333&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Systolic blood pressure&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;SHAP contribution of blood pressure&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;How much blood pressure moves the model&#39;s prediction&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">glue</span><span class="p">(</span><span class="s2">&quot;fig_bp_dependence&quot;</span><span class="p">,</span> <span class="n">fig</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="the-uncomfortable-result">
+<h3>The uncomfortable result<a class="headerlink" href="#the-uncomfortable-result" title="Permalink to this heading">#</a></h3>
+<p>Having built all this explanatory machinery around the forest, it is worth asking whether <strong>the forest is actually the model we should be using instead.</strong></p>
+<p>Let us compare all three models on the fairness metric from the previous chapter.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Refit the logistic regression from the fairness chapter for comparison</span>
+<span class="n">logreg</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">StandardScaler</span><span class="p">(),</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">))</span>
+<span class="n">logreg</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train_set</span><span class="p">[</span><span class="n">FEATURES</span><span class="p">],</span> <span class="n">train_set</span><span class="p">[</span><span class="s2">&quot;cvd_event&quot;</span><span class="p">])</span>
+<span class="n">test_set</span><span class="p">[</span><span class="s2">&quot;pred_logreg&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">logreg</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">test_set</span><span class="p">[</span><span class="n">FEATURES</span><span class="p">])</span>
+
+<span class="n">model_columns</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;logistic regression&quot;</span><span class="p">:</span> <span class="s2">&quot;pred_logreg&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;decision tree (depth 3)&quot;</span><span class="p">:</span> <span class="s2">&quot;pred_tree&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;random forest (300)&quot;</span><span class="p">:</span> <span class="s2">&quot;pred_forest&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="n">rows</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="p">(</span><span class="n">race_value</span><span class="p">,</span> <span class="n">sex_value</span><span class="p">),</span> <span class="n">subset</span> <span class="ow">in</span> <span class="n">test_set</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s2">&quot;race&quot;</span><span class="p">,</span> <span class="s2">&quot;sex&quot;</span><span class="p">]):</span>
+    <span class="n">row</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;group&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">race_value</span><span class="si">}</span><span class="s2"> / </span><span class="si">{</span><span class="n">sex_value</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">}</span>
+    <span class="k">for</span> <span class="n">label</span><span class="p">,</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">model_columns</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">row</span><span class="p">[</span><span class="n">label</span><span class="p">]</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">recall_score</span><span class="p">(</span><span class="n">subset</span><span class="p">[</span><span class="s2">&quot;cvd_event&quot;</span><span class="p">],</span> <span class="n">subset</span><span class="p">[</span><span class="n">column</span><span class="p">],</span>
+                                        <span class="n">zero_division</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="n">rows</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+
+<span class="n">recall_table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;logistic regression&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;RECALL BY SUBGROUP</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">recall_table</span><span class="o">.</span><span class="n">to_string</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">OVERALL ACCURACY vs EQUAL OPPORTUNITY GAP</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">label</span><span class="p">,</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">model_columns</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">accuracy</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">test_set</span><span class="p">[</span><span class="s2">&quot;cvd_event&quot;</span><span class="p">],</span> <span class="n">test_set</span><span class="p">[</span><span class="n">column</span><span class="p">])</span>
+    <span class="n">gap</span> <span class="o">=</span> <span class="n">recall_table</span><span class="p">[</span><span class="n">label</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">-</span> <span class="n">recall_table</span><span class="p">[</span><span class="n">label</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">label</span><span class="si">:</span><span class="s2">&lt;26</span><span class="si">}</span><span class="s2"> accuracy=</span><span class="si">{</span><span class="n">accuracy</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">   equal-opportunity gap=</span><span class="si">{</span><span class="n">gap</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s carefully consider what happened.</p>
+<p>The <strong>decision tree is the least accurate model</strong>, showing about 75% accuracy, which puts it five points behind the logistic regression. In a standard model-selection process it would be discarded immediately.</p>
+<p>It is also, by a wide margin, <strong>the fairest</strong>. Its recall gap between the best- and worst-served subgroups is roughly half that of the other two models, and it detects substantially more of the cardiovascular events among Black women than either the logistic regression or the forest.</p>
+<div class="dropdown admonition">
+<p class="admonition-title">Why did the simplest model do best for the worst-served group?</p>
+<p>Because a tree can split.</p>
+<p>A logistic regression fits <strong>one coefficient per feature for everybody</strong>. It must find a single compromise between a cholesterol-mediated rule and a blood-pressure-mediated one, and since the large majority of patients are cholesterol-mediated, the compromise lands close to them.</p>
+<p>A decision tree can branch: it can apply one rule to patients above a blood pressure threshold and a different rule below it. Our depth-3 tree splits on <code class="docutils literal notranslate"><span class="pre">systolic_bp</span></code> in several places, which happens to catch part of the group whose risk is blood-pressure-driven.</p>
+<p>Two important caveats:</p>
+<ul class="simple">
+<li><p><strong>This is not a general law.</strong> Decision trees are not inherently fair, and simple models are not inherently fair. What happened here is that this particular model’s structure happened to align with this particular data’s structure. On different data the ranking could reverse entirely!</p></li>
+<li><p><strong>The forest can split too</strong>, and its SHAP values show that it did, if only partly. But a forest is fitted to minimize <em>overall</em> error, and a group making up 3.5% of the data contributes very little to that objective. Thus, the capacity to represent the subgroup exists without much pressure to use it.</p></li>
+</ul>
+<p>The transferable lesson is not “use trees.” It is that <strong>the model that wins on aggregate accuracy is not automatically the model that serves everyone best</strong>, and you cannot know which is which unless you measure both.</p>
+</div>
+</section>
+<section id="what-explanations-cannot-do">
+<h3>What explanations cannot do<a class="headerlink" href="#what-explanations-cannot-do" title="Permalink to this heading">#</a></h3>
+<p>One final word of caution, and it is the <strong>most important point in this chapter.</strong></p>
+<p><strong>SHAP explains the model. It does not explain the disease.</strong></p>
+<p>Every value in this section describes what our forest learned from our synthetic data. If a model has learned a relationship that is wrong (e.g., because the training data was unrepresentative, or because a feature is a proxy for something we did not intend) SHAP will faithfully and confidently report that wrong relationship. It has no access to biology, and no way to tell a real mechanism from an artefact of how the data was collected.</p>
+<p>This is exactly what happened in the Obermeyer study from the previous chapter <span id="id3">[<a class="reference internal" href="../bibliographypage.html#id9" title="Ziad Obermeyer, Brian Powers, Christine Vogeli, and Sendhil Mullainathan. Dissecting racial bias in an algorithm used to manage the health of populations. Science, 366(6464):447–453, 2019. URL: https://www.science.org/doi/10.1126/science.aax2342, doi:10.1126/science.aax2342.">Obermeyer <em>et al.</em>, 2019</a>]</span>. An explanation of that algorithm would have correctly reported that prior healthcare cost drove its predictions. That explanation would have been perfectly accurate about the model, and would still have missed the point entirely, because the problem was that cost was the <em>wrong</em> feature to predict in the first place.</p>
+<div class="warning admonition">
+<p class="admonition-title">A confident explanation of a bad model is still a bad model</p>
+<p>Explanations make models feel trustworthy. This feeling alone is <em>not</em> good evidence.</p>
+<p>An explanation tells you what the model is doing. Whether what it is doing is <em>right</em> is a clinical question, and answering it requires domain knowledge, subgroup evaluation, and prospective testing. SHAP is a merely a lens, not a verdict.</p>
+</div>
+</section>
+</section>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this heading">#</a></h2>
+<p>We took the synthetic cardiovascular cohort from the fairness chapter and deconstructed three models.</p>
+<p>A <strong>depth-3 decision tree</strong> was fully interpretable: the model was a diagram you could read and trace by hand. A <strong>300-tree random forest</strong> was more accurate and completely unreadable, with close to 300,000 leaves. To say anything at all about why it predicted what it did, we needed <strong>SHAP</strong>, which distributes credit for each prediction across the features using an idea from cooperative game theory, in a way that confidently adds up.</p>
+<p>SHAP then allowed us to reveal <em>why</em> the model treated one subgroup differently. It showed us that blood pressure carried more weight in its predictions for Black women. Subgroup metrics told us the model failed them. The explanation began to tell us what it was doing instead.</p>
+<p>And the comparison at the end gave us a valuable result: the least accurate model was the fairest; the most accurate model was not. <strong>Accuracy and fairness are different questions, and a model-selection process that only asks the first will overlook the second.</strong></p>
+<div class="tip admonition">
+<p class="admonition-title">A practical checklist</p>
+<p>When thinking about explainability for a clinical model:</p>
+<ol class="arabic simple">
+<li><p><strong>Try an interpretable model first.</strong> If a shallow tree or a regression performs acceptably, you may not need post-hoc explanation at all (and you get transparency for free!).</p></li>
+<li><p><strong>Be explicit about which one you are doing.</strong> “This model is interpretable” and “we generated an explanation for this model” are different claims with different guarantees.</p></li>
+<li><p><strong>Report global and per-patient explanations.</strong> Feature importance describes the model; clinicians need to know about the patient in front of them.</p></li>
+<li><p><strong>Use explanations to interrogate subgroup failures</strong>, not only to build confidence. They are a debugging tool.</p></li>
+<li><p><strong>Remember that SHAP explains the model, not the biology.</strong> Validate the relationship; do not just admire the plot!</p></li>
+<li><p><strong>Do not let an explanation substitute for evaluation.</strong> A well-explained model that has never been tested on a subgroup or validated prospectively is still an untested model.</p></li>
+</ol>
+</div>
+<p>Together with the <span class="xref myst">fairness chapter</span>, this gives you two complementary tools: subgroup evaluation tells you <strong>whether</strong> a model is failing someone, and explainability begins to tell you <strong>why</strong>.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./M3S5"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../M3S4/M3S4nb.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Fairness and Bias in Model Evaluation</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../bibliographypage.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">References</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-started">Getting Started</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setting-up">Setting Up</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretability-vs-explainability">Interpretability vs. Explainability</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#an-interpretable-model-the-decision-tree">An Interpretable Model: The Decision Tree</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#where-we-lose-the-plot-pun-intended">Where We Lose the Plot (pun intended)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#shap-values">SHAP Values</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-idea-behind-shapley-values">The idea behind Shapley values</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#checking-that-the-contributions-really-do-add-up">Checking that the contributions really do add up</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-summary-plot">The summary plot</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#explaining-a-single-patient">Explaining a single patient</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#connecting-back-to-fairness">Connecting Back to Fairness</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-uncomfortable-result">The uncomfortable result</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-explanations-cannot-do">What explanations cannot do</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By T-CAIREM Trainee Affiliates
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

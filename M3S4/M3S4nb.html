@@ -1,0 +1,1171 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Fairness and Bias in Model Evaluation &#8212; T-CAIREM AI in Medicine</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'M3S4/M3S4nb';</script>
+    <link rel="shortcut icon" href="../_static/tcairem_fav.svg"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Explainability" href="../M3S5/M3S5nb.html" />
+    <link rel="prev" title="Feature Engineering in Healthcare Without Time Travel" href="../M2S2/M2S2.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/tcairem_fav.svg" class="logo__image only-light" alt="T-CAIREM AI in Medicine - Home"/>
+    <script>document.write(`<img src="../_static/tcairem_fav.svg" class="logo__image only-dark" alt="T-CAIREM AI in Medicine - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Welcome to T-CAIREM AI in Medicine Education Modules
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Algorithm Architectures</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../M1S0/M1S0.html">Resources and Healthcare Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../M1S1/M1S1nb.html">Intro to Machine Learning in Healthcare</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../M1S6/M1S6nb.html">Image-Based Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../M1S4/M1S4.html">Deep Learning / Feedforward Neural Networks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../M1S7/M1S7.html">Time Series Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../M1S12/M1S12.html">Generative Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../M1S14/M1S14.html">Agentic AI</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Model Development</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../M2S1/M2S1.html">Approach to Model Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../M2S2/M2S2.html">Feature Engineering</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Model Evaluation and Interpretation</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Fairness and Bias in Model Evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../M3S5/M3S5nb.html">Explainability</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">End Material</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../bibliographypage.html">References</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2FM3S4/M3S4nb.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/M3S4/M3S4nb.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Fairness and Bias in Model Evaluation</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-started">Getting Started</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setting-up">Setting Up</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#building-the-simulated-cohort">Building the simulated cohort</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#looking-at-the-data">Looking at the Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#training-the-model">Training the Model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#before-we-audit-two-causes-to-consider">Before We Audit: Two Causes to Consider</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#subgroup-analysis-one-attribute-at-a-time">Subgroup Analysis, One Attribute at a Time</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#subgroup-analysis-at-the-intersection">Subgroup Analysis at the Intersection</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-this-tells-us-about-fairness-through-unawareness">What This Tells Us About “Fairness Through Unawareness”</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fairness-metrics">Fairness Metrics</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#can-we-fix-it">Can We Fix It?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ethical-implications">Ethical Implications</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="fairness-and-bias-in-model-evaluation">
+<span id="chap-m2s4"></span><h1>Fairness and Bias in Model Evaluation<a class="headerlink" href="#fairness-and-bias-in-model-evaluation" title="Permalink to this heading">#</a></h1>
+<p><strong>Content creators:</strong> <a class="reference external" href="https://github.com/reneeandreea">Renee</a></p>
+<div class="tip admonition">
+<p class="admonition-title">Chapter Overview</p>
+<ul class="simple">
+<li><p>A model can have strong overall accuracy while performing badly for specific groups of patients</p></li>
+<li><p>Bias can be “invisible” when you evaluate one attribute at a time; some harms only appear at the <strong>intersection</strong> of attributes</p></li>
+<li><p>Removing race and sex from a model’s inputs does <strong>not</strong> make the model fair</p></li>
+<li><p>Improving representation in the training data reduces the gap, but rarely (if ever) closes it completely</p></li>
+</ul>
+</div>
+<div class="danger admonition">
+<p class="admonition-title">Important - this data is simulated, not real</p>
+<p><strong>Every value in this module comes from a synthetic dataset that we generated.</strong> No real patients, cohorts, or health records are involved.</p>
+<p>We deliberately built bias into these data for the purpose of demonstration <strong>only</strong>. This is a teaching device. It means:</p>
+<ul class="simple">
+<li><p><strong>None of the numbers here are epidemiological estimates.</strong> Do not quote the event rates, risk factors, or subgroup differences on this page as facts about cardiovascular disease in any real population.</p></li>
+<li><p><strong>The pattern we injected is a simplified caricature</strong> of a real phenomenon (described below). We chose it because it illustrates the method concisely.</p></li>
+<li><p><strong>The method is transferable, not the result.</strong> You can run the subgroup analysis, the fairness metrics, and the auditing workflow on real data. The specific gaps you see are ours by construction.</p></li>
+</ul>
+<p>We chose to simulate rather than use a real cohort for two reasons: we have limited dataset access, and we wanted the ground-truth bias mechanism to be known so we could check whether our audit does, in fact, recover it.</p>
+</div>
+<section id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this heading">#</a></h2>
+<p>In 2019, researchers examined a commercial risk-prediction algorithm used across the United States to identify patients who should be enrolled in high-risk care management programs. The algorithm was applied to roughly 200 million people a year.</p>
+<p>It was, by its own design metric, working well. It predicted its target accurately.</p>
+<p>The problem was the target itself. The algorithm predicted <strong>future healthcare costs</strong> and used that as a stand-in for <strong>future health needs</strong>, assuming that higher expenditure = greater need. As a result of historically embedded biases, less money is consistently spent on Black patients than on White patients at an equal-need threshold. Thus, the algorithm concluded that Black patients needed less care <em>in general</em> (e.g., they were “healthier,” because they were correlated with lower expenditure) than White patients. In reality, the converse has historically been true: due to systemic racism in the medical industry, unequal access to care, institutional discrimination, biological myth-propagation, and underrepresentation in the provider pool (to name just a few causes), Black patients have been underdiagnosed and undertreated. These factors further lead to Black patients garnering higher levels of distrust in the medical system, making it more likely that they will avoid seeking care until symptoms become severe (i.e., until they are “sick enough” to justify the potential institutional mistreatment they may receive). This pattern of historical bias was reflected in this study as well: at any given risk score, Black patients were substantially sicker (e.g., in need of more significant care) than White patients. Correcting the bias would have more than doubled the proportion of Black patients automatically referred for extra care, therefore improving downstream treatment outcomes for Black patients <span id="id1">[<a class="reference internal" href="../bibliographypage.html#id9" title="Ziad Obermeyer, Brian Powers, Christine Vogeli, and Sendhil Mullainathan. Dissecting racial bias in an algorithm used to manage the health of populations. Science, 366(6464):447–453, 2019. URL: https://www.science.org/doi/10.1126/science.aax2342, doi:10.1126/science.aax2342.">Obermeyer <em>et al.</em>, 2019</a>]</span>.</p>
+<p>The algorithm <strong>did not account for this inequity</strong>, specifically, it <strong>did not use race as an input at all</strong>.</p>
+<div class="info admonition">
+<p class="admonition-title">Clinical Question</p>
+<p>For this chapter we will assess a cardiovascular risk model and ask:</p>
+<ul class="simple">
+<li><p><strong>Is our model biased against certain populations?</strong></p>
+<ul>
+<li><p><strong>What are we trying to predict?</strong> Whether a patient experiences a cardiovascular event</p></li>
+<li><p><strong>What information do we have?</strong> Age, systolic blood pressure, cholesterol, BMI, smoking status</p></li>
+<li><p><strong>What do we need to check?</strong> Whether the model’s errors fall evenly across patient groups</p></li>
+</ul>
+</li>
+</ul>
+<p>Note: <em>A single overall accuracy number cannot answer this question.</em></p>
+</div>
+</section>
+<section id="setting-up">
+<h2>Setting Up<a class="headerlink" href="#setting-up" title="Permalink to this heading">#</a></h2>
+<p>The cell below loads the libraries used on this page. You do not need to read it to follow the chapter. It imports tools for handling tables (<code class="docutils literal notranslate"><span class="pre">pandas</span></code>), doing math (<code class="docutils literal notranslate"><span class="pre">numpy</span></code>), drawing charts (<code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>), and building models (<code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code>). Click to expand it if you want to see the details.</p>
+<div class="cell tag_hide-cell tag_thebe-init docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">These are imports that help the rest of the code on this page run.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="o">%</span><span class="k">load_ext</span> autoreload
+<span class="o">%</span><span class="k">autoreload</span> 2
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">myst_nb</span><span class="w"> </span><span class="kn">import</span> <span class="n">glue</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.linear_model</span><span class="w"> </span><span class="kn">import</span> <span class="n">LogisticRegression</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">recall_score</span><span class="p">,</span> <span class="n">confusion_matrix</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.pipeline</span><span class="w"> </span><span class="kn">import</span> <span class="n">make_pipeline</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">StandardScaler</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<section id="building-the-simulated-cohort">
+<h3>Building the simulated cohort<a class="headerlink" href="#building-the-simulated-cohort" title="Permalink to this heading">#</a></h3>
+<p>The next cell creates our synthetic patient data. As flagged above, these are manufactured data with deliberately engineered bias. It is worth understanding <em>what</em> we built in, because the rest of the chapter is an attempt to discover it using only the tools an auditor would have.</p>
+<p>We simulated two points of bias that have real-world observations:</p>
+<ol class="arabic simple">
+<li><p><strong>Under-representation.</strong> Women make up 38% of our cohort and Black patients 10%, so Black women are only about 3.5% of the data. Cardiovascular research has a documented history of under-enrolling both women and Black participants, which means risk models are largely fitted to the patients who were most highly recruited.</p></li>
+<li><p><strong>A different risk mechanism in the under-represented group.</strong> For most of our simulated cohort, cardiovascular risk is driven strongly by cholesterol. For Black women in our simulation, risk is driven mainly by blood pressure and shows up at <em>lower</em> cholesterol levels. This is a deliberate exaggeration of a real observation: cardiovascular risk does not present identically across groups, and risk scores developed in one population can transfer poorly to another <span id="id2">[<a class="reference internal" href="../bibliographypage.html#id10" title="Darshali A. Vyas, Leo G. Eisenstein, and David S. Jones. Hidden in plain sight — reconsidering the use of race correction in clinical algorithms. New England Journal of Medicine, 383(9):874–882, 2020. URL: https://www.nejm.org/doi/full/10.1056/NEJMms2004740, doi:10.1056/NEJMms2004740.">Vyas <em>et al.</em>, 2020</a>]</span>.</p></li>
+</ol>
+<p>The combination of these two points gives rise to harm. Taken together, the model encodes a cholesterol-driven rule from the patients it saw most (White men); this rule evidently does not describe the group it saw least (Black women).</p>
+<p>Expand the cell to see the generating code.</p>
+<div class="cell tag_hide-cell tag_thebe-init docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This code generates the synthetic dataset described above.</span>
+<span class="sd">The bias in this data is deliberate and engineered for teaching purposes.</span>
+<span class="sd">This code section was written with the support of generative AI.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c1"># Set a random seed so this page produces the same numbers every time</span>
+<span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">21</span><span class="p">)</span>
+
+<span class="c1"># Number of simulated patients</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">8000</span>
+
+<span class="c1"># --- Demographics -----------------------------------------------------</span>
+<span class="c1"># These proportions reflect historic under-enrolment, not any real population.</span>
+<span class="n">race</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="s2">&quot;White&quot;</span><span class="p">,</span> <span class="s2">&quot;Black&quot;</span><span class="p">,</span> <span class="s2">&quot;South Asian&quot;</span><span class="p">,</span> <span class="s2">&quot;East Asian&quot;</span><span class="p">],</span>
+                  <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="p">[</span><span class="mf">0.70</span><span class="p">,</span> <span class="mf">0.10</span><span class="p">,</span> <span class="mf">0.11</span><span class="p">,</span> <span class="mf">0.09</span><span class="p">])</span>
+<span class="n">sex</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.38</span><span class="p">,</span> <span class="s2">&quot;Female&quot;</span><span class="p">,</span> <span class="s2">&quot;Male&quot;</span><span class="p">)</span>
+
+<span class="c1"># --- Clinical features ------------------------------------------------</span>
+<span class="n">age</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">58</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">90</span><span class="p">)</span>
+<span class="n">smoker</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">binomial</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.22</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+<span class="n">systolic_bp</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="mi">90</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+<span class="n">cholesterol</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mf">5.2</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="mf">2.5</span><span class="p">,</span> <span class="mf">9.0</span><span class="p">)</span>
+<span class="n">bmi</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mf">27.5</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+
+<span class="c1"># --- The engineered difference ----------------------------------------</span>
+<span class="c1"># Black women in this simulation have lower cholesterol and higher blood</span>
+<span class="c1"># pressure than the cohort average.</span>
+<span class="n">is_bw</span> <span class="o">=</span> <span class="p">(</span><span class="n">race</span> <span class="o">==</span> <span class="s2">&quot;Black&quot;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">sex</span> <span class="o">==</span> <span class="s2">&quot;Female&quot;</span><span class="p">)</span>
+<span class="n">cholesterol</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">is_bw</span><span class="p">,</span> <span class="p">(</span><span class="n">cholesterol</span> <span class="o">-</span> <span class="mf">1.10</span><span class="p">)</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="mf">2.5</span><span class="p">,</span> <span class="mf">9.0</span><span class="p">),</span> <span class="n">cholesterol</span><span class="p">)</span>
+<span class="n">systolic_bp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">is_bw</span><span class="p">,</span> <span class="p">(</span><span class="n">systolic_bp</span> <span class="o">+</span> <span class="mi">12</span><span class="p">)</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="mi">90</span><span class="p">,</span> <span class="mi">200</span><span class="p">),</span> <span class="n">systolic_bp</span><span class="p">)</span>
+
+<span class="c1"># Majority risk mechanism: cholesterol matters a lot.</span>
+<span class="n">logit_major</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mf">26.6</span>
+               <span class="o">+</span> <span class="mf">0.14</span> <span class="o">*</span> <span class="n">age</span>
+               <span class="o">+</span> <span class="mf">0.055</span> <span class="o">*</span> <span class="n">systolic_bp</span>
+               <span class="o">+</span> <span class="mf">1.55</span> <span class="o">*</span> <span class="n">cholesterol</span>
+               <span class="o">+</span> <span class="mf">0.088</span> <span class="o">*</span> <span class="n">bmi</span>
+               <span class="o">+</span> <span class="mf">1.40</span> <span class="o">*</span> <span class="n">smoker</span><span class="p">)</span>
+
+<span class="c1"># Minority risk mechanism: blood pressure matters a lot, cholesterol barely.</span>
+<span class="n">logit_bw</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mf">29.6</span>
+            <span class="o">+</span> <span class="mf">0.14</span> <span class="o">*</span> <span class="n">age</span>
+            <span class="o">+</span> <span class="mf">0.13</span> <span class="o">*</span> <span class="n">systolic_bp</span>
+            <span class="o">+</span> <span class="mf">0.15</span> <span class="o">*</span> <span class="n">cholesterol</span>
+            <span class="o">+</span> <span class="mf">0.088</span> <span class="o">*</span> <span class="n">bmi</span>
+            <span class="o">+</span> <span class="mf">1.40</span> <span class="o">*</span> <span class="n">smoker</span><span class="p">)</span>
+
+<span class="n">logit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">is_bw</span><span class="p">,</span> <span class="n">logit_bw</span><span class="p">,</span> <span class="n">logit_major</span><span class="p">)</span>
+<span class="n">probability</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">logit</span><span class="p">))</span>
+<span class="n">cvd_event</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">binomial</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">probability</span><span class="p">)</span>
+
+<span class="c1"># --- Assemble the table -----------------------------------------------</span>
+<span class="n">patients</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">&quot;age&quot;</span><span class="p">:</span> <span class="n">age</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">),</span>
+    <span class="s2">&quot;sex&quot;</span><span class="p">:</span> <span class="n">sex</span><span class="p">,</span>
+    <span class="s2">&quot;race&quot;</span><span class="p">:</span> <span class="n">race</span><span class="p">,</span>
+    <span class="s2">&quot;systolic_bp&quot;</span><span class="p">:</span> <span class="n">systolic_bp</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
+    <span class="s2">&quot;cholesterol&quot;</span><span class="p">:</span> <span class="n">cholesterol</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+    <span class="s2">&quot;bmi&quot;</span><span class="p">:</span> <span class="n">bmi</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+    <span class="s2">&quot;smoker&quot;</span><span class="p">:</span> <span class="n">smoker</span><span class="p">,</span>
+    <span class="s2">&quot;cvd_event&quot;</span><span class="p">:</span> <span class="n">cvd_event</span><span class="p">,</span>
+<span class="p">})</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+</section>
+</section>
+<section id="looking-at-the-data">
+<h2>Looking at the Data<a class="headerlink" href="#looking-at-the-data" title="Permalink to this heading">#</a></h2>
+<p>Each row is one simulated patient. <code class="docutils literal notranslate"><span class="pre">cvd_event</span></code> is our label: 1 means the patient had a cardiovascular event, 0 means they did not.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the first five patients</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">patients</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+
+<span class="c1"># How common is the outcome overall?</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Outcome distribution:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">patients</span><span class="p">[</span><span class="s2">&quot;cvd_event&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>   age     sex   race  systolic_bp  cholesterol   bmi  smoker  cvd_event
+0   38  Female  Black        152.0          4.9  34.3       0          1
+1   67  Female  White        162.0          5.5  24.8       0          1
+2   57  Female  Black        131.0          5.3  31.2       0          0
+3   61    Male  White        145.0          6.4  24.5       0          1
+4   49  Female  White        107.0          4.3  26.7       0          0
+
+Outcome distribution:
+cvd_event
+0    4584
+1    3416
+Name: count, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<p>Before modelling anything, we want to <em>explicitly</em> ask ourselves: <strong>who is actually in this dataset?</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># What share of the cohort does each race x sex group make up?</span>
+<span class="n">composition</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">patients</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s2">&quot;race&quot;</span><span class="p">,</span> <span class="s2">&quot;sex&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s2">&quot;n&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+<span class="p">)</span>
+<span class="n">composition</span><span class="p">[</span><span class="s2">&quot;percent_of_cohort&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="n">composition</span><span class="p">[</span><span class="s2">&quot;n&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">patients</span><span class="p">))</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">composition</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;n&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">to_string</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>       race    sex    n  percent_of_cohort
+      White   Male 3471               43.4
+      White Female 2105               26.3
+South Asian   Male  562                7.0
+      Black   Male  518                6.5
+ East Asian   Male  453                5.7
+South Asian Female  330                4.1
+      Black Female  282                3.5
+ East Asian Female  279                3.5
+</pre></div>
+</div>
+</div>
+</div>
+<p>White men are roughly 43% of the cohort. Black women are roughly 3.5% (~280 patients out of 8000). Whatever the model learns, it will be learning it overwhelmingly from the groups at the top of this table.</p>
+<div class="info admonition">
+<p class="admonition-title">Structuring This Problem</p>
+<ul class="simple">
+<li><p><strong>Input Features</strong>: age, systolic blood pressure, cholesterol, BMI, smoking status</p></li>
+<li><p><strong>Output Label</strong>: <code class="docutils literal notranslate"><span class="pre">cvd_event</span></code> - 1 = experienced a cardiovascular event, 0 = did not</p></li>
+<li><p><strong>Attributes we will audit against</strong>: race, sex</p></li>
+</ul>
+<p>Notice that <strong>race and sex are not model inputs.</strong> The model never considers them. We are explicitly putting them aside to evaluate the model’s behaviour afterwards.</p>
+</div>
+<p>This is a deliberate choice, which communicates an implicit and common intuition: <em>if the model cannot see race, it cannot discriminate on race.</em> This (false) concept is called <strong>fairness through unawareness</strong>. We return to this concept later in the module.</p>
+</section>
+<section id="training-the-model">
+<h2>Training the Model<a class="headerlink" href="#training-the-model" title="Permalink to this heading">#</a></h2>
+<p>We split the data into a training set and a test set, then fit a logistic regression (i.e., the model architecture introduced in <span class="xref myst">the machine learning fundamentals chapter</span>). We first standardize the features so they are comparable.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">FEATURES</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;age&quot;</span><span class="p">,</span> <span class="s2">&quot;systolic_bp&quot;</span><span class="p">,</span> <span class="s2">&quot;cholesterol&quot;</span><span class="p">,</span> <span class="s2">&quot;bmi&quot;</span><span class="p">,</span> <span class="s2">&quot;smoker&quot;</span><span class="p">]</span>
+
+<span class="c1"># Hold out 30% of patients to evaluate on</span>
+<span class="n">train_set</span><span class="p">,</span> <span class="n">test_set</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">patients</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">stratify</span><span class="o">=</span><span class="n">patients</span><span class="p">[</span><span class="s2">&quot;cvd_event&quot;</span><span class="p">]</span>
+<span class="p">)</span>
+
+<span class="c1"># Standardize features, then fit logistic regression</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">StandardScaler</span><span class="p">(),</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">))</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train_set</span><span class="p">[</span><span class="n">FEATURES</span><span class="p">],</span> <span class="n">train_set</span><span class="p">[</span><span class="s2">&quot;cvd_event&quot;</span><span class="p">])</span>
+
+<span class="c1"># Predict on the held-out patients</span>
+<span class="n">test_set</span> <span class="o">=</span> <span class="n">test_set</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">test_set</span><span class="p">[</span><span class="s2">&quot;prediction&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">test_set</span><span class="p">[</span><span class="n">FEATURES</span><span class="p">])</span>
+
+<span class="n">overall_accuracy</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">test_set</span><span class="p">[</span><span class="s2">&quot;cvd_event&quot;</span><span class="p">],</span> <span class="n">test_set</span><span class="p">[</span><span class="s2">&quot;prediction&quot;</span><span class="p">])</span>
+<span class="n">overall_recall</span> <span class="o">=</span> <span class="n">recall_score</span><span class="p">(</span><span class="n">test_set</span><span class="p">[</span><span class="s2">&quot;cvd_event&quot;</span><span class="p">],</span> <span class="n">test_set</span><span class="p">[</span><span class="s2">&quot;prediction&quot;</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Overall accuracy: </span><span class="si">{</span><span class="n">overall_accuracy</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Overall recall:   </span><span class="si">{</span><span class="n">overall_recall</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Overall accuracy: 80.6%
+Overall recall:   75.9%
+</pre></div>
+</div>
+</div>
+</div>
+<p>About 81% accuracy, and the model catches roughly 76% of the patients who go on to have an event. For a five-feature model on messy clinical data, this is a respectable result. At this point, on most project timelines, this model will get written up.</p>
+<div class="note admonition">
+<p class="admonition-title">A note on metrics</p>
+<p>Two values appear throughout this chapter:</p>
+<ul class="simple">
+<li><p><strong>Accuracy</strong> - of all predictions, what fraction were correct? This is the value most often reported; it also hides the most information.</p></li>
+<li><p><strong>Recall</strong> (also called <em>sensitivity</em> or the <em>true positive rate</em>) - of the patients who actually had an event, what fraction did the model <em>correctly</em> flag?</p></li>
+</ul>
+<p>For a risk model that decides which patients receive extra clinical attention, recall is the number that matters most. A missed high-risk patient is a patient who does not receive care. Its supplement, the <strong>false negative rate</strong>, is simply <code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">-</span> <span class="pre">recall</span></code>.</p>
+</div>
+</section>
+<section id="before-we-audit-two-causes-to-consider">
+<h2>Before We Audit: Two Causes to Consider<a class="headerlink" href="#before-we-audit-two-causes-to-consider" title="Permalink to this heading">#</a></h2>
+<p>Subgroup analysis produces tables of values that differ between groups. These differences have two distinct causes.</p>
+<p><strong>1. Different underlying rates of disease.</strong> Some groups experience cardiovascular events more often than others, for reasons including material deprivation, chronic stress, differential access to primary care, and environmental exposure. If group A has twice the event rate of group B, a well-calibrated model <em>should</em> assign group A higher risk scores on average. This is correct–not biased–model behaviour. We do not want to flatten these (real) differences.</p>
+<p><strong>2. Different model performance.</strong> This is a separate question: <strong>given that a patient will have an event, how likely is the model to catch it?</strong> If the model detects 80% of events in group B but only 40% in group A, that is a property of the model, not of the patient groups. The disease is equally prevalent in both groups; the model is, however, worse at spotting it in one of them.</p>
+<p>The first is a fact about the world that a good model ought to reflect. The second is a defect in the model.</p>
+<div class="important admonition">
+<p class="admonition-title">Why this distinction drives our metric choice</p>
+<p>This difference describes why we emphasize <strong>recall</strong> rather than how many patients are flagged in each group. Recall conditions on patients who actually <em>had</em> an event, so it compares like cases with like cases. A group with a higher event rate should receive more flags: that is not evidence of bias. But every group’s <em>actual</em> events should be found at a similar rate, regardless of how common those events are.</p>
+<p>When you see a gap in this chapter, it is a gap in <strong>detection among patients who were actually at risk</strong>.</p>
+</div>
+</section>
+<section id="subgroup-analysis-one-attribute-at-a-time">
+<h2>Subgroup Analysis, One Attribute at a Time<a class="headerlink" href="#subgroup-analysis-one-attribute-at-a-time" title="Permalink to this heading">#</a></h2>
+<p>A standard audit will break performance down by each protected attribute. We can write a small helper chunk of code so we can reuse it.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">performance_by</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">group_columns</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return per-subgroup performance for the columns given.&quot;&quot;&quot;</span>
+    <span class="n">rows</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">group_value</span><span class="p">,</span> <span class="n">subset</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">group_columns</span><span class="p">):</span>
+        <span class="n">rows</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+            <span class="s2">&quot;group&quot;</span><span class="p">:</span> <span class="s2">&quot; / &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">group_value</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">group_value</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="k">else</span> <span class="n">group_value</span><span class="p">,</span>
+            <span class="s2">&quot;n_patients&quot;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">subset</span><span class="p">),</span>
+            <span class="s2">&quot;event_rate&quot;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">subset</span><span class="p">[</span><span class="s2">&quot;cvd_event&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="mi">3</span><span class="p">),</span>
+            <span class="s2">&quot;accuracy&quot;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">accuracy_score</span><span class="p">(</span><span class="n">subset</span><span class="p">[</span><span class="s2">&quot;cvd_event&quot;</span><span class="p">],</span> <span class="n">subset</span><span class="p">[</span><span class="s2">&quot;prediction&quot;</span><span class="p">]),</span> <span class="mi">3</span><span class="p">),</span>
+            <span class="s2">&quot;recall&quot;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">recall_score</span><span class="p">(</span><span class="n">subset</span><span class="p">[</span><span class="s2">&quot;cvd_event&quot;</span><span class="p">],</span> <span class="n">subset</span><span class="p">[</span><span class="s2">&quot;prediction&quot;</span><span class="p">],</span> <span class="n">zero_division</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="mi">3</span><span class="p">),</span>
+        <span class="p">})</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span>
+    <span class="n">result</span><span class="p">[</span><span class="s2">&quot;missed_rate&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;recall&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;recall&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>First, performance broken down by race:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">performance_by</span><span class="p">(</span><span class="n">test_set</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;race&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">to_string</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>      group  n_patients  event_rate  accuracy  recall  missed_rate
+      Black         248       0.528     0.758   0.641        0.359
+      White        1676       0.417     0.807   0.765        0.235
+South Asian         256       0.395     0.840   0.802        0.198
+ East Asian         220       0.427     0.814   0.830        0.170
+</pre></div>
+</div>
+</div>
+</div>
+<p>Then by sex:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">performance_by</span><span class="p">(</span><span class="n">test_set</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;sex&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">to_string</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> group  n_patients  event_rate  accuracy  recall  missed_rate
+Female         909       0.426     0.785   0.700        0.300
+  Male        1491       0.428     0.819   0.795        0.205
+</pre></div>
+</div>
+</div>
+</div>
+<p>We see a non-dramatic, but noticeable, trend here. Recall for Black patients is around 0.64 against roughly 0.77 for White patients. Recall for women is around 0.70 against roughly 0.80 for men.</p>
+<p>These are the kinds of gaps that are waved away in a pre-release meeting. <em>Smaller sample, wider confidence interval, we can watch it in the next release.</em> Both attributes look mildly imperfect and broadly acceptable.</p>
+<p><strong>This is a trap!</strong> We have checked race. We have checked sex. Every box on the standard fairness checklist is ticked. But have we checked race x sex? No! Let’s…</p>
+</section>
+<section id="subgroup-analysis-at-the-intersection">
+<h2>Subgroup Analysis at the Intersection<a class="headerlink" href="#subgroup-analysis-at-the-intersection" title="Permalink to this heading">#</a></h2>
+<p>Instead of grouping by race <em>or</em> sex, we group by race <strong>and</strong> sex together.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">intersectional</span> <span class="o">=</span> <span class="n">performance_by</span><span class="p">(</span><span class="n">test_set</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;race&quot;</span><span class="p">,</span> <span class="s2">&quot;sex&quot;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">intersectional</span><span class="o">.</span><span class="n">to_string</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>               group  n_patients  event_rate  accuracy  recall  missed_rate
+      Black / Female          95       0.653     0.600   0.403        0.597
+South Asian / Female          94       0.415     0.798   0.718        0.282
+      White / Female         636       0.396     0.813   0.758        0.242
+        White / Male        1040       0.430     0.804   0.770        0.230
+ East Asian / Female          84       0.405     0.774   0.794        0.206
+   East Asian / Male         136       0.441     0.838   0.850        0.150
+        Black / Male         153       0.451     0.856   0.855        0.145
+  South Asian / Male         162       0.383     0.864   0.855        0.145
+</pre></div>
+</div>
+</div>
+</div>
+<p>Read the top row.</p>
+<p>Black women have the <strong>highest event rate in the entire cohort</strong>: roughly 0.65, meaning about two in three experience a cardiovascular event. The model finds about <strong>40%</strong> of them. <strong>It misses close to 60% of the highest-risk patients in the dataset.</strong></p>
+<p>Every other subgroup sits between roughly 0.72 and 0.86. Black women alone fall off the edge.</p>
+<p>Notice too that Black <em>men</em> fit the trend, with a recall around 0.85. In fact, this is one of the better groups. This is why the race-only table looked survivable: Black men and Black women averaged together into a mild-seeming gap. The same thing happened in the sex-only table, where the White women’s results diluted the effect.</p>
+<p><strong>The harm was not invisible. It was diluted away.</strong></p>
+<div class="cell tag_remove-output docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Visualize recall across every race x sex subgroup</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;#c0392b&quot;</span> <span class="k">if</span> <span class="n">r</span> <span class="o">&lt;</span> <span class="mf">0.5</span> <span class="k">else</span> <span class="s2">&quot;#5b8db8&quot;</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">intersectional</span><span class="p">[</span><span class="s2">&quot;recall&quot;</span><span class="p">]]</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="n">intersectional</span><span class="p">[</span><span class="s2">&quot;group&quot;</span><span class="p">],</span> <span class="n">intersectional</span><span class="p">[</span><span class="s2">&quot;recall&quot;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">overall_recall</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#444444&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">overall_recall</span> <span class="o">+</span> <span class="mf">0.01</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.6</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;overall recall = </span><span class="si">{</span><span class="n">overall_recall</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#444444&quot;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Recall (share of genuine events the model detected)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Model recall by race and sex&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">glue</span><span class="p">(</span><span class="s2">&quot;fig_intersectional&quot;</span><span class="p">,</span> <span class="n">fig</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<figure class="align-center" id="fig-intersectional">
+<img alt="../_images/ff37907129d76979ddd2acba5c9f9eb82094b7c4702e017471af4b91913b97b6.png" src="../_images/ff37907129d76979ddd2acba5c9f9eb82094b7c4702e017471af4b91913b97b6.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 4 </span><span class="caption-text">Recall for each race and sex subgroup. The dashed line is the model’s overall recall. One group sits far below every other.</span><a class="headerlink" href="#fig-intersectional" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<div class="dropdown admonition">
+<p class="admonition-title">Why is the model so much worse for this one group?</p>
+<p>As described, two causes compound each other.</p>
+<p><strong>Under-representation.</strong> Black women are about 3.5% of the training data. Logistic regression fits one set of coefficients that minimizes error across all patients at once. A group contributing 3.5% of the rows has almost no influence on the boundary; the fit is dominated by the groups that supply the majority of the data points.</p>
+<p><strong>A different risk mechanism.</strong> In our simulation, risk for most patients is driven by cholesterol, while risk for Black women is driven by blood pressure and appears at <em>lower</em> cholesterol values. So the model learns a broadly cholesterol-mediated rule, and then applies it to a group of patients whose risk is <em>not</em> cholesterol-mediated. Their high blood pressure is visible in the data, but the model has learned to assign it little weight.</p>
+<p>Neither alone would be debilitating. <strong>The failure comes from any one group being both quantitatively small and qualitatively different</strong>. It should not be lost on us that this combination is exactly what an intersectional group is likely to be.</p>
+<p>This is also why single-axis analysis missed it. Black men share the cholesterol-driven mechanism; White women share it too. Only at the intersection do both conditions hold.</p>
+</div>
+<section id="what-this-tells-us-about-fairness-through-unawareness">
+<h3>What This Tells Us About “Fairness Through Unawareness”<a class="headerlink" href="#what-this-tells-us-about-fairness-through-unawareness" title="Permalink to this heading">#</a></h3>
+<p>Recall that our model never received race or sex as an input.</p>
+<p>Despite this blindness, it still produced a severe, patterned, race-and-sex-specific harm.</p>
+<p>Protected characteristics, like race and sex, are correlated with observational variables like blood pressure, cholesterol, BMI, and postal code; excluding them will not erase the relationships inherent in the data. A model that does not have access to race and sex labels, for example, will simply reconstruct the pattern with the information it is given. As we observed in the Obermeyer study, the algorithm used no race variable, but historical spending patterns still encoded it <span id="id3">[<a class="reference internal" href="../bibliographypage.html#id9" title="Ziad Obermeyer, Brian Powers, Christine Vogeli, and Sendhil Mullainathan. Dissecting racial bias in an algorithm used to manage the health of populations. Science, 366(6464):447–453, 2019. URL: https://www.science.org/doi/10.1126/science.aax2342, doi:10.1126/science.aax2342.">Obermeyer <em>et al.</em>, 2019</a>]</span>.</p>
+<div class="warning admonition">
+<p class="admonition-title">One practical consequence</p>
+<p><strong>Removing a protected attribute from your feature list does not make your model fair. It only makes the resulting bias harder to detect</strong> because you have also removed the variable you would need in order to measure it.</p>
+<p>Keeping race and sex available <em>for evaluation</em>, even when they are excluded from the model’s inputs, makes analysis possible. Datasets that do not record these attributes cannot be audited for bias against them.</p>
+</div>
+</section>
+</section>
+<section id="fairness-metrics">
+<h2>Fairness Metrics<a class="headerlink" href="#fairness-metrics" title="Permalink to this heading">#</a></h2>
+<p>“The model is unfair” is not itself a measurement. Several formal definitions exist; two of the most widely used are below.</p>
+<p><strong>Demographic parity</strong> asks whether each group is flagged at the same rate, regardless of outcome. It compares <code class="docutils literal notranslate"><span class="pre">P(prediction</span> <span class="pre">=</span> <span class="pre">1)</span></code> across groups. Note the weakness we discussed earlier: if two groups do in fact have different event rates, equal flagging rates would mean under-serving the higher-risk group.</p>
+<p><strong>Equal opportunity</strong> asks whether, <em>among patients who had an event</em>, each group is detected at the same rate <span id="id4">[<a class="reference internal" href="../bibliographypage.html#id11" title="Moritz Hardt, Eric Price, and Nathan Srebro. Equality of opportunity in supervised learning. In Advances in Neural Information Processing Systems 29 (NIPS 2016). 2016. URL: https://papers.nips.cc/paper/6374-equality-of-opportunity-in-supervised-learning.">Hardt <em>et al.</em>, 2016</a>]</span>. This is recall parity. This definition fits our clinical question best.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fairness</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="p">(</span><span class="n">race_value</span><span class="p">,</span> <span class="n">sex_value</span><span class="p">),</span> <span class="n">subset</span> <span class="ow">in</span> <span class="n">test_set</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s2">&quot;race&quot;</span><span class="p">,</span> <span class="s2">&quot;sex&quot;</span><span class="p">]):</span>
+    <span class="n">fairness</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+        <span class="s2">&quot;group&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">race_value</span><span class="si">}</span><span class="s2"> / </span><span class="si">{</span><span class="n">sex_value</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;flagged_rate&quot;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">subset</span><span class="p">[</span><span class="s2">&quot;prediction&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="mi">3</span><span class="p">),</span>        <span class="c1"># demographic parity</span>
+        <span class="s2">&quot;recall&quot;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">recall_score</span><span class="p">(</span><span class="n">subset</span><span class="p">[</span><span class="s2">&quot;cvd_event&quot;</span><span class="p">],</span> <span class="n">subset</span><span class="p">[</span><span class="s2">&quot;prediction&quot;</span><span class="p">],</span>
+                                     <span class="n">zero_division</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="mi">3</span><span class="p">),</span>            <span class="c1"># equal opportunity</span>
+    <span class="p">})</span>
+
+<span class="n">fairness</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">fairness</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;recall&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">fairness</span><span class="o">.</span><span class="n">to_string</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+
+<span class="c1"># Summarize each definition as a single gap: worst group vs best group</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Demographic parity gap: </span><span class="si">{</span><span class="n">fairness</span><span class="p">[</span><span class="s1">&#39;flagged_rate&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">fairness</span><span class="p">[</span><span class="s1">&#39;flagged_rate&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Equal opportunity gap:  </span><span class="si">{</span><span class="n">fairness</span><span class="p">[</span><span class="s1">&#39;recall&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">fairness</span><span class="p">[</span><span class="s1">&#39;recall&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>               group  flagged_rate  recall
+      Black / Female         0.274   0.403
+South Asian / Female         0.383   0.718
+      White / Female         0.392   0.758
+        White / Male         0.428   0.770
+ East Asian / Female         0.464   0.794
+   East Asian / Male         0.471   0.850
+        Black / Male         0.464   0.855
+  South Asian / Male         0.407   0.855
+
+Demographic parity gap: 0.197
+Equal opportunity gap:  0.452
+</pre></div>
+</div>
+</div>
+</div>
+<p>The equal opportunity gap is large: the best-served subgroup has recall roughly double that of the worst-served one.</p>
+<div class="note admonition">
+<p class="admonition-title">You cannot satisfy every fairness definition at once</p>
+<p>It is tempting to look for a model that satisfies <em>all</em> fairness criteria simultaneously. With rare exceptions, <strong>no such model exists.</strong> Where groups have significantly different event rates, it is mathematically impossible to equalize flagging rates, detection rates, and predictive value at the same time. Improving one necessarily worsens another <span id="id5">[<a class="reference internal" href="../bibliographypage.html#id12" title="Solon Barocas, Moritz Hardt, and Arvind Narayanan. Fairness and Machine Learning: Limitations and Opportunities. MIT Press, 2023. URL: https://fairmlbook.org/.">Barocas <em>et al.</em>, 2023</a>]</span>.</p>
+<p>This is not a reason to give up on fairness. It means the choice of definition is a <strong>clinical and ethical decision</strong> rather than a technical one. For a screening tool that permits further clinical assessment, missing high-risk patients is usually a worse error, suggesting we ought to adopt an “equal opportunity” definition of fairness. Conversely, for a tool that allocates a scarce or materially burdensome intervention, the trade-off may lie elsewhere.</p>
+<p>State which definition you are optimizing for, and why, before you start tuning.</p>
+</div>
+</section>
+<section id="can-we-fix-it">
+<h2>Can We Fix It?<a class="headerlink" href="#can-we-fix-it" title="Permalink to this heading">#</a></h2>
+<p>Our diagnosis was that the model fails for Black women because it saw too few in the dataset, and they differ from the majority. The most direct response is to address the first half of the issue: <strong>build a training set that represents the population the model will serve.</strong></p>
+<p>In practice this means going back to recruitment and deliberately enrolling more patients from under-represented groups, which is slow, expensive, and requires earning the trust of communities that medical research has often treated poorly. We simulate the outcome of that work here by generating a second cohort with proportionate representation.</p>
+<p>Note: we are <strong>not</strong> touching the model architecture, the features, or the decision threshold. Only the training data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">simulate_cohort</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="n">black_share</span><span class="p">,</span> <span class="n">female_share</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Regenerate the cohort with different recruitment, same biology.&quot;&quot;&quot;</span>
+    <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+    <span class="n">rest</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">black_share</span>
+    <span class="n">race</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="s2">&quot;White&quot;</span><span class="p">,</span> <span class="s2">&quot;Black&quot;</span><span class="p">,</span> <span class="s2">&quot;South Asian&quot;</span><span class="p">,</span> <span class="s2">&quot;East Asian&quot;</span><span class="p">],</span>
+                      <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="p">[</span><span class="n">rest</span> <span class="o">*</span> <span class="mf">0.70</span><span class="p">,</span> <span class="n">black_share</span><span class="p">,</span> <span class="n">rest</span> <span class="o">*</span> <span class="mf">0.16</span><span class="p">,</span> <span class="n">rest</span> <span class="o">*</span> <span class="mf">0.14</span><span class="p">])</span>
+    <span class="n">sex</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">female_share</span><span class="p">,</span> <span class="s2">&quot;Female&quot;</span><span class="p">,</span> <span class="s2">&quot;Male&quot;</span><span class="p">)</span>
+
+    <span class="n">age</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">58</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">90</span><span class="p">)</span>
+    <span class="n">smoker</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">binomial</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.22</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+    <span class="n">systolic_bp</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="mi">90</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+    <span class="n">cholesterol</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mf">5.2</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="mf">2.5</span><span class="p">,</span> <span class="mf">9.0</span><span class="p">)</span>
+    <span class="n">bmi</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mf">27.5</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+
+    <span class="n">is_bw</span> <span class="o">=</span> <span class="p">(</span><span class="n">race</span> <span class="o">==</span> <span class="s2">&quot;Black&quot;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">sex</span> <span class="o">==</span> <span class="s2">&quot;Female&quot;</span><span class="p">)</span>
+    <span class="n">cholesterol</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">is_bw</span><span class="p">,</span> <span class="p">(</span><span class="n">cholesterol</span> <span class="o">-</span> <span class="mf">1.10</span><span class="p">)</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="mf">2.5</span><span class="p">,</span> <span class="mf">9.0</span><span class="p">),</span> <span class="n">cholesterol</span><span class="p">)</span>
+    <span class="n">systolic_bp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">is_bw</span><span class="p">,</span> <span class="p">(</span><span class="n">systolic_bp</span> <span class="o">+</span> <span class="mi">12</span><span class="p">)</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="mi">90</span><span class="p">,</span> <span class="mi">200</span><span class="p">),</span> <span class="n">systolic_bp</span><span class="p">)</span>
+
+    <span class="n">logit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+        <span class="n">is_bw</span><span class="p">,</span>
+        <span class="o">-</span><span class="mf">29.6</span> <span class="o">+</span> <span class="mf">0.14</span><span class="o">*</span><span class="n">age</span> <span class="o">+</span> <span class="mf">0.13</span><span class="o">*</span><span class="n">systolic_bp</span> <span class="o">+</span> <span class="mf">0.15</span><span class="o">*</span><span class="n">cholesterol</span> <span class="o">+</span> <span class="mf">0.088</span><span class="o">*</span><span class="n">bmi</span> <span class="o">+</span> <span class="mf">1.40</span><span class="o">*</span><span class="n">smoker</span><span class="p">,</span>
+        <span class="o">-</span><span class="mf">26.6</span> <span class="o">+</span> <span class="mf">0.14</span><span class="o">*</span><span class="n">age</span> <span class="o">+</span> <span class="mf">0.055</span><span class="o">*</span><span class="n">systolic_bp</span> <span class="o">+</span> <span class="mf">1.55</span><span class="o">*</span><span class="n">cholesterol</span> <span class="o">+</span> <span class="mf">0.088</span><span class="o">*</span><span class="n">bmi</span> <span class="o">+</span> <span class="mf">1.40</span><span class="o">*</span><span class="n">smoker</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+        <span class="s2">&quot;age&quot;</span><span class="p">:</span> <span class="n">age</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">),</span> <span class="s2">&quot;sex&quot;</span><span class="p">:</span> <span class="n">sex</span><span class="p">,</span> <span class="s2">&quot;race&quot;</span><span class="p">:</span> <span class="n">race</span><span class="p">,</span>
+        <span class="s2">&quot;systolic_bp&quot;</span><span class="p">:</span> <span class="n">systolic_bp</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="s2">&quot;cholesterol&quot;</span><span class="p">:</span> <span class="n">cholesterol</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+        <span class="s2">&quot;bmi&quot;</span><span class="p">:</span> <span class="n">bmi</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="s2">&quot;smoker&quot;</span><span class="p">:</span> <span class="n">smoker</span><span class="p">,</span>
+        <span class="s2">&quot;cvd_event&quot;</span><span class="p">:</span> <span class="n">rng</span><span class="o">.</span><span class="n">binomial</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">logit</span><span class="p">))),</span>
+    <span class="p">})</span>
+
+
+<span class="c1"># A cohort where Black patients are 28% and sex is balanced</span>
+<span class="n">representative</span> <span class="o">=</span> <span class="n">simulate_cohort</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">8000</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">black_share</span><span class="o">=</span><span class="mf">0.28</span><span class="p">,</span> <span class="n">female_share</span><span class="o">=</span><span class="mf">0.50</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Black women as a share of each training cohort:&quot;</span><span class="p">)</span>
+<span class="n">orig_share</span> <span class="o">=</span> <span class="mi">100</span> <span class="o">*</span> <span class="p">((</span><span class="n">patients</span><span class="o">.</span><span class="n">race</span> <span class="o">==</span> <span class="s2">&quot;Black&quot;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">patients</span><span class="o">.</span><span class="n">sex</span> <span class="o">==</span> <span class="s2">&quot;Female&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">new_share</span> <span class="o">=</span> <span class="mi">100</span> <span class="o">*</span> <span class="p">((</span><span class="n">representative</span><span class="o">.</span><span class="n">race</span> <span class="o">==</span> <span class="s2">&quot;Black&quot;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">representative</span><span class="o">.</span><span class="n">sex</span> <span class="o">==</span> <span class="s2">&quot;Female&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  original:       </span><span class="si">{</span><span class="n">orig_share</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  representative: </span><span class="si">{</span><span class="n">new_share</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Black women as a share of each training cohort:
+  original:       3.5%
+  representative: 13.8%
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Retrain on the representative cohort</span>
+<span class="n">fair_model</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">StandardScaler</span><span class="p">(),</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">))</span>
+<span class="n">fair_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">representative</span><span class="p">[</span><span class="n">FEATURES</span><span class="p">],</span> <span class="n">representative</span><span class="p">[</span><span class="s2">&quot;cvd_event&quot;</span><span class="p">])</span>
+
+<span class="c1"># Evaluate on the SAME held-out test patients, so the comparison is like for like</span>
+<span class="n">test_set</span><span class="p">[</span><span class="s2">&quot;prediction_v2&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">fair_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">test_set</span><span class="p">[</span><span class="n">FEATURES</span><span class="p">])</span>
+
+<span class="n">comparison</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="p">(</span><span class="n">race_value</span><span class="p">,</span> <span class="n">sex_value</span><span class="p">),</span> <span class="n">subset</span> <span class="ow">in</span> <span class="n">test_set</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s2">&quot;race&quot;</span><span class="p">,</span> <span class="s2">&quot;sex&quot;</span><span class="p">]):</span>
+    <span class="n">comparison</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+        <span class="s2">&quot;group&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">race_value</span><span class="si">}</span><span class="s2"> / </span><span class="si">{</span><span class="n">sex_value</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;recall_before&quot;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">recall_score</span><span class="p">(</span><span class="n">subset</span><span class="p">[</span><span class="s2">&quot;cvd_event&quot;</span><span class="p">],</span> <span class="n">subset</span><span class="p">[</span><span class="s2">&quot;prediction&quot;</span><span class="p">],</span> <span class="n">zero_division</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="mi">3</span><span class="p">),</span>
+        <span class="s2">&quot;recall_after&quot;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">recall_score</span><span class="p">(</span><span class="n">subset</span><span class="p">[</span><span class="s2">&quot;cvd_event&quot;</span><span class="p">],</span> <span class="n">subset</span><span class="p">[</span><span class="s2">&quot;prediction_v2&quot;</span><span class="p">],</span> <span class="n">zero_division</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="mi">3</span><span class="p">),</span>
+    <span class="p">})</span>
+
+<span class="n">comparison</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">comparison</span><span class="p">)</span>
+<span class="n">comparison</span><span class="p">[</span><span class="s2">&quot;change&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">comparison</span><span class="p">[</span><span class="s2">&quot;recall_after&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">comparison</span><span class="p">[</span><span class="s2">&quot;recall_before&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">comparison</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;recall_before&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">to_string</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+
+<span class="n">acc_after</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">test_set</span><span class="p">[</span><span class="s2">&quot;cvd_event&quot;</span><span class="p">],</span> <span class="n">test_set</span><span class="p">[</span><span class="s2">&quot;prediction_v2&quot;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Overall accuracy before: </span><span class="si">{</span><span class="n">overall_accuracy</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Overall accuracy after:  </span><span class="si">{</span><span class="n">acc_after</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>               group  recall_before  recall_after  change
+      Black / Female          0.403         0.581   0.178
+South Asian / Female          0.718         0.692  -0.026
+      White / Female          0.758         0.774   0.016
+        White / Male          0.770         0.763  -0.007
+ East Asian / Female          0.794         0.765  -0.029
+   East Asian / Male          0.850         0.850   0.000
+        Black / Male          0.855         0.841  -0.014
+  South Asian / Male          0.855         0.839  -0.016
+
+Overall accuracy before: 80.6%
+Overall accuracy after:  80.9%
+</pre></div>
+</div>
+</div>
+</div>
+<p>Two results stand out:</p>
+<p><strong>The gap narrowed substantially.</strong> Recall for Black women rose from roughly 0.40 to roughly 0.58. The model now finds about half as many of this subpopulation’s cardiovascular events as it did before.</p>
+<p><strong>Overall accuracy did not drop.</strong> It sits at roughly 81% either way, and no other subgroup shifted by more than three percentage points in either direction. The common assumption that fairness must be traded off with performance can be debunked here. The original model was not more accurate; it was accurate <em>for some people and not others</em>!</p>
+<div class="warning admonition">
+<p class="admonition-title">But the gap did not close</p>
+<p>Black women remain the most under-served group, at roughly 0.58 against roughly 0.85 for the best-served. Better representation only solved one piece of the puzzle.</p>
+<p>We fixed the sample size problem, but we did not fix the mechanism problem. A single logistic regression fits <strong>one set of coefficients for everyone</strong>, so it must find a compromise between a cholesterol-mediated rule and a blood-pressure-mediated rule. More data makes this compromise fairer; it cannot make one trend describe two different relationships.</p>
+<p>Fixing this discrepancy further would mean changing the model in lieu of just the data. Another model can allow interaction terms so the effect of blood pressure can vary, fit separate models per group, or use an architecture that captures such differences natively. Each carries its own trade-offs around complexity, transparency, and the ethics of treating groups differently by design.</p>
+</div>
+<p><strong>More representative data is necessary, but not always sufficient.</strong></p>
+</section>
+<section id="ethical-implications">
+<h2>Ethical Implications<a class="headerlink" href="#ethical-implications" title="Permalink to this heading">#</a></h2>
+<p>The technical work is almost always the easy part. Some conceptual implications are often harder to parse.</p>
+<p><strong>A model that is unfair in deployment is unfair at scale.</strong> A single clinician who is worse at recognizing cardiovascular risk in Black women affects their own panel. A risk model with the same weakness, deployed across a health system, applies that failure to every patient it touches, consistently, invisibly, and with the ill-placed institutional authority of having been “validated.”</p>
+<p><strong>Aggregate metrics are an ethical choice, not just a reporting convention.</strong> Our model’s 81% accuracy was true. This accuracy estimate also hid a 60% miss rate in the highest-risk group in our cohort. Choosing to report only an aggregate value is choosing to remain unaware.</p>
+<p><strong>Bias in a model is usually inherited, not invented.</strong> Nothing <em>in our code</em> discriminated. Harm arose from gaps in recruitment and from a clinical reality the model was never built to represent. Models learn the world as it was recorded, including its embedded biases.</p>
+<p><strong>You cannot audit what you did not measure.</strong> This chapter was possible only because race and sex were recorded and retained for evaluation. There is a well-meaning instinct to drop protected attributes from health datasets entirely. This instinct does not remove bias; it removes the ability to detect it.</p>
+<p><strong>Defining “fairness” should not fall to the modeller’s alone.</strong> A trade-off must be chosen. This choice should always involve clinicians, ethicists, and members of the affected communities, and it should be documented alongside the model.</p>
+<div class="tip admonition">
+<p class="admonition-title">A practical checklist</p>
+<p>When evaluating any clinical model:</p>
+<ol class="arabic simple">
+<li><p><strong>Report performance by subgroup, never only in aggregate.</strong></p></li>
+<li><p><strong>Test intersections, not just single attributes.</strong></p></li>
+<li><p><strong>Check who is in your training data</strong> before you check how the model performs.</p></li>
+<li><p><strong>Separate real differences in disease rates from differences in model performance.</strong></p></li>
+<li><p><strong>Choose and state your fairness definition explicitly</strong>, with clinical input.</p></li>
+<li><p><strong>Retain protected attributes for evaluation</strong>, even when excluding them from model inputs.</p></li>
+<li><p><strong>Ask who is harmed by each error type</strong>, and remember that false negatives and false positives rarely fall on the same people.</p></li>
+</ol>
+</div>
+</section>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this heading">#</a></h2>
+<p>We trained a cardiovascular risk model that reached 81% accuracy and caught roughly 76% of events. Auditing by race alone, and by sex alone, showed only mild differences. Auditing at their intersection revealed that the model missed <strong>nearly 60% of cardiovascular events among Black women</strong>–the group with the highest true event rate in the cohort. The model never used race or sex as inputs.</p>
+<p>Retraining on more representative data recovered a substantial part of this discrepancy at no cost to overall accuracy. It still did not completely close this gap.</p>
+<p>In the next chapter we return to this same dataset and ask a different question: <strong>how does a model arrive at its predictions in the first place</strong>?</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./M3S4"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../M2S2/M2S2.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Feature Engineering in Healthcare Without Time Travel</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../M3S5/M3S5nb.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Explainability</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-started">Getting Started</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setting-up">Setting Up</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#building-the-simulated-cohort">Building the simulated cohort</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#looking-at-the-data">Looking at the Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#training-the-model">Training the Model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#before-we-audit-two-causes-to-consider">Before We Audit: Two Causes to Consider</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#subgroup-analysis-one-attribute-at-a-time">Subgroup Analysis, One Attribute at a Time</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#subgroup-analysis-at-the-intersection">Subgroup Analysis at the Intersection</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-this-tells-us-about-fairness-through-unawareness">What This Tells Us About “Fairness Through Unawareness”</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fairness-metrics">Fairness Metrics</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#can-we-fix-it">Can We Fix It?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ethical-implications">Ethical Implications</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By T-CAIREM Trainee Affiliates
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

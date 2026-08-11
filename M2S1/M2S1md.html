@@ -68,8 +68,6 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../_static/tcairem_fav.svg"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Introduction to Machine Learning in Healthcare" href="M2S1nb.html" />
-    <link rel="prev" title="Notebooks with MyST Markdown" href="../markdown-notebooks.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -178,9 +176,9 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="../markdown-notebooks.html">Notebooks with MyST Markdown</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Algorithm Architectures</span></p>
-<ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Intro to Machine Learning in Healthcare</a></li>
+<ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="M2S1nb.html">Intro to Machine Learning in Healthcare NB</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../M1S4/M1S4.html">Deep Learning / Feedforward Neural Networks</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">End Material</span></p>
 <ul class="nav bd-sidenav">
@@ -520,11 +518,11 @@ document.write(`
 </section>
 <section id="how-machine-learning-becomes-clinical">
 <h2>How Machine Learning Becomes Clinical<a class="headerlink" href="#how-machine-learning-becomes-clinical" title="Permalink to this heading">#</a></h2>
-<p>Specifically when thinking about clinical applications, there’s a number of steps to work towards development and deployment. Just building the model is not enough to get in into clinical use! The pipeline below in <a class="reference internal" href="M2S1nb.html#ml-clinical"><span class="std std-numref">Fig. 4</span></a> is an example of what this can look like.</p>
+<p>Specifically when thinking about clinical applications, there’s a number of steps to work towards development and deployment. Just building the model is not enough to get in into clinical use! The pipeline below in <code class="xref std std-numref docutils literal notranslate"><span class="pre">ml-clinical</span></code> is an example of what this can look like.</p>
 <figure class="align-default" id="id3">
 <span id="ml-clinical"></span><a class="reference internal image-reference" href="../_images/mlclinical.png"><img alt="pipeline for ML for healthcare development" src="../_images/mlclinical.png" style="width: 80%;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 1 </span><span class="caption-text">This flowchart shows the steps involved in preparing a machine learning model for use in a healthcare setting.</span><a class="headerlink" href="#id3" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">This flowchart shows the steps involved in preparing a machine learning model for use in a healthcare setting.</span><a class="headerlink" href="#id3" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <ul class="simple">
@@ -549,14 +547,14 @@ document.write(`
 </section>
 <section id="supervised-learning">
 <h2>Supervised Learning<a class="headerlink" href="#supervised-learning" title="Permalink to this heading">#</a></h2>
-<p>In the training phase of these models, you use labelled data, so the model can learn relationships. When you later use a supervised model, you can use it to predict labels for data that is otherwise unlabelled. This concept is illustrated below in <a class="reference internal" href="M2S1nb.html#supervised-model"><span class="std std-numref">Fig. 5</span></a>.</p>
+<p>In the training phase of these models, you use labelled data, so the model can learn relationships. When you later use a supervised model, you can use it to predict labels for data that is otherwise unlabelled. This concept is illustrated below in <code class="xref std std-numref docutils literal notranslate"><span class="pre">supervised-model</span></code>.</p>
 <figure class="align-default" id="id4">
 <span id="supervised-model"></span><a class="reference internal image-reference" href="../_images/supervisedmodel.png"><img alt="training and use phase of supervised models" src="../_images/supervisedmodel.png" style="width: 80%;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 2 </span><span class="caption-text">Data used for training is labelled, producing a model that can be used to predict missing labels.</span><a class="headerlink" href="#id4" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">Data used for training is labelled, producing a model that can be used to predict missing labels.</span><a class="headerlink" href="#id4" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>As shown in <a class="reference internal" href="M2S1nb.html#classreg"><span class="std std-numref">Fig. 6</span></a>, there are two types of supervised learning:</p>
+<p>As shown in <code class="xref std std-numref docutils literal notranslate"><span class="pre">classreg</span></code>, there are two types of supervised learning:</p>
 <ol class="arabic simple">
 <li><p><strong>Regression</strong>: predicts continuous numerical values, e.g., length of hospital stay, treatment dosage, future biomarker values</p></li>
 <li><p><strong>Classification</strong>: predicts discrete categories/classes, e.g., whether or not patient will experience adverse drug reaction, if lung nodule is malignant or benign</p></li>
@@ -564,7 +562,7 @@ document.write(`
 <figure class="align-default" id="id5">
 <span id="classreg"></span><a class="reference internal image-reference" href="../_images/regclass.png"><img alt="classification vs. regression" src="../_images/regclass.png" style="width: 40%;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 3 </span><span class="caption-text">Regression predicts to continuous values, think of those you can place on the number line. On the other hand, classification predicts categories.</span><a class="headerlink" href="#id5" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">Regression predicts to continuous values, think of those you can place on the number line. On the other hand, classification predicts categories.</span><a class="headerlink" href="#id5" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 </section>
@@ -630,9 +628,9 @@ Name: count, dtype: int64
 <section id="logistic-regression">
 <h2>Logistic Regression<a class="headerlink" href="#logistic-regression" title="Permalink to this heading">#</a></h2>
 <p>Logistic regression is one type of supervised model we can train. We are starting here because it is simple and interpretable.</p>
-<p>Logistic regression fits a curve (the logistic function, shown in Equation <a class="reference internal" href="M2S1nb.html#equation-logregmath">(2)</a>) to the labeled data.</p>
+<p>Logistic regression fits a curve (the logistic function, shown in Equation <a class="reference internal" href="../M3S1/M3S1nb.html#equation-logregmath">()</a>) to the labeled data.</p>
 <div class="math notranslate nohighlight" id="equation-logregmath">
-<span class="eqno">(1)<a class="headerlink" href="#equation-logregmath" title="Permalink to this equation">#</a></span>\[f(z) = \frac{1}{1 + e^{-(b_1 \cdot x_1 + b_2 \cdot x_2 + ... + b_n \cdot x_n + b_0 )}}\]</div>
+<span class="eqno">()<a class="headerlink" href="#equation-logregmath" title="Permalink to this equation">#</a></span>\[f(z) = \frac{1}{1 + e^{-(b_1 \cdot x_1 + b_2 \cdot x_2 + ... + b_n \cdot x_n + b_0 )}}\]</div>
 <p>Logistic regression is:</p>
 <ul class="simple">
 <li><p>A weighted combination of features</p></li>
@@ -747,24 +745,6 @@ Intercept: [-9.85568385]
                 <footer class="prev-next-footer">
                   
 <div class="prev-next-area">
-    <a class="left-prev"
-       href="../markdown-notebooks.html"
-       title="previous page">
-      <i class="fa-solid fa-angle-left"></i>
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Notebooks with MyST Markdown</p>
-      </div>
-    </a>
-    <a class="right-next"
-       href="M2S1nb.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Introduction to Machine Learning in Healthcare</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
-    </a>
 </div>
                 </footer>
               

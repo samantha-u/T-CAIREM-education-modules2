@@ -1,0 +1,833 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Introduction to Machine Learning in Healthcare &#8212; T-CAIREM AI in Medicine</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'M1S1/M1S1md';</script>
+    <link rel="shortcut icon" href="../_static/tcairem_fav.svg"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/tcairem_fav.svg" class="logo__image only-light" alt="T-CAIREM AI in Medicine - Home"/>
+    <script>document.write(`<img src="../_static/tcairem_fav.svg" class="logo__image only-dark" alt="T-CAIREM AI in Medicine - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Welcome to T-CAIREM AI in Medicine Education Modules
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Algorithm Architectures</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../M1S0/M1S0.html">Resources and Healthcare Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="M1S1nb.html">Intro to Machine Learning in Healthcare</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../M1S6/M1S6nb.html">Image-Based Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../M1S4/M1S4.html">Deep Learning / Feedforward Neural Networks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../M1S7/M1S7.html">Time Series Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../M1S12/M1S12.html">Generative Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../M1S14/M1S14.html">Agentic AI</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Model Development</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../M2S1/M2S1.html">Approach to Model Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../M2S2/M2S2.html">Feature Engineering</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Model Evaluation and Interpretation</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../M3S4/M3S4nb.html">Fairness and Bias in Model Evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../M3S5/M3S5nb.html">Explainability</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">End Material</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../bibliographypage.html">References</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2FM1S1/M1S1md.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/M1S1/M1S1md.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Introduction to Machine Learning in Healthcare</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-started">Getting Started</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-machine-learning-becomes-clinical">How Machine Learning Becomes Clinical</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-machine-learning">What is Machine Learning</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#supervised-learning">Supervised Learning</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tabular-data">Tabular Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#logistic-regression">Logistic Regression</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementing-this-model">Implementing This Model</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="introduction-to-machine-learning-in-healthcare">
+<span id="chap-m2s1"></span><h1>Introduction to Machine Learning in Healthcare<a class="headerlink" href="#introduction-to-machine-learning-in-healthcare" title="Permalink to this heading">#</a></h1>
+<p><strong>Content creators:</strong> <a class="reference external" href="https://github.com/samantha-u">Samantha</a></p>
+<div class="tip admonition">
+<p class="admonition-title">Chapter Overview</p>
+<ul class="simple">
+<li><p>There is increasing interest in applying machine learning to healthcare, with some systems already deployed</p></li>
+<li><p>Some types of machine learning are supervised learning, unsupervised learning and reinforcement learning</p></li>
+<li><p>Logistic regression is one type of supervised model that can handle tabular data</p></li>
+<li><p>Understanding differences in algorithm architectures helps you to know what your model is doing and how you can improve it</p></li>
+</ul>
+</div>
+<div class="cell tag_hide-cell tag_thebe-init docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">These are imports that help the rest of the code on this page run.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="o">%</span><span class="k">load_ext</span> autoreload
+<span class="o">%</span><span class="k">autoreload</span> 2
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">myst_nb</span><span class="w"> </span><span class="kn">import</span> <span class="n">glue</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.linear_model</span><span class="w"> </span><span class="kn">import</span> <span class="n">LogisticRegression</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">confusion_matrix</span><span class="p">,</span> <span class="n">ConfusionMatrixDisplay</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_hide-cell tag_thebe-init docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This code generates a simple synthetic dataset. This code section specifically was generated with the support of generative AI.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c1"># Set a random seed for reproducibility</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">21</span><span class="p">)</span>
+
+<span class="c1"># Number of patients</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">1000</span>
+
+<span class="c1"># Generate clean features</span>
+<span class="n">age</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">55</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="mi">90</span><span class="p">)</span>
+<span class="n">heart_rate</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">75</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="mi">180</span><span class="p">)</span>
+<span class="n">blood_pressure</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">120</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="mi">80</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+
+<span class="c1"># # Add feature noise</span>
+<span class="c1"># age += np.random.normal(0, 2, n)              # ±2 years noise</span>
+<span class="c1"># heart_rate += np.random.normal(0, 5, n)       # ±5 bpm noise</span>
+<span class="c1"># blood_pressure += np.random.normal(0, 8, n)   # ±8 mmHg noise</span>
+
+<span class="c1"># Keep values in realistic ranges</span>
+<span class="n">age</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">age</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">90</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<span class="n">heart_rate</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">heart_rate</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">180</span><span class="p">)</span>
+<span class="n">blood_pressure</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">blood_pressure</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+
+<span class="c1"># Generate outcome probabilities</span>
+<span class="n">logit</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="o">-</span><span class="mf">9.8</span>
+    <span class="o">+</span> <span class="mf">0.05</span> <span class="o">*</span> <span class="n">age</span>
+    <span class="o">+</span> <span class="mf">0.04</span> <span class="o">*</span> <span class="n">heart_rate</span>
+    <span class="o">+</span> <span class="mf">0.03</span> <span class="o">*</span> <span class="n">blood_pressure</span>
+<span class="p">)</span>
+
+<span class="n">prob</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">logit</span><span class="p">))</span>
+<span class="n">outcome</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">binomial</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">prob</span><span class="p">)</span>
+
+<span class="c1"># Add label noise: flip 10% of labels</span>
+<span class="n">flip_rate</span> <span class="o">=</span> <span class="mf">0.01</span>
+<span class="n">flip_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">flip_rate</span> <span class="o">*</span> <span class="n">n</span><span class="p">),</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">outcome</span><span class="p">[</span><span class="n">flip_idx</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">outcome</span><span class="p">[</span><span class="n">flip_idx</span><span class="p">]</span>
+
+<span class="c1"># Create DataFrame</span>
+<span class="n">patient_dataset</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">&quot;age&quot;</span><span class="p">:</span> <span class="n">age</span><span class="p">,</span>
+    <span class="s2">&quot;heart_rate&quot;</span><span class="p">:</span> <span class="n">heart_rate</span><span class="p">,</span>
+    <span class="s2">&quot;blood_pressure&quot;</span><span class="p">:</span> <span class="n">blood_pressure</span><span class="p">,</span>
+    <span class="s2">&quot;patient_outcome&quot;</span><span class="p">:</span> <span class="n">outcome</span>
+<span class="p">})</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<section id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this heading">#</a></h2>
+<p>There is growing interest in how machine learning can be leveraged into healthcare settings. One exciting example is CHARTwatch, an artificial intelligence early warning system developed at St. Michael’s Hospital. This system:</p>
+<ul class="simple">
+<li><p>Monitors hospital patients in real-time​</p></li>
+<li><p>Identifies those at high risk of unexpected death or transfer to intensive care​</p></li>
+<li><p>Sends alerts to enable early intervention by clinical team</p></li>
+</ul>
+<p><strong>A study showed that this system reduced risk of unanticipated death in hospitalized patients by 26%</strong> <span id="id1">[<a class="reference internal" href="../bibliographypage.html#id7" title="Amol A. Verma, Therese A. Stukel, Michael Colacci, Shirley Bell, Jonathan Ailon, Jan O. Friedrich, Joshua Murray, Sebnem Kuzulugil, Zhen Yang, Yuna Lee, Chloe Pou-Prom, and Muhammad Mamdani. Clinical evaluation of a machine learning–based early warning system for patient deterioration. Canadian Medical Association Journal, 196(30):E1027–E1037, 2024. URL: http://www.cmaj.ca/content/196/30/E1027, arXiv:http://www.cmaj.ca/content/196/30/E1027.full.pdf, doi:10.1503/cmaj.240132.">Verma <em>et al.</em>, 2024</a>]</span>. These results show that machine learning can have a role to play in reducing unexpected deaths of patients in hospitals.</p>
+<div class="info admonition">
+<p class="admonition-title">Clinical Question</p>
+<p>In the case of this system, we can think about the following clinical question:</p>
+<ul class="simple">
+<li><p><strong>Can we predict patient deterioration (using simple features)?​</strong></p>
+<ul>
+<li><p><strong>What are we trying to predict?</strong> Unexpected death or ICU transfer​</p></li>
+<li><p><strong>What information do we have?</strong> Blood pressure, age, heart rate</p></li>
+</ul>
+</li>
+</ul>
+<p><em>Here, machine learning can formalize patterns and support early alerts.</em></p>
+</div>
+</section>
+<section id="how-machine-learning-becomes-clinical">
+<h2>How Machine Learning Becomes Clinical<a class="headerlink" href="#how-machine-learning-becomes-clinical" title="Permalink to this heading">#</a></h2>
+<p>Specifically when thinking about clinical applications, there’s a number of steps to work towards development and deployment. Just building the model is not enough to get in into clinical use! The pipeline below in <code class="xref std std-numref docutils literal notranslate"><span class="pre">ml-clinical</span></code> is an example of what this can look like.</p>
+<figure class="align-default" id="id3">
+<span id="ml-clinical"></span><a class="reference internal image-reference" href="../_images/mlclinical.png"><img alt="pipeline for ML for healthcare development" src="../_images/mlclinical.png" style="width: 80%;" /></a>
+<figcaption>
+<p><span class="caption-text">This flowchart shows the steps involved in preparing a machine learning model for use in a healthcare setting.</span><a class="headerlink" href="#id3" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<ul class="simple">
+<li><p><strong>Patient Health Data</strong>: Health data from patients is generally used in models for clinical settings. Given the sensitive nature of this sort of data, there are often additional concerns with data privacy compared to working with other kinds of data.</p></li>
+<li><p><strong>Model Development</strong>: Model development involves creating training a model. In practice, this often means training many, many models, comparing them and seeing what works best.</p></li>
+<li><p><strong>Model Validation (new dataset)</strong>: Before deployment models should be evaluated on data that was not used during training. Ideally, if the model is designed to be broadly applicable, this data could come from another centre. This is discussed in further detail in another section.</p></li>
+<li><p><strong>Final ML Model</strong>: This produces a finalized ML model that is ready to be evaluated.</p></li>
+<li><p><strong>Silent Trial &amp; Evaluation</strong>: In a silent trial, ML models are evaluated on prospective patients in real-time, but model results are not shared with healthcare providers. This enables research teams to assess the model without impacting patient care.</p></li>
+<li><p><strong>Model Deployment in Hospital</strong>: Deployment in the hospital can involve integration into existing technical infrastruction. This enables the model to access the data needed to make prediction.</p></li>
+<li><p><strong>Integration in Clinical Care</strong>: Beyond technical integration, a model is only useful if clinicians are actually using it. It thus needs to fit into clinical workflows and be accepted by clinicians.</p></li>
+<li><p><strong>Health Canada Software as a Medical Device (SaMD) Approval</strong>: ML products can be classified as software as a medical device. There are pathways with Health Canada for approval of such devices.</p></li>
+</ul>
+</section>
+<section id="what-is-machine-learning">
+<h2>What is Machine Learning<a class="headerlink" href="#what-is-machine-learning" title="Permalink to this heading">#</a></h2>
+<p>Machine learning is about training a computer model to find patterns within data. Some times of machine learning are:</p>
+<ol class="arabic simple">
+<li><p><strong>Supervised Learning</strong> - training a computer model to understand the <strong>relationship between data and its label</strong> (e.g., outcome).</p></li>
+<li><p><strong>Unsupervised Learning</strong> - training a computer model to understand <strong>patterns within data without explicit guidance of the label</strong> (discussed in another chapter)</p></li>
+<li><p><strong>Reinforcement Learning</strong> - training a computer model through iterative feedback (i.e., trial and error) so that it may <strong>optimize task performance</strong> over time (not covered in this site)</p></li>
+</ol>
+</section>
+<section id="supervised-learning">
+<h2>Supervised Learning<a class="headerlink" href="#supervised-learning" title="Permalink to this heading">#</a></h2>
+<p>In the training phase of these models, you use labelled data, so the model can learn relationships. When you later use a supervised model, you can use it to predict labels for data that is otherwise unlabelled. This concept is illustrated below in <code class="xref std std-numref docutils literal notranslate"><span class="pre">supervised-model</span></code>.</p>
+<figure class="align-default" id="id4">
+<span id="supervised-model"></span><a class="reference internal image-reference" href="../_images/supervisedmodel.png"><img alt="training and use phase of supervised models" src="../_images/supervisedmodel.png" style="width: 80%;" /></a>
+<figcaption>
+<p><span class="caption-text">Data used for training is labelled, producing a model that can be used to predict missing labels.</span><a class="headerlink" href="#id4" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>As shown in <code class="xref std std-numref docutils literal notranslate"><span class="pre">classreg</span></code>, there are two types of supervised learning:</p>
+<ol class="arabic simple">
+<li><p><strong>Regression</strong>: predicts continuous numerical values, e.g., length of hospital stay, treatment dosage, future biomarker values</p></li>
+<li><p><strong>Classification</strong>: predicts discrete categories/classes, e.g., whether or not patient will experience adverse drug reaction, if lung nodule is malignant or benign</p></li>
+</ol>
+<figure class="align-default" id="id5">
+<span id="classreg"></span><a class="reference internal image-reference" href="../_images/regclass.png"><img alt="classification vs. regression" src="../_images/regclass.png" style="width: 40%;" /></a>
+<figcaption>
+<p><span class="caption-text">Regression predicts to continuous values, think of those you can place on the number line. On the other hand, classification predicts categories.</span><a class="headerlink" href="#id5" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="tabular-data">
+<h2>Tabular Data<a class="headerlink" href="#tabular-data" title="Permalink to this heading">#</a></h2>
+<p>Tabular data is structured in rows and columns - think of a spreadsheet!</p>
+<ul class="simple">
+<li><p>Each row represents an observation or <em><strong>training example</strong></em></p></li>
+<li><p>Each column represents a <em><strong>feature</strong></em></p></li>
+</ul>
+<p>Tabular data can often feature mixted types of data and missing values (<em>discussed in another module</em>).</p>
+<p>For this clinical problem, our data may look something like this. Each row represents a patient interaction. This is a supervised learning problem as we can use patient outcome as a label.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># This will display the first 5 rows of the dataset</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">patient_dataset</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+
+<span class="c1"># This will display the counts for each label</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Outcome distribution:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">patient_dataset</span><span class="p">[</span><span class="s2">&quot;patient_outcome&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>   age  heart_rate  blood_pressure  patient_outcome
+0   54   93.525204       95.823634                1
+1   53   76.145234      149.005544                0
+2   70   83.369705      125.011079                1
+3   36   60.268840      118.133046                0
+4   66   83.641184      124.170756                1
+
+Outcome distribution:
+patient_outcome
+0    611
+1    389
+Name: count, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="info admonition">
+<p class="admonition-title">Structuring This Problem</p>
+<p>In the case of this system, we can think about the following clinical question:</p>
+<ul class="simple">
+<li><p><strong>Input Features​</strong>: Heart Rate, Blood Pressure, Age</p></li>
+<li><p><strong>Output Label</strong>: Risk Label - 1 = at risk of deterioration, 0 = not at risk</p></li>
+</ul>
+<p><em>Here, machine learning can formalize patterns and support early alerts.</em></p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># assign the features (X) </span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">patient_dataset</span><span class="p">[[</span><span class="s2">&quot;age&quot;</span><span class="p">,</span> <span class="s2">&quot;heart_rate&quot;</span><span class="p">,</span> <span class="s2">&quot;blood_pressure&quot;</span><span class="p">]]</span>
+
+<span class="c1"># assign the labels (y)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">patient_dataset</span><span class="p">[</span><span class="s2">&quot;patient_outcome&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>This is considered a <strong>binary classification</strong> problem as there are two possible labels being predicted (i.e., like a yes/no question).</p>
+</section>
+<section id="logistic-regression">
+<h2>Logistic Regression<a class="headerlink" href="#logistic-regression" title="Permalink to this heading">#</a></h2>
+<p>Logistic regression is one type of supervised model we can train. We are starting here because it is simple and interpretable.</p>
+<p>Logistic regression fits a curve (the logistic function, shown in Equation <a class="reference internal" href="../M3S1/M3S1nb.html#equation-logregmath">()</a>) to the labeled data.</p>
+<div class="math notranslate nohighlight" id="equation-logregmath">
+<span class="eqno">()<a class="headerlink" href="#equation-logregmath" title="Permalink to this equation">#</a></span>\[f(z) = \frac{1}{1 + e^{-(b_1 \cdot x_1 + b_2 \cdot x_2 + ... + b_n \cdot x_n + b_0 )}}\]</div>
+<p>Logistic regression is:</p>
+<ul class="simple">
+<li><p>A weighted combination of features</p></li>
+<li><p>Produces a probability between 0 and 1</p></li>
+</ul>
+<p>We can understand where the outputs come from (<em><strong>interpretability</strong></em>) by inspecting the relative weightings of each feature.</p>
+<p>In this model…</p>
+<ul class="simple">
+<li><p>Positive coefficient → increases risk</p></li>
+<li><p>Negative coefficient → decreses risk</p></li>
+<li><p>Magnitude → strength of association (* if features are normalized - <em>see other module</em>)</p></li>
+</ul>
+<p>We can ask questions like:</p>
+<ul class="simple">
+<li><p>“Does higher heart rate increase risk?”</p></li>
+<li><p>“Is age more important than blood pressure?”</p></li>
+</ul>
+<p><strong>Since this is straightforward, the model may be easier to explain and trust.</strong></p>
+</section>
+<section id="implementing-this-model">
+<h2>Implementing This Model<a class="headerlink" href="#implementing-this-model" title="Permalink to this heading">#</a></h2>
+<p>This model can be implemented using the Sklearn library. Additional documentation is available <span id="id2">[<a class="reference internal" href="../bibliographypage.html#id8" title="scikit-learn developers. Logistic regression. URL: https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html#sklearn.linear_model.LogisticRegression.">scikit-learn developers, n.d.</a>]</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Fit a logistic regression model to the data</span>
+<span class="n">fit_model</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="c1"># We can see the accuracy of this model on the training data</span>
+<span class="n">model_accuracy</span> <span class="o">=</span> <span class="n">fit_model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Model accuracy: </span><span class="si">{</span><span class="n">model_accuracy</span><span class="o">*</span><span class="mi">100</span><span class="si">}</span><span class="s1">%&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Model accuracy: 69.3%
+</pre></div>
+</div>
+</div>
+</div>
+<p>This accuracy is OK, but not quite perfect! To get a better sense of what’s going on here, we can plot a confusion matrix to understand where the accuracy is coming from.</p>
+<div class="cell tag_remove-output docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Make predictions on the training set</span>
+<span class="n">y_train_pred</span> <span class="o">=</span> <span class="n">fit_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+<span class="c1"># Generate the values for the confusion matrix</span>
+<span class="n">cm</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">y_train_pred</span><span class="p">)</span>
+
+<span class="c1"># Visualize the matrix</span>
+<span class="n">disp</span> <span class="o">=</span> <span class="n">ConfusionMatrixDisplay</span><span class="p">(</span><span class="n">confusion_matrix</span><span class="o">=</span><span class="n">cm</span><span class="p">,</span> <span class="n">display_labels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;0 - Remains stable&#39;</span><span class="p">,</span> <span class="s1">&#39;1 - Will Deteriorate&#39;</span><span class="p">])</span>
+<span class="n">disp</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">Blues</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># glue(&#39;fig_cm&#39;, disp.figure_)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Looking at the confusion matrix, we can see that most of the patients who remain stable are predicted to remain stable. However, only around half the patients who deteriorate are predicted to do so. This implies that the model may not work be ready to be deployed!</p>
+<div class="dropdown admonition">
+<p class="admonition-title">Why might this not be working so well?</p>
+<p>The training examples contain more patients who remain stable than those who deteriorate. Some types of models struggle when there is an imbalanced number of examples in each class. We call this <strong>class imbalance</strong>. This is discussed in further detail <em>in another module</em>.</p>
+</div>
+<p>We can also inspect the coefficients of the model.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Examine model coefficients</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Coefficients:&quot;</span><span class="p">,</span> <span class="n">fit_model</span><span class="o">.</span><span class="n">coef_</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Intercept:&quot;</span><span class="p">,</span> <span class="n">fit_model</span><span class="o">.</span><span class="n">intercept_</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Coefficients: [[0.05334319 0.03102967 0.03403639]]
+Intercept: [-9.85568385]
+</pre></div>
+</div>
+</div>
+</div>
+<p>All of the coefficients are positive, implying that higher heart rate, age, and blood pressure are all associated with increased risk of deterioration in our model. If we wanted to examine the relative magnitudes, we would have needed to normalize the input data for each feature to be in the same range, <em>as described in another module</em>.</p>
+<p>With this code ready to go, we can look at exploring other types of models and seeing how they perform on different types of data!</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./M1S1"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-started">Getting Started</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-machine-learning-becomes-clinical">How Machine Learning Becomes Clinical</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-machine-learning">What is Machine Learning</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#supervised-learning">Supervised Learning</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tabular-data">Tabular Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#logistic-regression">Logistic Regression</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementing-this-model">Implementing This Model</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By T-CAIREM Trainee Affiliates
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

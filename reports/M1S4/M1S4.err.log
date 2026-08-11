@@ -1,0 +1,116 @@
+Traceback (most recent call last):
+  File "C:\Users\sammy\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.8_qbz5n2kfra8p0\LocalCache\local-packages\Python38\site-packages\jupyter_core\utils\__init__.py", line 154, in wrapped
+    asyncio.get_running_loop()
+RuntimeError: no running event loop
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\sammy\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.8_qbz5n2kfra8p0\LocalCache\local-packages\Python38\site-packages\jupyter_cache\executors\utils.py", line 58, in single_nb_execution
+    executenb(
+  File "C:\Users\sammy\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.8_qbz5n2kfra8p0\LocalCache\local-packages\Python38\site-packages\nbclient\client.py", line 1305, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "C:\Users\sammy\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.8_qbz5n2kfra8p0\LocalCache\local-packages\Python38\site-packages\jupyter_core\utils\__init__.py", line 158, in wrapped
+    return loop.run_until_complete(inner)
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.8_3.8.2800.0_x64__qbz5n2kfra8p0\lib\asyncio\base_events.py", line 616, in run_until_complete
+    return future.result()
+  File "C:\Users\sammy\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.8_qbz5n2kfra8p0\LocalCache\local-packages\Python38\site-packages\nbclient\client.py", line 705, in async_execute
+    await self.async_execute_cell(
+  File "C:\Users\sammy\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.8_qbz5n2kfra8p0\LocalCache\local-packages\Python38\site-packages\nbclient\client.py", line 1058, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "C:\Users\sammy\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.8_qbz5n2kfra8p0\LocalCache\local-packages\Python38\site-packages\nbclient\client.py", line 914, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+# Phase 1: install the official dataset interface only when the runtime needs it.
+import importlib.util
+import subprocess
+import sys
+
+if importlib.util.find_spec("medmnist") is None:
+    subprocess.check_call(
+        [sys.executable, "-m", "pip", "install", "-q", "medmnist==3.0.2"]
+    )
+
+# Phase 2: import numerical, plotting, classical-ML, and neural-network tools.
+import copy
+import random
+import warnings
+from pathlib import Path
+
+import matplotlib.pyplot as plt
+# Some locked-down runtimes cannot create MedMNIST's optional default cache;
+# this tutorial supplies an explicit writable cache in the next cell.
+warnings.filterwarnings("ignore", message="Failed to setup default root.*")
+import medmnist
+import numpy as np
+import pandas as pd
+import torch
+from IPython.display import display
+from medmnist import INFO
+from sklearn.decomposition import PCA
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import (
+    average_precision_score,
+    balanced_accuracy_score,
+    confusion_matrix,
+    ConfusionMatrixDisplay,
+    f1_score,
+    log_loss,
+    roc_auc_score,
+)
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import StandardScaler, label_binarize
+from torch import nn
+from torch.utils.data import DataLoader, TensorDataset
+
+# Phase 3: seed every source of randomness used below.
+SEED = 17
+random.seed(SEED)
+np.random.seed(SEED)
+torch.manual_seed(SEED)
+torch.set_num_threads(min(2, torch.get_num_threads()))
+DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+print(f"PyTorch {torch.__version__}; training device: {DEVICE}")
+
+------------------
+
+----- stdout -----
+Please install the required packages first. Use `pip install -r requirements.txt`.
+------------------
+
+[1;31m---------------------------------------------------------------------------[0m
+[1;31mModuleNotFoundError[0m                       Traceback (most recent call last)
+Cell [1;32mIn[1], line 40[0m
+[0;32m     38[0m [38;5;28;01mfrom[39;00m[38;5;250m [39m[38;5;21;01msklearn[39;00m[38;5;21;01m.[39;00m[38;5;21;01mpipeline[39;00m[38;5;250m [39m[38;5;28;01mimport[39;00m make_pipeline
+[0;32m     39[0m [38;5;28;01mfrom[39;00m[38;5;250m [39m[38;5;21;01msklearn[39;00m[38;5;21;01m.[39;00m[38;5;21;01mpreprocessing[39;00m[38;5;250m [39m[38;5;28;01mimport[39;00m StandardScaler, label_binarize
+[1;32m---> 40[0m [38;5;28;01mfrom[39;00m[38;5;250m [39m[38;5;21;01mtorch[39;00m[38;5;250m [39m[38;5;28;01mimport[39;00m nn
+[0;32m     41[0m [38;5;28;01mfrom[39;00m[38;5;250m [39m[38;5;21;01mtorch[39;00m[38;5;21;01m.[39;00m[38;5;21;01mutils[39;00m[38;5;21;01m.[39;00m[38;5;21;01mdata[39;00m[38;5;250m [39m[38;5;28;01mimport[39;00m DataLoader, TensorDataset
+[0;32m     43[0m [38;5;66;03m# Phase 3: seed every source of randomness used below.[39;00m
+
+File [1;32m~\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.8_qbz5n2kfra8p0\LocalCache\local-packages\Python38\site-packages\torch\nn\__init__.py:2[0m
+[0;32m      1[0m [38;5;66;03m# mypy: allow-untyped-defs[39;00m
+[1;32m----> 2[0m [38;5;28;01mfrom[39;00m[38;5;250m [39m[38;5;21;01m.[39;00m[38;5;21;01mmodules[39;00m[38;5;250m [39m[38;5;28;01mimport[39;00m [38;5;241m*[39m  [38;5;66;03m# noqa: F403[39;00m
+[0;32m      3[0m [38;5;28;01mfrom[39;00m[38;5;250m [39m[38;5;21;01m.[39;00m[38;5;21;01mparameter[39;00m[38;5;250m [39m[38;5;28;01mimport[39;00m (
+[0;32m      4[0m     Parameter [38;5;28;01mas[39;00m Parameter,
+[0;32m      5[0m     UninitializedParameter [38;5;28;01mas[39;00m UninitializedParameter,
+[0;32m      6[0m     UninitializedBuffer [38;5;28;01mas[39;00m UninitializedBuffer,
+[0;32m      7[0m )
+[0;32m      8[0m [38;5;28;01mfrom[39;00m[38;5;250m [39m[38;5;21;01m.[39;00m[38;5;21;01mparallel[39;00m[38;5;250m [39m[38;5;28;01mimport[39;00m DataParallel [38;5;28;01mas[39;00m DataParallel
+
+File [1;32m~\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.8_qbz5n2kfra8p0\LocalCache\local-packages\Python38\site-packages\torch\nn\modules\__init__.py:1[0m
+[1;32m----> 1[0m [38;5;28;01mfrom[39;00m[38;5;250m [39m[38;5;21;01m.[39;00m[38;5;21;01mmodule[39;00m[38;5;250m [39m[38;5;28;01mimport[39;00m Module
+[0;32m      2[0m [38;5;28;01mfrom[39;00m[38;5;250m [39m[38;5;21;01m.[39;00m[38;5;21;01mlinear[39;00m[38;5;250m [39m[38;5;28;01mimport[39;00m Identity, Linear, Bilinear, LazyLinear
+[0;32m      3[0m [38;5;28;01mfrom[39;00m[38;5;250m [39m[38;5;21;01m.[39;00m[38;5;21;01mconv[39;00m[38;5;250m [39m[38;5;28;01mimport[39;00m Conv1d, Conv2d, Conv3d, \
+[0;32m      4[0m     ConvTranspose1d, ConvTranspose2d, ConvTranspose3d, \
+[0;32m      5[0m     LazyConv1d, LazyConv2d, LazyConv3d, LazyConvTranspose1d, LazyConvTranspose2d, LazyConvTranspose3d
+
+File [1;32m~\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.8_qbz5n2kfra8p0\LocalCache\local-packages\Python38\site-packages\torch\nn\modules\module.py:9[0m
+[0;32m      6[0m [38;5;28;01mimport[39;00m[38;5;250m [39m[38;5;21;01mweakref[39;00m
+[0;32m      8[0m [38;5;28;01mimport[39;00m[38;5;250m [39m[38;5;21;01mtorch[39;00m
+[1;32m----> 9[0m [38;5;28;01mfrom[39;00m[38;5;250m [39m[38;5;21;01mtorch[39;00m[38;5;21;01m.[39;00m[38;5;21;01m_prims_common[39;00m[38;5;250m [39m[38;5;28;01mimport[39;00m DeviceLikeType
+[0;32m     10[0m [38;5;28;01mfrom[39;00m[38;5;250m [39m[38;5;21;01m.[39;00m[38;5;21;01m.[39;00m[38;5;21;01mparameter[39;00m[38;5;250m [39m[38;5;28;01mimport[39;00m Parameter
+[0;32m     11[0m [38;5;28;01mimport[39;00m[38;5;250m [39m[38;5;21;01mtorch[39;00m[38;5;21;01m.[39;00m[38;5;21;01mutils[39;00m[38;5;21;01m.[39;00m[38;5;21;01mhooks[39;00m[38;5;250m [39m[38;5;28;01mas[39;00m[38;5;250m [39m[38;5;21;01mhooks[39;00m
+
+[1;31mModuleNotFoundError[0m: No module named 'torch._prims_common'
+
