@@ -69,7 +69,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Time-Series Models for Healthcare" href="../M1S7/M1S7.html" />
-    <link rel="prev" title="Introduction to Machine Learning in Healthcare" href="../M1S1/M1S1nb.html" />
+    <link rel="prev" title="Image-Based Models" href="../M1S6/M1S6nb.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -175,6 +175,7 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../M1S0/M1S0.html">Resources and Healthcare Data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../M1S1/M1S1nb.html">Intro to Machine Learning in Healthcare</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../M1S6/M1S6nb.html">Image-Based Models</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Deep Learning / Feedforward Neural Networks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../M1S7/M1S7.html">Time Series Models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../M1S12/M1S12.html">Generative Models</a></li>
@@ -422,6 +423,7 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="deep-learning-and-neural-networks-for-healthcare">
 <span id="chap-aihc-deep-learning"></span><h1>Deep Learning and Neural Networks for Healthcare<a class="headerlink" href="#deep-learning-and-neural-networks-for-healthcare" title="Permalink to this heading">#</a></h1>
+<p><strong>Content creators:</strong> <a class="reference external" href="https://github.com/moturuab">Abhishek</a></p>
 <p><strong>A weak-to-strong model ladder on official DermaMNIST</strong></p>
 <p>Deep learning is most useful when we can explain what capability it adds beyond simpler alternatives. This tutorial therefore builds five multiclass image classifiers in a deliberate sequence:</p>
 <div class="math notranslate nohighlight">
@@ -601,57 +603,43 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Please install the required packages first. Use `pip install -r requirements.txt`.
+</pre></div>
+</div>
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">7</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
-<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="k">if</span> <span class="n">importlib</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">find_spec</span><span class="p">(</span><span class="s2">&quot;medmnist&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-<span class="ne">----&gt; </span><span class="mi">7</span>     <span class="n">subprocess</span><span class="o">.</span><span class="n">check_call</span><span class="p">(</span>
-<span class="g g-Whitespace">      </span><span class="mi">8</span>         <span class="p">[</span><span class="n">sys</span><span class="o">.</span><span class="n">executable</span><span class="p">,</span> <span class="s2">&quot;-m&quot;</span><span class="p">,</span> <span class="s2">&quot;pip&quot;</span><span class="p">,</span> <span class="s2">&quot;install&quot;</span><span class="p">,</span> <span class="s2">&quot;-q&quot;</span><span class="p">,</span> <span class="s2">&quot;medmnist==3.0.2&quot;</span><span class="p">]</span>
-<span class="g g-Whitespace">      </span><span class="mi">9</span>     <span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">11</span> <span class="c1"># Phase 2: import numerical, plotting, classical-ML, and neural-network tools.</span>
-<span class="g g-Whitespace">     </span><span class="mi">12</span> <span class="kn">import</span><span class="w"> </span><span class="nn">copy</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">40</span>
+<span class="g g-Whitespace">     </span><span class="mi">38</span> <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.pipeline</span><span class="w"> </span><span class="kn">import</span> <span class="n">make_pipeline</span>
+<span class="g g-Whitespace">     </span><span class="mi">39</span> <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">StandardScaler</span><span class="p">,</span> <span class="n">label_binarize</span>
+<span class="ne">---&gt; </span><span class="mi">40</span> <span class="kn">from</span><span class="w"> </span><span class="nn">torch</span><span class="w"> </span><span class="kn">import</span> <span class="n">nn</span>
+<span class="g g-Whitespace">     </span><span class="mi">41</span> <span class="kn">from</span><span class="w"> </span><span class="nn">torch.utils.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataLoader</span><span class="p">,</span> <span class="n">TensorDataset</span>
+<span class="g g-Whitespace">     </span><span class="mi">43</span> <span class="c1"># Phase 3: seed every source of randomness used below.</span>
 
-<span class="nn">File C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.8_3.8.2800.0_x64__qbz5n2kfra8p0\lib\subprocess.py:359,</span> in <span class="ni">check_call</span><span class="nt">(*popenargs, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">349</span> <span class="k">def</span><span class="w"> </span><span class="nf">check_call</span><span class="p">(</span><span class="o">*</span><span class="n">popenargs</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="g g-Whitespace">    </span><span class="mi">350</span><span class="w">     </span><span class="sd">&quot;&quot;&quot;Run command with arguments.  Wait for command to complete.  If</span>
-<span class="g g-Whitespace">    </span><span class="mi">351</span><span class="sd">     the exit code was zero then return, otherwise raise</span>
-<span class="g g-Whitespace">    </span><span class="mi">352</span><span class="sd">     CalledProcessError.  The CalledProcessError object will have the</span>
-<span class="sd">   (...)</span>
-<span class="g g-Whitespace">    </span><span class="mi">357</span><span class="sd">     check_call([&quot;ls&quot;, &quot;-l&quot;])</span>
-<span class="g g-Whitespace">    </span><span class="mi">358</span><span class="sd">     &quot;&quot;&quot;</span>
-<span class="ne">--&gt; </span><span class="mi">359</span>     <span class="n">retcode</span> <span class="o">=</span> <span class="n">call</span><span class="p">(</span><span class="o">*</span><span class="n">popenargs</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">360</span>     <span class="k">if</span> <span class="n">retcode</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">361</span>         <span class="n">cmd</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;args&quot;</span><span class="p">)</span>
+<span class="n">File</span> <span class="o">~</span>\<span class="n">AppData</span>\<span class="n">Local</span>\<span class="n">Packages</span>\<span class="n">PythonSoftwareFoundation</span><span class="o">.</span><span class="n">Python</span><span class="mf">.3.8</span><span class="n">_qbz5n2kfra8p0</span>\<span class="n">LocalCache</span>\<span class="n">local</span><span class="o">-</span><span class="n">packages</span>\<span class="n">Python38</span>\<span class="n">site</span><span class="o">-</span><span class="n">packages</span>\<span class="n">torch</span>\<span class="n">nn</span>\<span class="fm">__init__</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">2</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># mypy: allow-untyped-defs</span>
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="kn">from</span><span class="w"> </span><span class="nn">.modules</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>  <span class="c1"># noqa: F403</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">from</span><span class="w"> </span><span class="nn">.parameter</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span>     <span class="n">Parameter</span> <span class="k">as</span> <span class="n">Parameter</span><span class="p">,</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span>     <span class="n">UninitializedParameter</span> <span class="k">as</span> <span class="n">UninitializedParameter</span><span class="p">,</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span>     <span class="n">UninitializedBuffer</span> <span class="k">as</span> <span class="n">UninitializedBuffer</span><span class="p">,</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="kn">from</span><span class="w"> </span><span class="nn">.parallel</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataParallel</span> <span class="k">as</span> <span class="n">DataParallel</span>
 
-<span class="nn">File C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.8_3.8.2800.0_x64__qbz5n2kfra8p0\lib\subprocess.py:342,</span> in <span class="ni">call</span><span class="nt">(timeout, *popenargs, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">340</span> <span class="k">with</span> <span class="n">Popen</span><span class="p">(</span><span class="o">*</span><span class="n">popenargs</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="k">as</span> <span class="n">p</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">341</span>     <span class="k">try</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">342</span>         <span class="k">return</span> <span class="n">p</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">343</span>     <span class="k">except</span><span class="p">:</span>  <span class="c1"># Including KeyboardInterrupt, wait handled that.</span>
-<span class="g g-Whitespace">    </span><span class="mi">344</span>         <span class="n">p</span><span class="o">.</span><span class="n">kill</span><span class="p">()</span>
+<span class="n">File</span> <span class="o">~</span>\<span class="n">AppData</span>\<span class="n">Local</span>\<span class="n">Packages</span>\<span class="n">PythonSoftwareFoundation</span><span class="o">.</span><span class="n">Python</span><span class="mf">.3.8</span><span class="n">_qbz5n2kfra8p0</span>\<span class="n">LocalCache</span>\<span class="n">local</span><span class="o">-</span><span class="n">packages</span>\<span class="n">Python38</span>\<span class="n">site</span><span class="o">-</span><span class="n">packages</span>\<span class="n">torch</span>\<span class="n">nn</span>\<span class="n">modules</span>\<span class="fm">__init__</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">1</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">from</span><span class="w"> </span><span class="nn">.module</span><span class="w"> </span><span class="kn">import</span> <span class="n">Module</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">from</span><span class="w"> </span><span class="nn">.linear</span><span class="w"> </span><span class="kn">import</span> <span class="n">Identity</span><span class="p">,</span> <span class="n">Linear</span><span class="p">,</span> <span class="n">Bilinear</span><span class="p">,</span> <span class="n">LazyLinear</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">from</span><span class="w"> </span><span class="nn">.conv</span><span class="w"> </span><span class="kn">import</span> <span class="n">Conv1d</span><span class="p">,</span> <span class="n">Conv2d</span><span class="p">,</span> <span class="n">Conv3d</span><span class="p">,</span> \
+<span class="g g-Whitespace">      </span><span class="mi">4</span>     <span class="n">ConvTranspose1d</span><span class="p">,</span> <span class="n">ConvTranspose2d</span><span class="p">,</span> <span class="n">ConvTranspose3d</span><span class="p">,</span> \
+<span class="g g-Whitespace">      </span><span class="mi">5</span>     <span class="n">LazyConv1d</span><span class="p">,</span> <span class="n">LazyConv2d</span><span class="p">,</span> <span class="n">LazyConv3d</span><span class="p">,</span> <span class="n">LazyConvTranspose1d</span><span class="p">,</span> <span class="n">LazyConvTranspose2d</span><span class="p">,</span> <span class="n">LazyConvTranspose3d</span>
 
-<span class="nn">File C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.8_3.8.2800.0_x64__qbz5n2kfra8p0\lib\subprocess.py:1083,</span> in <span class="ni">Popen.wait</span><span class="nt">(self, timeout)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1081</span>     <span class="n">endtime</span> <span class="o">=</span> <span class="n">_time</span><span class="p">()</span> <span class="o">+</span> <span class="n">timeout</span>
-<span class="g g-Whitespace">   </span><span class="mi">1082</span> <span class="k">try</span><span class="p">:</span>
-<span class="ne">-&gt; </span><span class="mi">1083</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_wait</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1084</span> <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
-<span class="g g-Whitespace">   </span><span class="mi">1085</span>     <span class="c1"># https://bugs.python.org/issue25942</span>
-<span class="g g-Whitespace">   </span><span class="mi">1086</span>     <span class="c1"># The first keyboard interrupt waits briefly for the child to</span>
-<span class="g g-Whitespace">   </span><span class="mi">1087</span>     <span class="c1"># exit under the common assumption that it also received the ^C</span>
-<span class="g g-Whitespace">   </span><span class="mi">1088</span>     <span class="c1"># generated SIGINT and will exit rapidly.</span>
-<span class="g g-Whitespace">   </span><span class="mi">1089</span>     <span class="k">if</span> <span class="n">timeout</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+<span class="n">File</span> <span class="o">~</span>\<span class="n">AppData</span>\<span class="n">Local</span>\<span class="n">Packages</span>\<span class="n">PythonSoftwareFoundation</span><span class="o">.</span><span class="n">Python</span><span class="mf">.3.8</span><span class="n">_qbz5n2kfra8p0</span>\<span class="n">LocalCache</span>\<span class="n">local</span><span class="o">-</span><span class="n">packages</span>\<span class="n">Python38</span>\<span class="n">site</span><span class="o">-</span><span class="n">packages</span>\<span class="n">torch</span>\<span class="n">nn</span>\<span class="n">modules</span>\<span class="n">module</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">9</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="kn">import</span><span class="w"> </span><span class="nn">weakref</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="ne">----&gt; </span><span class="mi">9</span> <span class="kn">from</span><span class="w"> </span><span class="nn">torch._prims_common</span><span class="w"> </span><span class="kn">import</span> <span class="n">DeviceLikeType</span>
+<span class="g g-Whitespace">     </span><span class="mi">10</span> <span class="kn">from</span><span class="w"> </span><span class="nn">..parameter</span><span class="w"> </span><span class="kn">import</span> <span class="n">Parameter</span>
+<span class="g g-Whitespace">     </span><span class="mi">11</span> <span class="kn">import</span><span class="w"> </span><span class="nn">torch.utils.hooks</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">hooks</span>
 
-<span class="nn">File C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.8_3.8.2800.0_x64__qbz5n2kfra8p0\lib\subprocess.py:1361,</span> in <span class="ni">Popen._wait</span><span class="nt">(self, timeout)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1358</span>     <span class="n">timeout_millis</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">timeout</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1359</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">returncode</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-<span class="g g-Whitespace">   </span><span class="mi">1360</span>     <span class="c1"># API note: Returns immediately if timeout_millis == 0.</span>
-<span class="ne">-&gt; </span><span class="mi">1361</span>     <span class="n">result</span> <span class="o">=</span> <span class="n">_winapi</span><span class="o">.</span><span class="n">WaitForSingleObject</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1362</span>                                          <span class="n">timeout_millis</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1363</span>     <span class="k">if</span> <span class="n">result</span> <span class="o">==</span> <span class="n">_winapi</span><span class="o">.</span><span class="n">WAIT_TIMEOUT</span><span class="p">:</span>
-<span class="g g-Whitespace">   </span><span class="mi">1364</span>         <span class="k">raise</span> <span class="n">TimeoutExpired</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">,</span> <span class="n">timeout</span><span class="p">)</span>
-
-<span class="ne">KeyboardInterrupt</span>: 
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;torch._prims_common&#39;
 </pre></div>
 </div>
 </div>
@@ -1755,12 +1743,12 @@ Optional coding extensions<div class="sd-summary-down docutils">
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../M1S1/M1S1nb.html"
+       href="../M1S6/M1S6nb.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Introduction to Machine Learning in Healthcare</p>
+        <p class="prev-next-title">Image-Based Models</p>
       </div>
     </a>
     <a class="right-next"
