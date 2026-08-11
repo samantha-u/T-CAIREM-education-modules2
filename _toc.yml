@@ -28,9 +28,9 @@ parts:
       title: "Feature Engineering"
   - caption: Model Evaluation and Interpretation
     chapters:
-    - file: M2S4/M2S4nb
+    - file: M3S4/M3S4nb
       title: "Fairness and Bias in Model Evaluation"
-    - file: M2S5/M2S5nb
+    - file: M3S5/M3S5nb
       title: "Explainability"
   - caption: End Material
     chapters:
