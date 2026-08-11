@@ -265,7 +265,7 @@ disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=['0 - Remains 
 disp.plot(cmap=plt.cm.Blues)
 plt.show()
 
-glue('fig_cm', disp.figure_)
+# glue('fig_cm', disp.figure_)
 ```
 
 ```{glue:figure} fig_cm

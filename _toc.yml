@@ -12,6 +12,7 @@ parts:
   - caption: Algorithm Architectures 
     chapters:
     - file: M2S1/M2S1md
+    - file: M1S1/M1S1nb
       title: "Intro to Machine Learning in Healthcare"
     - file: M2S1/M2S1nb
       title: "Intro to Machine Learning in Healthcare NB"
