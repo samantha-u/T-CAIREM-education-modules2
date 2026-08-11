@@ -1,0 +1,1870 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Deep Learning and Neural Networks for Healthcare &#8212; T-CAIREM AI in Medicine</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'M1S4/M1S4';</script>
+    <link rel="shortcut icon" href="../_static/tcairem_fav.svg"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Time-Series Models for Healthcare" href="../M1S7/M1S7.html" />
+    <link rel="prev" title="Introduction to Machine Learning in Healthcare" href="../M1S1/M1S1nb.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/tcairem_fav.svg" class="logo__image only-light" alt="T-CAIREM AI in Medicine - Home"/>
+    <script>document.write(`<img src="../_static/tcairem_fav.svg" class="logo__image only-dark" alt="T-CAIREM AI in Medicine - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Welcome to T-CAIREM AI in Medicine Education Modules
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Algorithm Architectures</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../M1S0/M1S0.html">Resources and Healthcare Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../M1S1/M1S1nb.html">Intro to Machine Learning in Healthcare</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Deep Learning / Feedforward Neural Networks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../M1S7/M1S7.html">Time Series Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../M1S12/M1S12.html">Generative Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../M1S14/M1S14.html">Agentic AI</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Model Development</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../M2S1/M2S1.html">Approach to Model Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../M2S2/M2S2.html">Feature Engineering</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">End Material</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../bibliographypage.html">References</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2FM1S4/M1S4.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/M1S4/M1S4.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Deep Learning and Neural Networks for Healthcare</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#at-a-glance">At a glance</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">Learning objectives</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-does-each-rung-add">1. What does each rung add?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dataset-provenance-and-why-the-task-is-difficult">2. Dataset provenance and why the task is difficult</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reproducible-setup-and-official-data-only-loading">3. Reproducible setup and official-data-only loading</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#convert-the-package-arrays-and-audit-the-class-distribution">4. Convert the package arrays and audit the class distribution</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inspect-images-without-pretending-to-diagnose-them">5. Inspect images without pretending to diagnose them</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#protect-the-trainvalidationtest-boundary">6. Protect the train–validation–test boundary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#define-multiclass-metrics-once">7. Define multiclass metrics once</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-0-the-training-class-prior">8. Model 0: the training class prior</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-1-coarse-global-colour-texture-logistic-regression">9. Model 1: coarse global colour/texture logistic regression</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-2-regularized-logistic-regression-on-flattened-pixels">10. Model 2: regularized logistic regression on flattened pixels</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prepare-neural-tensors-without-leakage">11. Prepare neural tensors without leakage</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#models-3-and-4-mlp-versus-cnn">12. Models 3 and 4: MLP versus CNN</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#final-locked-test-comparison">13. Final locked-test comparison</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-interpret-these-results">How to interpret these results</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#per-class-results-reveal-what-macro-averages-hide">14. Per-class results reveal what macro averages hide</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inspect-feature-maps-carefully">15. Inspect feature maps carefully</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#from-an-internal-benchmark-to-clinical-evidence">16. From an internal benchmark to clinical evidence</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#knowledge-check-and-optional-extensions">17. Knowledge check and optional extensions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#take-home-messages">18. Take-home messages</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="deep-learning-and-neural-networks-for-healthcare">
+<span id="chap-aihc-deep-learning"></span><h1>Deep Learning and Neural Networks for Healthcare<a class="headerlink" href="#deep-learning-and-neural-networks-for-healthcare" title="Permalink to this heading">#</a></h1>
+<p><strong>A weak-to-strong model ladder on official DermaMNIST</strong></p>
+<p>Deep learning is most useful when we can explain what capability it adds beyond simpler alternatives. This tutorial therefore builds five multiclass image classifiers in a deliberate sequence:</p>
+<div class="math notranslate nohighlight">
+\[
+\text{class prior} \rightarrow \text{coarse colour/texture logistic}
+\rightarrow \text{pixel logistic} \rightarrow \text{MLP} \rightarrow \text{CNN}.
+\]</div>
+<section id="at-a-glance">
+<h2>At a glance<a class="headerlink" href="#at-a-glance" title="Permalink to this heading">#</a></h2>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Item</p></th>
+<th class="head"><p>This tutorial</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Question</strong></p></td>
+<td><p>How much do learned spatial representations add when classifying seven DermaMNIST categories?</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Data</strong></p></td>
+<td><p>Official DermaMNIST, derived from HAM10000: 7,007 training, 1,003 validation, and 2,005 test images; RGB; <span class="math notranslate nohighlight">\(28\times28\)</span> pixels</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Model ladder</strong></p></td>
+<td><p>Training prior, seven global colour/contrast features + multinomial logistic regression, PCA-compressed flattened-pixel logistic regression, compact MLP, compact CNN</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Selection rule</strong></p></td>
+<td><p>Regularization and neural-network epochs use validation macro AUPRC only; the test set is opened after choices are frozen</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Metrics</strong></p></td>
+<td><p>Balanced accuracy, macro F1, macro one-vs-rest AUROC and AUPRC, multiclass log loss, confusion matrix, per-class recall/AP</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Runtime</strong></p></td>
+<td><p>Usually 2–4 minutes on a Colab CPU; faster with a GPU</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Core route</strong></p></td>
+<td><p>Sections 1–13, including the final comparison, take about 30–35 minutes; later sections are optional depth</p></td>
+</tr>
+</tbody>
+</table>
+<section id="learning-objectives">
+<h3>Learning objectives<a class="headerlink" href="#learning-objectives" title="Permalink to this heading">#</a></h3>
+<p>By the end, you should be able to:</p>
+<ol class="arabic simple">
+<li><p>explain why ordinary accuracy is misleading for an imbalanced multiclass dataset;</p></li>
+<li><p>distinguish information added by engineered summaries, pixels, nonlinearity, and convolution;</p></li>
+<li><p>trace the shapes of RGB image tensors through an MLP and CNN;</p></li>
+<li><p>use a validation split without repeatedly optimizing against the test set;</p></li>
+<li><p>calculate macro one-vs-rest ranking metrics without inventing a binary threshold; and</p></li>
+<li><p>interpret moderate, non-monotonic performance as evidence rather than a model leaderboard.</p></li>
+</ol>
+<div class="warning admonition">
+<p class="admonition-title">Educational scope</p>
+<p>This notebook is not a skin-lesion diagnostic system. Do not use its predictions for patient care. It does not validate clinical workflow, external sites, acquisition devices, demographic groups, reader comparison, prospective outcomes, or regulatory requirements.</p>
+</div>
+</section>
+</section>
+<section id="what-does-each-rung-add">
+<h2>1. What does each rung add?<a class="headerlink" href="#what-does-each-rung-add" title="Permalink to this heading">#</a></h2>
+<p>A weak-to-strong ladder should not merely add parameters. Each step should answer a different scientific question.</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Model</p></th>
+<th class="head"><p>Input</p></th>
+<th class="head"><p>New capability</p></th>
+<th class="head"><p>What remains impossible or difficult</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Class prior</p></td>
+<td><p>training labels only</p></td>
+<td><p>reflects class prevalence</p></td>
+<td><p>cannot distinguish two images</p></td>
+</tr>
+<tr class="row-odd"><td><p>Global logistic</p></td>
+<td><p>RGB means, RGB standard deviations, overall intensity variation</p></td>
+<td><p>linear use of coarse colour and texture/contrast</p></td>
+<td><p>discards lesion location, border, and local pattern</p></td>
+</tr>
+<tr class="row-even"><td><p>Pixel logistic</p></td>
+<td><p>a linear projection of all 2,352 RGB pixels</p></td>
+<td><p>uses spatially indexed pixel information</p></td>
+<td><p>cannot form nonlinear or hierarchical patterns</p></td>
+</tr>
+<tr class="row-odd"><td><p>MLP</p></td>
+<td><p>all flattened pixels</p></td>
+<td><p>nonlinear interactions between any pixels</p></td>
+<td><p>flattening does not explicitly preserve neighbourhood structure</p></td>
+</tr>
+<tr class="row-even"><td><p>CNN</p></td>
+<td><p>the 2-D RGB grid</p></td>
+<td><p>shared local filters and hierarchical spatial representation</p></td>
+<td><p>can still exploit shortcuts and remain poorly calibrated or non-transportable</p></td>
+</tr>
+</tbody>
+</table>
+<p>“Stronger” refers to representation capacity and a better-matched inductive bias. It does <strong>not</strong> promise that every metric increases at every step. A well-chosen coarse feature can beat a poorly optimized neural model; a larger model can overfit; and macro metrics can move differently because rare classes receive equal weight.</p>
+</section>
+<section id="dataset-provenance-and-why-the-task-is-difficult">
+<h2>2. Dataset provenance and why the task is difficult<a class="headerlink" href="#dataset-provenance-and-why-the-task-is-difficult" title="Permalink to this heading">#</a></h2>
+<p>DermaMNIST is a <span class="math notranslate nohighlight">\(28\times28\)</span> version of images from HAM10000, a collection of dermatoscopic images from multiple sources. MedMNIST provides a standardized seven-class task and official 70%/10%/20% train/validation/test split. The classes include melanocytic nevi, melanoma, basal cell carcinoma, vascular lesions, and several other lesion groups.</p>
+<p>The dataset is attractive for education because it is small enough to download and train in Colab. Its limitations are equally important:</p>
+<ul class="simple">
+<li><p>downsampling from the source resolution removes substantial visual detail;</p></li>
+<li><p>classes are highly imbalanced, with melanocytic nevi forming most examples;</p></li>
+<li><p>HAM10000 contains multiple images of some lesions, so an image-level split can be more optimistic than a patient- or lesion-level external evaluation;</p></li>
+<li><p>diagnostic labels have different verification routes and may inherit uncertainty;</p></li>
+<li><p>dermatoscopic acquisition is not the same as every real primary-care or patient-facing setting; and</p></li>
+<li><p>benchmark performance does not measure how a model changes clinical decisions or outcomes.</p></li>
+</ul>
+<div class="important admonition">
+<p class="admonition-title">Result disclaimer</p>
+<p>The reported values apply only to these official internal benchmark splits and this implementation. Even a high macro AUROC would not establish clinical accuracy: one-vs-rest AUROC can look encouraging while rare-class precision, calibration, or argmax classification remains modest. MedMNIST explicitly states that it is not intended for clinical use.</p>
+</div>
+</section>
+<section id="reproducible-setup-and-official-data-only-loading">
+<h2>3. Reproducible setup and official-data-only loading<a class="headerlink" href="#reproducible-setup-and-official-data-only-loading" title="Permalink to this heading">#</a></h2>
+<p>The setup cell installs MedMNIST only if needed. The following loader requests <code class="docutils literal notranslate"><span class="pre">DermaMNIST</span></code> from the package and stops with an actionable error if the official archive cannot be obtained. It never manufactures images or silently switches datasets.</p>
+<p>We use a visible local cache so repeated Colab runs do not redownload the archive. Random seeds make CPU runs reproducible; exact GPU kernels can still differ slightly.</p>
+<div class="cell tag_hide-cell tag_thebe-init docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Phase 1: install the official dataset interface only when the runtime needs it.</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">importlib.util</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">subprocess</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+
+<span class="k">if</span> <span class="n">importlib</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">find_spec</span><span class="p">(</span><span class="s2">&quot;medmnist&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">subprocess</span><span class="o">.</span><span class="n">check_call</span><span class="p">(</span>
+        <span class="p">[</span><span class="n">sys</span><span class="o">.</span><span class="n">executable</span><span class="p">,</span> <span class="s2">&quot;-m&quot;</span><span class="p">,</span> <span class="s2">&quot;pip&quot;</span><span class="p">,</span> <span class="s2">&quot;install&quot;</span><span class="p">,</span> <span class="s2">&quot;-q&quot;</span><span class="p">,</span> <span class="s2">&quot;medmnist==3.0.2&quot;</span><span class="p">]</span>
+    <span class="p">)</span>
+
+<span class="c1"># Phase 2: import numerical, plotting, classical-ML, and neural-network tools.</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">copy</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="c1"># Some locked-down runtimes cannot create MedMNIST&#39;s optional default cache;</span>
+<span class="c1"># this tutorial supplies an explicit writable cache in the next cell.</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;Failed to setup default root.*&quot;</span><span class="p">)</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">medmnist</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">display</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">medmnist</span><span class="w"> </span><span class="kn">import</span> <span class="n">INFO</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.decomposition</span><span class="w"> </span><span class="kn">import</span> <span class="n">PCA</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.linear_model</span><span class="w"> </span><span class="kn">import</span> <span class="n">LogisticRegression</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">average_precision_score</span><span class="p">,</span>
+    <span class="n">balanced_accuracy_score</span><span class="p">,</span>
+    <span class="n">confusion_matrix</span><span class="p">,</span>
+    <span class="n">ConfusionMatrixDisplay</span><span class="p">,</span>
+    <span class="n">f1_score</span><span class="p">,</span>
+    <span class="n">log_loss</span><span class="p">,</span>
+    <span class="n">roc_auc_score</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.pipeline</span><span class="w"> </span><span class="kn">import</span> <span class="n">make_pipeline</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">StandardScaler</span><span class="p">,</span> <span class="n">label_binarize</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torch</span><span class="w"> </span><span class="kn">import</span> <span class="n">nn</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torch.utils.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataLoader</span><span class="p">,</span> <span class="n">TensorDataset</span>
+
+<span class="c1"># Phase 3: seed every source of randomness used below.</span>
+<span class="n">SEED</span> <span class="o">=</span> <span class="mi">17</span>
+<span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">SEED</span><span class="p">)</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">SEED</span><span class="p">)</span>
+<span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="n">SEED</span><span class="p">)</span>
+<span class="n">torch</span><span class="o">.</span><span class="n">set_num_threads</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">get_num_threads</span><span class="p">()))</span>
+<span class="n">DEVICE</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cuda&quot;</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;PyTorch </span><span class="si">{</span><span class="n">torch</span><span class="o">.</span><span class="n">__version__</span><span class="si">}</span><span class="s2">; training device: </span><span class="si">{</span><span class="n">DEVICE</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">7</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="k">if</span> <span class="n">importlib</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">find_spec</span><span class="p">(</span><span class="s2">&quot;medmnist&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<span class="ne">----&gt; </span><span class="mi">7</span>     <span class="n">subprocess</span><span class="o">.</span><span class="n">check_call</span><span class="p">(</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span>         <span class="p">[</span><span class="n">sys</span><span class="o">.</span><span class="n">executable</span><span class="p">,</span> <span class="s2">&quot;-m&quot;</span><span class="p">,</span> <span class="s2">&quot;pip&quot;</span><span class="p">,</span> <span class="s2">&quot;install&quot;</span><span class="p">,</span> <span class="s2">&quot;-q&quot;</span><span class="p">,</span> <span class="s2">&quot;medmnist==3.0.2&quot;</span><span class="p">]</span>
+<span class="g g-Whitespace">      </span><span class="mi">9</span>     <span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">11</span> <span class="c1"># Phase 2: import numerical, plotting, classical-ML, and neural-network tools.</span>
+<span class="g g-Whitespace">     </span><span class="mi">12</span> <span class="kn">import</span><span class="w"> </span><span class="nn">copy</span>
+
+<span class="nn">File C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.8_3.8.2800.0_x64__qbz5n2kfra8p0\lib\subprocess.py:359,</span> in <span class="ni">check_call</span><span class="nt">(*popenargs, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">349</span> <span class="k">def</span><span class="w"> </span><span class="nf">check_call</span><span class="p">(</span><span class="o">*</span><span class="n">popenargs</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">350</span><span class="w">     </span><span class="sd">&quot;&quot;&quot;Run command with arguments.  Wait for command to complete.  If</span>
+<span class="g g-Whitespace">    </span><span class="mi">351</span><span class="sd">     the exit code was zero then return, otherwise raise</span>
+<span class="g g-Whitespace">    </span><span class="mi">352</span><span class="sd">     CalledProcessError.  The CalledProcessError object will have the</span>
+<span class="sd">   (...)</span>
+<span class="g g-Whitespace">    </span><span class="mi">357</span><span class="sd">     check_call([&quot;ls&quot;, &quot;-l&quot;])</span>
+<span class="g g-Whitespace">    </span><span class="mi">358</span><span class="sd">     &quot;&quot;&quot;</span>
+<span class="ne">--&gt; </span><span class="mi">359</span>     <span class="n">retcode</span> <span class="o">=</span> <span class="n">call</span><span class="p">(</span><span class="o">*</span><span class="n">popenargs</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">360</span>     <span class="k">if</span> <span class="n">retcode</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">361</span>         <span class="n">cmd</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;args&quot;</span><span class="p">)</span>
+
+<span class="nn">File C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.8_3.8.2800.0_x64__qbz5n2kfra8p0\lib\subprocess.py:342,</span> in <span class="ni">call</span><span class="nt">(timeout, *popenargs, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">340</span> <span class="k">with</span> <span class="n">Popen</span><span class="p">(</span><span class="o">*</span><span class="n">popenargs</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="k">as</span> <span class="n">p</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">341</span>     <span class="k">try</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">342</span>         <span class="k">return</span> <span class="n">p</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">343</span>     <span class="k">except</span><span class="p">:</span>  <span class="c1"># Including KeyboardInterrupt, wait handled that.</span>
+<span class="g g-Whitespace">    </span><span class="mi">344</span>         <span class="n">p</span><span class="o">.</span><span class="n">kill</span><span class="p">()</span>
+
+<span class="nn">File C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.8_3.8.2800.0_x64__qbz5n2kfra8p0\lib\subprocess.py:1083,</span> in <span class="ni">Popen.wait</span><span class="nt">(self, timeout)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1081</span>     <span class="n">endtime</span> <span class="o">=</span> <span class="n">_time</span><span class="p">()</span> <span class="o">+</span> <span class="n">timeout</span>
+<span class="g g-Whitespace">   </span><span class="mi">1082</span> <span class="k">try</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">1083</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_wait</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1084</span> <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1085</span>     <span class="c1"># https://bugs.python.org/issue25942</span>
+<span class="g g-Whitespace">   </span><span class="mi">1086</span>     <span class="c1"># The first keyboard interrupt waits briefly for the child to</span>
+<span class="g g-Whitespace">   </span><span class="mi">1087</span>     <span class="c1"># exit under the common assumption that it also received the ^C</span>
+<span class="g g-Whitespace">   </span><span class="mi">1088</span>     <span class="c1"># generated SIGINT and will exit rapidly.</span>
+<span class="g g-Whitespace">   </span><span class="mi">1089</span>     <span class="k">if</span> <span class="n">timeout</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+
+<span class="nn">File C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.8_3.8.2800.0_x64__qbz5n2kfra8p0\lib\subprocess.py:1361,</span> in <span class="ni">Popen._wait</span><span class="nt">(self, timeout)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1358</span>     <span class="n">timeout_millis</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">timeout</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1359</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">returncode</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1360</span>     <span class="c1"># API note: Returns immediately if timeout_millis == 0.</span>
+<span class="ne">-&gt; </span><span class="mi">1361</span>     <span class="n">result</span> <span class="o">=</span> <span class="n">_winapi</span><span class="o">.</span><span class="n">WaitForSingleObject</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1362</span>                                          <span class="n">timeout_millis</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1363</span>     <span class="k">if</span> <span class="n">result</span> <span class="o">==</span> <span class="n">_winapi</span><span class="o">.</span><span class="n">WAIT_TIMEOUT</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1364</span>         <span class="k">raise</span> <span class="n">TimeoutExpired</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">,</span> <span class="n">timeout</span><span class="p">)</span>
+
+<span class="ne">KeyboardInterrupt</span>: 
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">DATA_FLAG</span> <span class="o">=</span> <span class="s2">&quot;dermamnist&quot;</span>
+<span class="n">dataset_info</span> <span class="o">=</span> <span class="n">INFO</span><span class="p">[</span><span class="n">DATA_FLAG</span><span class="p">]</span>
+<span class="n">DatasetClass</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">medmnist</span><span class="p">,</span> <span class="n">dataset_info</span><span class="p">[</span><span class="s2">&quot;python_class&quot;</span><span class="p">])</span>
+<span class="n">data_root</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;data/medmnist&quot;</span><span class="p">)</span>
+<span class="n">data_root</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="c1"># Phase 1: request each published split without merging or resplitting it.</span>
+    <span class="n">train_dataset</span> <span class="o">=</span> <span class="n">DatasetClass</span><span class="p">(</span><span class="n">split</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">,</span> <span class="n">root</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">data_root</span><span class="p">),</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">28</span><span class="p">)</span>
+    <span class="n">val_dataset</span> <span class="o">=</span> <span class="n">DatasetClass</span><span class="p">(</span><span class="n">split</span><span class="o">=</span><span class="s2">&quot;val&quot;</span><span class="p">,</span> <span class="n">root</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">data_root</span><span class="p">),</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">28</span><span class="p">)</span>
+    <span class="n">test_dataset</span> <span class="o">=</span> <span class="n">DatasetClass</span><span class="p">(</span><span class="n">split</span><span class="o">=</span><span class="s2">&quot;test&quot;</span><span class="p">,</span> <span class="n">root</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">data_root</span><span class="p">),</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">28</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+    <span class="c1"># Phase 2: fail visibly; changing the dataset would change the scientific task.</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+        <span class="s2">&quot;Official DermaMNIST could not be loaded. This notebook intentionally uses &quot;</span>
+        <span class="s2">&quot;no substitute data. Enable internet access in Colab and rerun. Original error: &quot;</span>
+        <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">exc</span><span class="p">)</span>
+    <span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">exc</span>
+
+<span class="c1"># Phase 3: display provenance beside the run rather than relying on memory.</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Dataset description:&quot;</span><span class="p">,</span> <span class="n">dataset_info</span><span class="p">[</span><span class="s2">&quot;description&quot;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Licence:&quot;</span><span class="p">,</span> <span class="n">dataset_info</span><span class="p">[</span><span class="s2">&quot;license&quot;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Official label map:&quot;</span><span class="p">,</span> <span class="n">dataset_info</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Official split sizes:&quot;</span><span class="p">,</span> <span class="n">dataset_info</span><span class="p">[</span><span class="s2">&quot;n_samples&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Dataset description: The DermaMNIST is based on the HAM10000, a large collection of multi-source dermatoscopic images of common pigmented skin lesions. The dataset consists of 10,015 dermatoscopic images categorized as 7 different diseases, formulized as a multi-class classification task. We split the images into training, validation and test set with a ratio of 7:1:2. The source images of 3×600×450 are resized into 3×28×28.
+Licence: CC BY-NC 4.0
+Official label map: {&#39;0&#39;: &#39;actinic keratoses and intraepithelial carcinoma&#39;, &#39;1&#39;: &#39;basal cell carcinoma&#39;, &#39;2&#39;: &#39;benign keratosis-like lesions&#39;, &#39;3&#39;: &#39;dermatofibroma&#39;, &#39;4&#39;: &#39;melanoma&#39;, &#39;5&#39;: &#39;melanocytic nevi&#39;, &#39;6&#39;: &#39;vascular lesions&#39;}
+Official split sizes: {&#39;train&#39;: 7007, &#39;val&#39;: 1003, &#39;test&#39;: 2005}
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="convert-the-package-arrays-and-audit-the-class-distribution">
+<h2>4. Convert the package arrays and audit the class distribution<a class="headerlink" href="#convert-the-package-arrays-and-audit-the-class-distribution" title="Permalink to this heading">#</a></h2>
+<p>MedMNIST stores RGB images as <code class="docutils literal notranslate"><span class="pre">[image,</span> <span class="pre">height,</span> <span class="pre">width,</span> <span class="pre">channel]</span></code> with integer values from 0 to 255. We divide by 255 to obtain floating-point values from 0 to 1. This fixed unit conversion does not estimate anything from held-out data.</p>
+<p>Labels are converted from shape <code class="docutils literal notranslate"><span class="pre">[N,</span> <span class="pre">1]</span></code> to <code class="docutils literal notranslate"><span class="pre">[N]</span></code>. We preserve the official splits exactly. The assertions are not cosmetic: they make the expected dataset version, shape, channels, and label set executable.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">medmnist_arrays</span><span class="p">(</span><span class="n">dataset</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Convert one official split to images [N,28,28,3] and labels [N].&#39;&#39;&#39;</span>
+    <span class="c1"># Phase 1: use the package&#39;s verified in-memory archive rather than PIL loops.</span>
+    <span class="n">images</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">imgs</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> <span class="o">/</span> <span class="mf">255.0</span>
+    <span class="n">labels</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">labels</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+    <span class="c1"># Phase 2: return independent arrays without learning preprocessing statistics.</span>
+    <span class="k">return</span> <span class="n">images</span><span class="p">,</span> <span class="n">labels</span>
+
+
+<span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span> <span class="o">=</span> <span class="n">medmnist_arrays</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">)</span>
+<span class="n">X_val</span><span class="p">,</span> <span class="n">y_val</span> <span class="o">=</span> <span class="n">medmnist_arrays</span><span class="p">(</span><span class="n">val_dataset</span><span class="p">)</span>
+<span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">medmnist_arrays</span><span class="p">(</span><span class="n">test_dataset</span><span class="p">)</span>
+<span class="n">CLASS_NAMES</span> <span class="o">=</span> <span class="p">[</span><span class="n">dataset_info</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">][</span><span class="nb">str</span><span class="p">(</span><span class="n">index</span><span class="p">)]</span> <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">7</span><span class="p">)]</span>
+<span class="n">N_CLASSES</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">CLASS_NAMES</span><span class="p">)</span>
+
+<span class="c1"># Phase 3: fail early if the active archive differs from the documented task.</span>
+<span class="k">assert</span> <span class="n">X_train</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">7007</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">X_val</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">1003</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">X_test</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">2005</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="k">assert</span> <span class="nb">set</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y_train</span><span class="p">))</span> <span class="o">==</span> <span class="nb">set</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">N_CLASSES</span><span class="p">))</span>
+
+<span class="c1"># Test images are loaded for later inference, but their labels are not summarized here.</span>
+<span class="n">split_summary</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;split&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">,</span> <span class="s2">&quot;validation&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;images&quot;</span><span class="p">:</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">y_train</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">y_val</span><span class="p">)],</span>
+        <span class="s2">&quot;majority_fraction&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">bincount</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">labels</span> <span class="ow">in</span> <span class="p">(</span><span class="n">y_train</span><span class="p">,</span> <span class="n">y_val</span><span class="p">)</span>
+        <span class="p">],</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">split_summary</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">format</span><span class="p">({</span><span class="s2">&quot;majority_fraction&quot;</span><span class="p">:</span> <span class="s2">&quot;</span><span class="si">{:.1%}</span><span class="s2">&quot;</span><span class="p">}))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style type="text/css">
+</style>
+<table id="T_1d15a">
+  <thead>
+    <tr>
+      <th class="blank level0" >&nbsp;</th>
+      <th id="T_1d15a_level0_col0" class="col_heading level0 col0" >split</th>
+      <th id="T_1d15a_level0_col1" class="col_heading level0 col1" >images</th>
+      <th id="T_1d15a_level0_col2" class="col_heading level0 col2" >majority_fraction</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th id="T_1d15a_level0_row0" class="row_heading level0 row0" >0</th>
+      <td id="T_1d15a_row0_col0" class="data row0 col0" >train</td>
+      <td id="T_1d15a_row0_col1" class="data row0 col1" >7007</td>
+      <td id="T_1d15a_row0_col2" class="data row0 col2" >67.0%</td>
+    </tr>
+    <tr>
+      <th id="T_1d15a_level0_row1" class="row_heading level0 row1" >1</th>
+      <td id="T_1d15a_row1_col0" class="data row1 col0" >validation</td>
+      <td id="T_1d15a_row1_col1" class="data row1 col1" >1003</td>
+      <td id="T_1d15a_row1_col2" class="data row1 col2" >66.9%</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Phase 1: count every class separately in each official split.</span>
+<span class="n">class_counts</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="n">CLASS_NAMES</span><span class="p">,</span>
+        <span class="s2">&quot;train&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">bincount</span><span class="p">(</span><span class="n">y_train</span><span class="p">,</span> <span class="n">minlength</span><span class="o">=</span><span class="n">N_CLASSES</span><span class="p">),</span>
+        <span class="s2">&quot;validation&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">bincount</span><span class="p">(</span><span class="n">y_val</span><span class="p">,</span> <span class="n">minlength</span><span class="o">=</span><span class="n">N_CLASSES</span><span class="p">),</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">class_counts</span><span class="p">)</span>
+
+<span class="c1"># Phase 2: plot training counts on a log scale so rare classes remain visible.</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">class_counts</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;class&quot;</span><span class="p">)[</span><span class="s2">&quot;train&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span>
+    <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mf">4.8</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#2563eb&quot;</span><span class="p">,</span> <span class="n">logx</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">&quot;training images (log scale)&quot;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;DermaMNIST is strongly imbalanced&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+<span class="c1"># Phase 3: keep the rarest classes legible without hiding the absolute counts.</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>class</th>
+      <th>train</th>
+      <th>validation</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>actinic keratoses and intraepithelial carcinoma</td>
+      <td>228</td>
+      <td>33</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>basal cell carcinoma</td>
+      <td>359</td>
+      <td>52</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>benign keratosis-like lesions</td>
+      <td>769</td>
+      <td>110</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>dermatofibroma</td>
+      <td>80</td>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>melanoma</td>
+      <td>779</td>
+      <td>111</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>melanocytic nevi</td>
+      <td>4693</td>
+      <td>671</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>vascular lesions</td>
+      <td>99</td>
+      <td>14</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><img alt="../_images/64956898205f14550896eeeefbe1c7e5f897e97e3d77337e9de6778bf9a355ac.png" src="../_images/64956898205f14550896eeeefbe1c7e5f897e97e3d77337e9de6778bf9a355ac.png" />
+</div>
+</div>
+<p>The majority class makes up roughly two thirds of the data. A classifier that always predicts that class can therefore obtain seemingly respectable ordinary accuracy while having <strong>zero recall for six classes</strong>. Balanced accuracy averages recall across classes, so the same majority classifier receives <span class="math notranslate nohighlight">\(1/7\approx0.143\)</span>.</p>
+<p>Macro F1 and macro AUPRC also give every class equal weight. This makes rare-class failures visible, but it creates wide uncertainty: the validation set contains very few examples of some classes. Macro estimates can move noticeably when only one or two rare cases change.</p>
+</section>
+<section id="inspect-images-without-pretending-to-diagnose-them">
+<h2>5. Inspect images without pretending to diagnose them<a class="headerlink" href="#inspect-images-without-pretending-to-diagnose-them" title="Permalink to this heading">#</a></h2>
+<p>We draw two fixed training examples from each class. At <span class="math notranslate nohighlight">\(28\times28\)</span>, colour, broad borders, and gross texture remain visible, but fine dermatoscopic structures are lost. The montage helps us understand the tensor; it is not a diagnostic exercise and the labels are not an invitation to infer clinical criteria from compressed thumbnails.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Phase 1: select examples reproducibly within each class.</span>
+<span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">SEED</span><span class="p">)</span>
+<span class="n">selected</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">(</span><span class="n">y_train</span> <span class="o">==</span> <span class="n">class_id</span><span class="p">),</span> <span class="n">size</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">class_id</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N_CLASSES</span><span class="p">)</span>
+<span class="p">]</span>
+
+<span class="c1"># Phase 2: place one class per row so label imbalance does not dominate the display.</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">N_CLASSES</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">5.5</span><span class="p">,</span> <span class="mi">14</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">class_id</span><span class="p">,</span> <span class="n">image_ids</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">selected</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">column</span><span class="p">,</span> <span class="n">image_id</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">image_ids</span><span class="p">):</span>
+        <span class="n">axes</span><span class="p">[</span><span class="n">class_id</span><span class="p">,</span> <span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">X_train</span><span class="p">[</span><span class="n">image_id</span><span class="p">])</span>
+        <span class="n">axes</span><span class="p">[</span><span class="n">class_id</span><span class="p">,</span> <span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">column</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">axes</span><span class="p">[</span><span class="n">class_id</span><span class="p">,</span> <span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">CLASS_NAMES</span><span class="p">[</span><span class="n">class_id</span><span class="p">],</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;left&quot;</span><span class="p">)</span>
+<span class="c1"># Phase 3: state provenance directly in the figure title.</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Official DermaMNIST training examples&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">1.001</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/0721dec0c247e6d7e3193d542e266d7fefdac4b7904e68ddbd8570c8cef15edf.png" src="../_images/0721dec0c247e6d7e3193d542e266d7fefdac4b7904e68ddbd8570c8cef15edf.png" />
+</div>
+</div>
+</section>
+<section id="protect-the-trainvalidationtest-boundary">
+<h2>6. Protect the train–validation–test boundary<a class="headerlink" href="#protect-the-trainvalidationtest-boundary" title="Permalink to this heading">#</a></h2>
+<p>The official partitions have different jobs:</p>
+<ul class="simple">
+<li><p><strong>Train:</strong> estimate feature means, PCA components, logistic coefficients, neural weights, and class weights.</p></li>
+<li><p><strong>Validation:</strong> choose logistic regularization and neural early-stopping epochs.</p></li>
+<li><p><strong>Test:</strong> estimate final performance once the complete pipeline is frozen.</p></li>
+</ul>
+<p>We select models using <strong>validation macro AUPRC</strong> because it emphasizes performance across all seven one-vs-rest tasks and is sensitive to rare-class precision. Other defensible choices exist, but the choice must be made before test inspection.</p>
+<p>Unlike a binary alert, this seven-class tutorial does not choose a single sensitivity threshold. The predicted class is <code class="docutils literal notranslate"><span class="pre">argmax</span></code>: the class with the largest probability. AUROC and AUPRC are computed one class versus all others and then macro-averaged. Test labels never determine a threshold, epoch, or regularization value.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># A visual reminder that information flows forward only.</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mf">2.3</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
+<span class="n">boxes</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="mf">0.03</span><span class="p">,</span> <span class="s2">&quot;TRAIN</span><span class="se">\n</span><span class="s2">fit representation + weights&quot;</span><span class="p">,</span> <span class="s2">&quot;#dbeafe&quot;</span><span class="p">),</span>
+    <span class="p">(</span><span class="mf">0.38</span><span class="p">,</span> <span class="s2">&quot;VALIDATION</span><span class="se">\n</span><span class="s2">choose C + stopping epoch&quot;</span><span class="p">,</span> <span class="s2">&quot;#fef3c7&quot;</span><span class="p">),</span>
+    <span class="p">(</span><span class="mf">0.73</span><span class="p">,</span> <span class="s2">&quot;LOCKED TEST</span><span class="se">\n</span><span class="s2">report once&quot;</span><span class="p">,</span> <span class="s2">&quot;#dcfce7&quot;</span><span class="p">),</span>
+<span class="p">]</span>
+<span class="c1"># Phase 1: draw three partitions with their non-interchangeable roles.</span>
+<span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">colour</span> <span class="ow">in</span> <span class="n">boxes</span><span class="p">:</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">plt</span><span class="o">.</span><span class="n">Rectangle</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">),</span> <span class="mf">0.24</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="n">colour</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;#334155&quot;</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mf">0.12</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">)</span>
+<span class="c1"># Phase 2: arrows encode permitted forward information flow.</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="mf">0.38</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span> <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="mf">0.27</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span> <span class="n">arrowprops</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;arrowstyle&quot;</span><span class="p">:</span> <span class="s2">&quot;-&gt;&quot;</span><span class="p">})</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="mf">0.73</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span> <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="mf">0.62</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span> <span class="n">arrowprops</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;arrowstyle&quot;</span><span class="p">:</span> <span class="s2">&quot;-&gt;&quot;</span><span class="p">})</span>
+<span class="c1"># Phase 3: make the prohibited direction explicit.</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.03</span><span class="p">,</span> <span class="s2">&quot;Do not revise the pipeline after reading test results&quot;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#b91c1c&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/9d983ca9890d1322c8d448bda7ccd3bea9e7127bb7199817275b7a5593e5ddd5.png" src="../_images/9d983ca9890d1322c8d448bda7ccd3bea9e7127bb7199817275b7a5593e5ddd5.png" />
+</div>
+</div>
+</section>
+<section id="define-multiclass-metrics-once">
+<h2>7. Define multiclass metrics once<a class="headerlink" href="#define-multiclass-metrics-once" title="Permalink to this heading">#</a></h2>
+<p>Balanced accuracy and macro F1 use the <code class="docutils literal notranslate"><span class="pre">argmax</span></code> class. For ranking metrics, a seven-class problem becomes seven one-vs-rest questions. For example, melanoma is positive in one question and every other category is negative. We calculate an AUROC and AUPRC for each question, then average the seven values equally.</p>
+<p>Macro AUROC can be high even when the final classifier is only moderately useful. Each one-vs-rest negative set is large, and ranking can be reasonable without producing precise rare-class predictions. Macro AUPRC starts from the average one-vs-rest prevalence, which equals <span class="math notranslate nohighlight">\(1/7\)</span> when averaged across all classes, and is often more revealing here.</p>
+<p>Multiclass log loss evaluates the full probability vector and penalizes confident wrong predictions. Lower is better. It complements, rather than replaces, discrimination metrics.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">multiclass_metrics</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">probabilities</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Return complementary argmax, ranking, and probability metrics.&#39;&#39;&#39;</span>
+    <span class="c1"># Phase 1: argmax converts seven probabilities into one predicted class.</span>
+    <span class="n">predictions</span> <span class="o">=</span> <span class="n">probabilities</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">one_hot_labels</span> <span class="o">=</span> <span class="n">label_binarize</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N_CLASSES</span><span class="p">))</span>
+    <span class="c1"># Phase 2: one-vs-rest metrics are calculated per class and macro-averaged.</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">&quot;balanced_accuracy&quot;</span><span class="p">:</span> <span class="n">balanced_accuracy_score</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">predictions</span><span class="p">),</span>
+        <span class="s2">&quot;macro_F1&quot;</span><span class="p">:</span> <span class="n">f1_score</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">predictions</span><span class="p">,</span> <span class="n">average</span><span class="o">=</span><span class="s2">&quot;macro&quot;</span><span class="p">,</span> <span class="n">zero_division</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+        <span class="s2">&quot;macro_AUROC&quot;</span><span class="p">:</span> <span class="n">roc_auc_score</span><span class="p">(</span>
+            <span class="n">one_hot_labels</span><span class="p">,</span> <span class="n">probabilities</span><span class="p">,</span> <span class="n">average</span><span class="o">=</span><span class="s2">&quot;macro&quot;</span><span class="p">,</span> <span class="n">multi_class</span><span class="o">=</span><span class="s2">&quot;ovr&quot;</span>
+        <span class="p">),</span>
+        <span class="s2">&quot;macro_AUPRC&quot;</span><span class="p">:</span> <span class="n">average_precision_score</span><span class="p">(</span>
+            <span class="n">one_hot_labels</span><span class="p">,</span> <span class="n">probabilities</span><span class="p">,</span> <span class="n">average</span><span class="o">=</span><span class="s2">&quot;macro&quot;</span>
+        <span class="p">),</span>
+        <span class="c1"># Phase 3: log loss uses all seven probabilities and rewards calibration.</span>
+        <span class="s2">&quot;log_loss&quot;</span><span class="p">:</span> <span class="n">log_loss</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">probabilities</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N_CLASSES</span><span class="p">)),</span>
+    <span class="p">}</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">validation_macro_auprc</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">probabilities</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">multiclass_metrics</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">probabilities</span><span class="p">)[</span><span class="s2">&quot;macro_AUPRC&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="model-0-the-training-class-prior">
+<h2>8. Model 0: the training class prior<a class="headerlink" href="#model-0-the-training-class-prior" title="Permalink to this heading">#</a></h2>
+<p>The weakest model assigns every image the seven class fractions observed in training. Its argmax is always the majority class. It is valuable because it reveals how much performance comes from prevalence alone.</p>
+<p>Its balanced accuracy is <span class="math notranslate nohighlight">\(1/7\)</span>, macro AUROC is 0.5, and macro AUPRC is <span class="math notranslate nohighlight">\(1/7\)</span>. Log loss is not meaningless: assigning realistic training priors is less overconfident than assigning probability one to the majority class.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Phase 1: estimate seven probabilities from training labels only.</span>
+<span class="n">training_priors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">bincount</span><span class="p">(</span><span class="n">y_train</span><span class="p">,</span> <span class="n">minlength</span><span class="o">=</span><span class="n">N_CLASSES</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">y_train</span><span class="p">)</span>
+<span class="c1"># Phase 2: tile the same vector for every validation and test image.</span>
+<span class="n">validation_probabilities</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;Class prior&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">training_priors</span><span class="p">,</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">y_val</span><span class="p">),</span> <span class="mi">1</span><span class="p">))</span>
+<span class="p">}</span>
+<span class="n">test_probabilities</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;Class prior&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">training_priors</span><span class="p">,</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">y_test</span><span class="p">),</span> <span class="mi">1</span><span class="p">))</span>
+<span class="p">}</span>
+<span class="c1"># Phase 3: confirm that every probability vector is valid.</span>
+<span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">validation_probabilities</span><span class="p">[</span><span class="s2">&quot;Class prior&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="mf">1.0</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Training class priors:&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">training_priors</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Training class priors: [0.033 0.051 0.11  0.011 0.111 0.67  0.014]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="model-1-coarse-global-colour-texture-logistic-regression">
+<h2>9. Model 1: coarse global colour/texture logistic regression<a class="headerlink" href="#model-1-coarse-global-colour-texture-logistic-regression" title="Permalink to this heading">#</a></h2>
+<p>We compress each image into seven values: the mean and standard deviation of red, green, and blue pixels, plus overall intensity variation. Means summarize global colour. Standard deviations and total intensity variation are crude texture/contrast measures. They do not capture where a lesion sits, whether a border is irregular, or how local structures are arranged.</p>
+<p>Multinomial logistic regression combines the standardized features linearly to produce seven logits followed by a softmax. We try three regularization strengths and select the one with highest validation macro AUPRC. The scaler is refitted inside each training-only pipeline; no validation feature statistic is learned.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">GLOBAL_FEATURE_NAMES</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;red_mean&quot;</span><span class="p">,</span> <span class="s2">&quot;green_mean&quot;</span><span class="p">,</span> <span class="s2">&quot;blue_mean&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;red_sd&quot;</span><span class="p">,</span> <span class="s2">&quot;green_sd&quot;</span><span class="p">,</span> <span class="s2">&quot;blue_sd&quot;</span><span class="p">,</span> <span class="s2">&quot;overall_intensity_sd&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">coarse_global_features</span><span class="p">(</span><span class="n">images</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Compress RGB images to seven global colour/contrast summaries.&#39;&#39;&#39;</span>
+    <span class="c1"># Phase 1: summarize each colour channel independently over the 28x28 grid.</span>
+    <span class="n">channel_means</span> <span class="o">=</span> <span class="n">images</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="n">channel_sds</span> <span class="o">=</span> <span class="n">images</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="c1"># Phase 2: retain one crude global texture/contrast statistic.</span>
+    <span class="n">overall_sd</span> <span class="o">=</span> <span class="n">images</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">False</span><span class="p">)[:,</span> <span class="kc">None</span><span class="p">]</span>
+    <span class="c1"># Phase 3: concatenate to a conventional [images, features] table.</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">channel_means</span><span class="p">,</span> <span class="n">channel_sds</span><span class="p">,</span> <span class="n">overall_sd</span><span class="p">])</span>
+
+
+<span class="n">global_train</span> <span class="o">=</span> <span class="n">coarse_global_features</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+<span class="n">global_val</span> <span class="o">=</span> <span class="n">coarse_global_features</span><span class="p">(</span><span class="n">X_val</span><span class="p">)</span>
+<span class="n">global_test</span> <span class="o">=</span> <span class="n">coarse_global_features</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+
+<span class="n">global_candidates</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">C</span> <span class="ow">in</span> <span class="p">[</span><span class="mf">0.03</span><span class="p">,</span> <span class="mf">0.10</span><span class="p">,</span> <span class="mf">0.30</span><span class="p">]:</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span>
+        <span class="n">StandardScaler</span><span class="p">(),</span>
+        <span class="n">LogisticRegression</span><span class="p">(</span>
+            <span class="n">C</span><span class="o">=</span><span class="n">C</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">1_000</span><span class="p">,</span> <span class="n">class_weight</span><span class="o">=</span><span class="s2">&quot;balanced&quot;</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">SEED</span>
+        <span class="p">),</span>
+    <span class="p">)</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">global_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+    <span class="n">global_candidates</span><span class="p">[</span><span class="n">C</span><span class="p">]</span> <span class="o">=</span> <span class="n">model</span>
+
+<span class="c1"># Selection uses validation labels; test labels remain untouched.</span>
+<span class="n">global_validation_scores</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">C</span><span class="p">:</span> <span class="n">validation_macro_auprc</span><span class="p">(</span><span class="n">y_val</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">global_val</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">C</span><span class="p">,</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">global_candidates</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+<span class="p">}</span>
+<span class="n">selected_global_C</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">global_validation_scores</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">global_validation_scores</span><span class="o">.</span><span class="n">get</span><span class="p">)</span>
+<span class="n">global_model</span> <span class="o">=</span> <span class="n">global_candidates</span><span class="p">[</span><span class="n">selected_global_C</span><span class="p">]</span>
+<span class="n">validation_probabilities</span><span class="p">[</span><span class="s2">&quot;Global logistic&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">global_model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">global_val</span><span class="p">)</span>
+<span class="n">test_probabilities</span><span class="p">[</span><span class="s2">&quot;Global logistic&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">global_model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">global_test</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Validation macro AUPRC by C:&quot;</span><span class="p">,</span> <span class="p">{</span><span class="n">C</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="k">for</span> <span class="n">C</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">global_validation_scores</span><span class="o">.</span><span class="n">items</span><span class="p">()})</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Selected global-feature C:&quot;</span><span class="p">,</span> <span class="n">selected_global_C</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Validation macro AUPRC by C: {0.03: 0.303, 0.1: 0.316, 0.3: 0.32}
+Selected global-feature C: 0.3
+</pre></div>
+</div>
+</div>
+</div>
+<p>This model is intentionally coarse. If it improves substantially over the prior, colour and contrast alone contain dataset-specific signal. That signal is not necessarily a clinically valid lesion representation: acquisition conditions, rulers, colour charts, cropping, or source differences can also affect global summaries.</p>
+<p>Coefficients describe conditional associations in this fitted benchmark model. They should not be translated into statements such as “more red causes melanoma.”</p>
+</section>
+<section id="model-2-regularized-logistic-regression-on-flattened-pixels">
+<h2>10. Model 2: regularized logistic regression on flattened pixels<a class="headerlink" href="#model-2-regularized-logistic-regression-on-flattened-pixels" title="Permalink to this heading">#</a></h2>
+<p>Flattening creates 2,352 ordered inputs: 28 rows × 28 columns × 3 channels. A full pixel logistic model is still linear, but it can assign a different weight to each location and colour.</p>
+<p>To keep CPU runtime small and reduce collinearity, we fit a <strong>training-only 64-component PCA</strong> before logistic regression. PCA and logistic regression are both linear transformations, so the complete decision remains linear in the original flattened pixels. The PCA components are not labels or hand-engineered clinical features; they summarize directions of greatest training-image variation. <code class="docutils literal notranslate"><span class="pre">whiten=True</span></code> puts component scores on comparable scales.</p>
+<p>We fix 64 components before looking at validation results, then choose logistic regularization on validation macro AUPRC. The test set never fits centring, PCA, or coefficients.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Phase 1: flatten RGB grids while retaining a consistent pixel/channel order.</span>
+<span class="n">pixel_train</span> <span class="o">=</span> <span class="n">X_train</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">X_train</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">pixel_val</span> <span class="o">=</span> <span class="n">X_val</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">X_val</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">pixel_test</span> <span class="o">=</span> <span class="n">X_test</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">X_test</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Phase 2: fit a linear training-only compression once, then freeze it.</span>
+<span class="n">pixel_centrer</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">(</span><span class="n">with_std</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">centred_train</span> <span class="o">=</span> <span class="n">pixel_centrer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">pixel_train</span><span class="p">)</span>
+<span class="n">centred_val</span> <span class="o">=</span> <span class="n">pixel_centrer</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">pixel_val</span><span class="p">)</span>
+<span class="n">centred_test</span> <span class="o">=</span> <span class="n">pixel_centrer</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">pixel_test</span><span class="p">)</span>
+<span class="n">pixel_pca</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span>
+    <span class="n">n_components</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">whiten</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">svd_solver</span><span class="o">=</span><span class="s2">&quot;randomized&quot;</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">SEED</span>
+<span class="p">)</span>
+<span class="n">pixel_train_64</span> <span class="o">=</span> <span class="n">pixel_pca</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">centred_train</span><span class="p">)</span>
+<span class="n">pixel_val_64</span> <span class="o">=</span> <span class="n">pixel_pca</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">centred_val</span><span class="p">)</span>
+<span class="n">pixel_test_64</span> <span class="o">=</span> <span class="n">pixel_pca</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">centred_test</span><span class="p">)</span>
+
+<span class="c1"># Phase 3: choose only the regularization value using validation macro AUPRC.</span>
+<span class="n">pixel_candidates</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">C</span> <span class="ow">in</span> <span class="p">[</span><span class="mf">0.03</span><span class="p">,</span> <span class="mf">0.10</span><span class="p">,</span> <span class="mf">0.30</span><span class="p">]:</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span>
+        <span class="n">C</span><span class="o">=</span><span class="n">C</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">1_000</span><span class="p">,</span> <span class="n">class_weight</span><span class="o">=</span><span class="s2">&quot;balanced&quot;</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">SEED</span>
+    <span class="p">)</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">pixel_train_64</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+    <span class="n">pixel_candidates</span><span class="p">[</span><span class="n">C</span><span class="p">]</span> <span class="o">=</span> <span class="n">model</span>
+
+<span class="n">pixel_validation_scores</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">C</span><span class="p">:</span> <span class="n">validation_macro_auprc</span><span class="p">(</span><span class="n">y_val</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">pixel_val_64</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">C</span><span class="p">,</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">pixel_candidates</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+<span class="p">}</span>
+<span class="n">selected_pixel_C</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">pixel_validation_scores</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">pixel_validation_scores</span><span class="o">.</span><span class="n">get</span><span class="p">)</span>
+<span class="n">pixel_model</span> <span class="o">=</span> <span class="n">pixel_candidates</span><span class="p">[</span><span class="n">selected_pixel_C</span><span class="p">]</span>
+<span class="n">validation_probabilities</span><span class="p">[</span><span class="s2">&quot;Pixel logistic&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pixel_model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">pixel_val_64</span><span class="p">)</span>
+<span class="n">test_probabilities</span><span class="p">[</span><span class="s2">&quot;Pixel logistic&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pixel_model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">pixel_test_64</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;PCA variance retained: </span><span class="si">{</span><span class="n">pixel_pca</span><span class="o">.</span><span class="n">explained_variance_ratio_</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">:</span><span class="s2">.1%</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Validation macro AUPRC by C:&quot;</span><span class="p">,</span> <span class="p">{</span><span class="n">C</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="k">for</span> <span class="n">C</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">pixel_validation_scores</span><span class="o">.</span><span class="n">items</span><span class="p">()})</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Selected pixel-model C:&quot;</span><span class="p">,</span> <span class="n">selected_pixel_C</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>PCA variance retained: 97.2%
+Validation macro AUPRC by C: {0.03: 0.334, 0.1: 0.327, 0.3: 0.325}
+Selected pixel-model C: 0.03
+</pre></div>
+</div>
+</div>
+</div>
+<p>Pixel logistic regression uses more spatial information than the global model, but “more information” is not automatically “better information.” Alignment and acquisition artefacts can create location-specific associations. PCA also prioritizes common variation, which may underrepresent a rare but discriminative pattern. The comparison is empirical, not guaranteed to be monotonic.</p>
+</section>
+<section id="prepare-neural-tensors-without-leakage">
+<h2>11. Prepare neural tensors without leakage<a class="headerlink" href="#prepare-neural-tensors-without-leakage" title="Permalink to this heading">#</a></h2>
+<p>PyTorch convolution expects <code class="docutils literal notranslate"><span class="pre">[batch,</span> <span class="pre">channel,</span> <span class="pre">height,</span> <span class="pre">width]</span></code>, while the package stores <code class="docutils literal notranslate"><span class="pre">[image,</span> <span class="pre">height,</span> <span class="pre">width,</span> <span class="pre">channel]</span></code>. We transpose the axes after normalizing each RGB channel using training means and standard deviations only.</p>
+<p>The loss uses class weights proportional to inverse frequency raised to 0.65. This is milder than full inverse-frequency weighting: it asks the network to pay more attention to rare classes without letting a handful of rare samples dominate every gradient. The exponent is fixed before model comparison. Weighting changes the optimized objective and can affect calibration, which is why log loss remains in the final table.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Phase 1: estimate per-channel normalization from training pixels only.</span>
+<span class="n">training_rgb_mean</span> <span class="o">=</span> <span class="n">X_train</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="n">training_rgb_sd</span> <span class="o">=</span> <span class="n">X_train</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">neural_tensor</span><span class="p">(</span><span class="n">images</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Normalize with frozen training statistics and transpose to [N,C,H,W].&#39;&#39;&#39;</span>
+    <span class="n">normalized</span> <span class="o">=</span> <span class="p">(</span><span class="n">images</span> <span class="o">-</span> <span class="n">training_rgb_mean</span><span class="p">)</span> <span class="o">/</span> <span class="n">training_rgb_sd</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">normalized</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+
+
+<span class="n">X_train_nn</span> <span class="o">=</span> <span class="n">neural_tensor</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+<span class="n">X_val_nn</span> <span class="o">=</span> <span class="n">neural_tensor</span><span class="p">(</span><span class="n">X_val</span><span class="p">)</span>
+<span class="n">X_test_nn</span> <span class="o">=</span> <span class="n">neural_tensor</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+
+<span class="c1"># Phase 2: derive a moderate rare-class weight from training counts only.</span>
+<span class="n">training_counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">bincount</span><span class="p">(</span><span class="n">y_train</span><span class="p">,</span> <span class="n">minlength</span><span class="o">=</span><span class="n">N_CLASSES</span><span class="p">)</span>
+<span class="n">class_weights</span> <span class="o">=</span> <span class="p">(</span><span class="n">training_counts</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">/</span> <span class="n">training_counts</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.65</span>
+<span class="n">class_weights_tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">class_weights</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">DEVICE</span><span class="p">)</span>
+
+<span class="c1"># Phase 3: create the shared training dataset; loaders are seeded per model.</span>
+<span class="n">neural_training_data</span> <span class="o">=</span> <span class="n">TensorDataset</span><span class="p">(</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">X_train_nn</span><span class="p">),</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">y_train</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Neural input shape:&quot;</span><span class="p">,</span> <span class="n">X_train_nn</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Training RGB mean:&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">training_rgb_mean</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Class weights:&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">class_weights</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Neural input shape: (7007, 3, 28, 28)
+Training RGB mean: [0.764 0.537 0.561]
+Class weights: [ 7.14  5.32  3.24 14.11  3.21  1.   12.28]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="models-3-and-4-mlp-versus-cnn">
+<h2>12. Models 3 and 4: MLP versus CNN<a class="headerlink" href="#models-3-and-4-mlp-versus-cnn" title="Permalink to this heading">#</a></h2>
+<p>The MLP flattens the image, then learns nonlinear combinations through two hidden layers. It can represent interactions—for example, a pattern involving red values in two different locations—but it must learn spatial regularities from scratch.</p>
+<p>The CNN uses shared <span class="math notranslate nohighlight">\(3\times3\)</span> filters. A filter learned in one part of an image is reused elsewhere. Pooling reduces resolution; deeper filters combine earlier local responses; global average pooling summarizes each final feature map. This inductive bias usually suits images better and uses far fewer location-specific connections than an equivalently wide MLP.</p>
+<p>Both output seven <strong>logits</strong>. <code class="docutils literal notranslate"><span class="pre">CrossEntropyLoss</span></code> applies the softmax internally during training. We call <code class="docutils literal notranslate"><span class="pre">softmax</span></code> only during evaluation to obtain probabilities.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">ImageMLP</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;A nonlinear model that deliberately flattens the spatial grid.&#39;&#39;&#39;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="c1"># Phase 1: map 2,352 standardized pixels to a compact hidden representation.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">network</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Flatten</span><span class="p">(),</span>                         <span class="c1"># [B,3,28,28] -&gt; [B,2352]</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="mi">28</span> <span class="o">*</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">160</span><span class="p">),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Dropout</span><span class="p">(</span><span class="mf">0.35</span><span class="p">),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">160</span><span class="p">,</span> <span class="mi">64</span><span class="p">),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Dropout</span><span class="p">(</span><span class="mf">0.20</span><span class="p">),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="n">N_CLASSES</span><span class="p">),</span>             <span class="c1"># -&gt; [B,7] logits</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">images</span><span class="p">):</span>
+        <span class="c1"># Phase 2: no softmax here; cross-entropy expects raw logits.</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">network</span><span class="p">(</span><span class="n">images</span><span class="p">)</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">CompactCNN</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;A small RGB CNN with shared local filters.&#39;&#39;&#39;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="c1"># Phase 1: learn local filters while reducing 28x28 to 7x7.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">features</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="c1"># [B,3,28,28] -&gt; [B,24,28,28]</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">BatchNorm2d</span><span class="p">(</span><span class="mi">24</span><span class="p">),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">MaxPool2d</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span>                           <span class="c1"># -&gt; [B,24,14,14]</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="mi">48</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">BatchNorm2d</span><span class="p">(</span><span class="mi">48</span><span class="p">),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">MaxPool2d</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span>                           <span class="c1"># -&gt; [B,48,7,7]</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">48</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">BatchNorm2d</span><span class="p">(</span><span class="mi">64</span><span class="p">),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">AdaptiveAvgPool2d</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>                   <span class="c1"># -&gt; [B,64,1,1]</span>
+        <span class="p">)</span>
+        <span class="c1"># Phase 2: convert the learned 64-value representation to seven logits.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">classifier</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Flatten</span><span class="p">(),</span> <span class="n">nn</span><span class="o">.</span><span class="n">Dropout</span><span class="p">(</span><span class="mf">0.25</span><span class="p">),</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="n">N_CLASSES</span><span class="p">)</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">images</span><span class="p">):</span>
+        <span class="c1"># Phase 3: keep representation learning and classification visibly separate.</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">classifier</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">(</span><span class="n">images</span><span class="p">))</span>
+
+
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">model</span> <span class="ow">in</span> <span class="p">[(</span><span class="s2">&quot;MLP&quot;</span><span class="p">,</span> <span class="n">ImageMLP</span><span class="p">()),</span> <span class="p">(</span><span class="s2">&quot;Compact CNN&quot;</span><span class="p">,</span> <span class="n">CompactCNN</span><span class="p">())]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">:</span><span class="s2">11s</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="nb">sum</span><span class="p">(</span><span class="n">parameter</span><span class="o">.</span><span class="n">numel</span><span class="p">()</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">parameter</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">())</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2"> parameters&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>MLP        : 387,239 parameters
+Compact CNN: 39,527 parameters
+</pre></div>
+</div>
+</div>
+</div>
+<p>The CNN has a stronger image-specific assumption, not necessarily more parameters. Convolution shares weights across locations. The MLP’s first layer alone contains hundreds of thousands of separate pixel connections.</p>
+<p>We train both models with the same optimizer, batches, class weights, maximum 10 epochs, and validation-macro-AUPRC early stopping. Recreating the seeded loader inside the fitting function gives both models the same shuffle order. No test array enters the fitting function.</p>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nd">@torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">()</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">neural_probabilities</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">images</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">256</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Return seven-class softmax probabilities in memory-safe batches.&#39;&#39;&#39;</span>
+    <span class="c1"># Phase 1: disable dropout/BatchNorm updates and gradient storage.</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+    <span class="n">tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">images</span><span class="p">)</span>
+    <span class="n">outputs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="c1"># Phase 2: move only one batch at a time to the selected device.</span>
+    <span class="k">for</span> <span class="n">start</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">tensor</span><span class="p">),</span> <span class="n">batch_size</span><span class="p">):</span>
+        <span class="n">batch</span> <span class="o">=</span> <span class="n">tensor</span><span class="p">[</span><span class="n">start</span> <span class="p">:</span> <span class="n">start</span> <span class="o">+</span> <span class="n">batch_size</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">DEVICE</span><span class="p">)</span>
+        <span class="n">outputs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">model</span><span class="p">(</span><span class="n">batch</span><span class="p">),</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
+    <span class="c1"># Phase 3: restore original image order in one probability matrix.</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">outputs</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">fit_neural_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">max_epochs</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">patience</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Fit training images and restore the validation-best checkpoint.&#39;&#39;&#39;</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">DEVICE</span><span class="p">)</span>
+    <span class="c1"># Phase 1: recreate the seeded loader so architectures see the same shuffles.</span>
+    <span class="n">loader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span>
+        <span class="n">neural_training_data</span><span class="p">,</span>
+        <span class="n">batch_size</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span>
+        <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">generator</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">Generator</span><span class="p">()</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="n">SEED</span><span class="p">),</span>
+    <span class="p">)</span>
+    <span class="n">optimizer</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">AdamW</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span> <span class="n">weight_decay</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">)</span>
+    <span class="n">loss_function</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">CrossEntropyLoss</span><span class="p">(</span><span class="n">weight</span><span class="o">=</span><span class="n">class_weights_tensor</span><span class="p">)</span>
+
+    <span class="n">best_score</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+    <span class="n">best_state</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">stale_epochs</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">history</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;training_loss&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;validation_macro_AUPRC&quot;</span><span class="p">:</span> <span class="p">[]}</span>
+
+    <span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_epochs</span><span class="p">):</span>
+        <span class="c1"># Phase 2: update parameters using training mini-batches only.</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+        <span class="n">losses</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">batch_images</span><span class="p">,</span> <span class="n">batch_labels</span> <span class="ow">in</span> <span class="n">loader</span><span class="p">:</span>
+            <span class="n">batch_images</span> <span class="o">=</span> <span class="n">batch_images</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">DEVICE</span><span class="p">)</span>
+            <span class="n">batch_labels</span> <span class="o">=</span> <span class="n">batch_labels</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">DEVICE</span><span class="p">)</span>
+            <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+            <span class="n">loss</span> <span class="o">=</span> <span class="n">loss_function</span><span class="p">(</span><span class="n">model</span><span class="p">(</span><span class="n">batch_images</span><span class="p">),</span> <span class="n">batch_labels</span><span class="p">)</span>
+            <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">clip_grad_norm_</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">max_norm</span><span class="o">=</span><span class="mf">2.0</span><span class="p">)</span>
+            <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+            <span class="n">losses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">loss</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">cpu</span><span class="p">()))</span>
+
+        <span class="c1"># Validation chooses the checkpoint; test labels remain inaccessible.</span>
+        <span class="n">val_probabilities</span> <span class="o">=</span> <span class="n">neural_probabilities</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">X_val_nn</span><span class="p">)</span>
+        <span class="n">val_score</span> <span class="o">=</span> <span class="n">validation_macro_auprc</span><span class="p">(</span><span class="n">y_val</span><span class="p">,</span> <span class="n">val_probabilities</span><span class="p">)</span>
+        <span class="n">history</span><span class="p">[</span><span class="s2">&quot;training_loss&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">losses</span><span class="p">))</span>
+        <span class="n">history</span><span class="p">[</span><span class="s2">&quot;validation_macro_AUPRC&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">val_score</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">val_score</span> <span class="o">&gt;</span> <span class="n">best_score</span> <span class="o">+</span> <span class="mf">1e-4</span><span class="p">:</span>
+            <span class="n">best_score</span> <span class="o">=</span> <span class="n">val_score</span>
+            <span class="n">best_state</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">state_dict</span><span class="p">())</span>
+            <span class="n">stale_epochs</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">stale_epochs</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">stale_epochs</span> <span class="o">&gt;=</span> <span class="n">patience</span><span class="p">:</span>
+            <span class="k">break</span>
+
+    <span class="c1"># Phase 3: restore the best validation epoch, not simply the final epoch.</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">best_state</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">model</span><span class="p">,</span> <span class="n">history</span><span class="p">,</span> <span class="n">best_score</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">trained_neural_models</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">neural_histories</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="c1"># Phase 1: apply the identical training protocol to MLP and CNN.</span>
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="p">[(</span><span class="s2">&quot;MLP&quot;</span><span class="p">,</span> <span class="n">ImageMLP</span><span class="p">()),</span> <span class="p">(</span><span class="s2">&quot;Compact CNN&quot;</span><span class="p">,</span> <span class="n">CompactCNN</span><span class="p">())]:</span>
+    <span class="n">fitted</span><span class="p">,</span> <span class="n">history</span><span class="p">,</span> <span class="n">best_score</span> <span class="o">=</span> <span class="n">fit_neural_model</span><span class="p">(</span><span class="n">candidate</span><span class="p">)</span>
+    <span class="n">trained_neural_models</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">fitted</span>
+    <span class="n">neural_histories</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">history</span>
+    <span class="c1"># Phase 2: store validation probabilities for transparent model selection records.</span>
+    <span class="n">validation_probabilities</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">neural_probabilities</span><span class="p">(</span><span class="n">fitted</span><span class="p">,</span> <span class="n">X_val_nn</span><span class="p">)</span>
+    <span class="c1"># Phase 3: generate test probabilities only after the selected state is restored.</span>
+    <span class="n">test_probabilities</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">neural_probabilities</span><span class="p">(</span><span class="n">fitted</span><span class="p">,</span> <span class="n">X_test_nn</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">history</span><span class="p">[</span><span class="s1">&#39;training_loss&#39;</span><span class="p">])</span><span class="si">}</span><span class="s2"> epochs; &quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;best validation macro AUPRC=</span><span class="si">{</span><span class="n">best_score</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>MLP: 10 epochs; best validation macro AUPRC=0.412
+Compact CNN: 10 epochs; best validation macro AUPRC=0.502
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<p>Learning curves answer two different questions. Training loss shows whether optimization fits the weighted objective. Validation macro AUPRC shows whether one-vs-rest ranking transfers across all seven classes. Training loss can continue falling while the validation curve stalls; that is why the final epoch is not automatically the deployed epoch.</p>
+<p>Validation macro AUPRC is noisy because some classes have only a handful of examples. Early stopping reduces unnecessary overfitting but does not eliminate selection uncertainty.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Phase 1: place optimization and held-out selection on separate axes.</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mf">4.2</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">history</span> <span class="ow">in</span> <span class="n">neural_histories</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">epochs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">history</span><span class="p">[</span><span class="s2">&quot;training_loss&quot;</span><span class="p">])</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">epochs</span><span class="p">,</span> <span class="n">history</span><span class="p">[</span><span class="s2">&quot;training_loss&quot;</span><span class="p">],</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">epochs</span><span class="p">,</span> <span class="n">history</span><span class="p">[</span><span class="s2">&quot;validation_macro_AUPRC&quot;</span><span class="p">],</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
+<span class="c1"># Phase 2: label metrics precisely; the left curve is not test performance.</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Training optimization&quot;</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="s2">&quot;epoch&quot;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">&quot;weighted cross-entropy&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Validation model selection&quot;</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="s2">&quot;epoch&quot;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">&quot;macro AUPRC&quot;</span><span class="p">)</span>
+<span class="c1"># Phase 3: use matching formatting for a fair visual comparison.</span>
+<span class="k">for</span> <span class="n">axis</span> <span class="ow">in</span> <span class="n">axes</span><span class="p">:</span>
+    <span class="n">axis</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+    <span class="n">axis</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/98f2db13643cff760c1e9935627dca7f1ee9525d2d2f2748a120a65bebd94e98.png" src="../_images/98f2db13643cff760c1e9935627dca7f1ee9525d2d2f2748a120a65bebd94e98.png" />
+</div>
+</div>
+</section>
+<section id="final-locked-test-comparison">
+<h2>13. Final locked-test comparison<a class="headerlink" href="#final-locked-test-comparison" title="Permalink to this heading">#</a></h2>
+<p>All feature preprocessing, logistic regularization, neural weights, and stopping epochs are now frozen. We can open the official test labels once.</p>
+<p>No single number defines the winner. Balanced accuracy and macro F1 assess argmax classification; macro AUROC and AUPRC assess one-vs-rest ranking; log loss assesses the full probability vector. We expect a broad improvement from prior to learned image models and a further benefit from the CNN’s spatial bias—but not a perfect staircase or near-perfect performance.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">MODEL_ORDER</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Class prior&quot;</span><span class="p">,</span> <span class="s2">&quot;Global logistic&quot;</span><span class="p">,</span> <span class="s2">&quot;Pixel logistic&quot;</span><span class="p">,</span> <span class="s2">&quot;MLP&quot;</span><span class="p">,</span> <span class="s2">&quot;Compact CNN&quot;</span><span class="p">]</span>
+
+<span class="c1"># Phase 1: evaluate every frozen probability matrix with one shared function.</span>
+<span class="n">test_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="p">[</span>
+        <span class="p">{</span><span class="s2">&quot;model&quot;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span> <span class="o">**</span><span class="n">multiclass_metrics</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">test_probabilities</span><span class="p">[</span><span class="n">name</span><span class="p">])}</span>
+        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">MODEL_ORDER</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+<span class="n">display</span><span class="p">(</span>
+    <span class="n">test_results</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="p">{</span><span class="n">column</span><span class="p">:</span> <span class="s2">&quot;</span><span class="si">{:.3f}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">test_results</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">column</span> <span class="o">!=</span> <span class="s2">&quot;model&quot;</span><span class="p">}</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+
+<span class="c1"># Phase 2: compare the most imbalance-aware rank/classification metrics visually.</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">test_results</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;model&quot;</span><span class="p">)[[</span><span class="s2">&quot;balanced_accuracy&quot;</span><span class="p">,</span> <span class="s2">&quot;macro_F1&quot;</span><span class="p">,</span> <span class="s2">&quot;macro_AUPRC&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span>
+    <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mf">4.8</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;#2563eb&quot;</span><span class="p">,</span> <span class="s2">&quot;#16a34a&quot;</span><span class="p">,</span> <span class="s2">&quot;#f59e0b&quot;</span><span class="p">]</span>
+<span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">N_CLASSES</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;1/7 reference&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">ylim</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">&quot;test metric&quot;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Weak-to-strong ladder on official DermaMNIST&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">,</span> <span class="n">ncol</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;right&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Phase 3: print immediate numerical interpretation rather than leaving a bare table.</span>
+<span class="n">prior_ap</span> <span class="o">=</span> <span class="n">test_results</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">test_results</span><span class="o">.</span><span class="n">model</span> <span class="o">==</span> <span class="s2">&quot;Class prior&quot;</span><span class="p">,</span> <span class="s2">&quot;macro_AUPRC&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">cnn_ap</span> <span class="o">=</span> <span class="n">test_results</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">test_results</span><span class="o">.</span><span class="n">model</span> <span class="o">==</span> <span class="s2">&quot;Compact CNN&quot;</span><span class="p">,</span> <span class="s2">&quot;macro_AUPRC&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">best_balanced</span> <span class="o">=</span> <span class="n">test_results</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">test_results</span><span class="o">.</span><span class="n">balanced_accuracy</span><span class="o">.</span><span class="n">idxmax</span><span class="p">()]</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;Macro AUPRC rises from </span><span class="si">{</span><span class="n">prior_ap</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> for the class prior to </span><span class="si">{</span><span class="n">cnn_ap</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> &quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;for the CNN. Highest balanced accuracy is </span><span class="si">{</span><span class="n">best_balanced</span><span class="o">.</span><span class="n">balanced_accuracy</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> &quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;(</span><span class="si">{</span><span class="n">best_balanced</span><span class="o">.</span><span class="n">model</span><span class="si">}</span><span class="s2">). These are useful but clearly non-perfect internal results.&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style type="text/css">
+</style>
+<table id="T_ca2db">
+  <thead>
+    <tr>
+      <th class="blank level0" >&nbsp;</th>
+      <th id="T_ca2db_level0_col0" class="col_heading level0 col0" >model</th>
+      <th id="T_ca2db_level0_col1" class="col_heading level0 col1" >balanced_accuracy</th>
+      <th id="T_ca2db_level0_col2" class="col_heading level0 col2" >macro_F1</th>
+      <th id="T_ca2db_level0_col3" class="col_heading level0 col3" >macro_AUROC</th>
+      <th id="T_ca2db_level0_col4" class="col_heading level0 col4" >macro_AUPRC</th>
+      <th id="T_ca2db_level0_col5" class="col_heading level0 col5" >log_loss</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th id="T_ca2db_level0_row0" class="row_heading level0 row0" >0</th>
+      <td id="T_ca2db_row0_col0" class="data row0 col0" >Class prior</td>
+      <td id="T_ca2db_row0_col1" class="data row0 col1" >0.143</td>
+      <td id="T_ca2db_row0_col2" class="data row0 col2" >0.115</td>
+      <td id="T_ca2db_row0_col3" class="data row0 col3" >0.500</td>
+      <td id="T_ca2db_row0_col4" class="data row0 col4" >0.143</td>
+      <td id="T_ca2db_row0_col5" class="data row0 col5" >1.133</td>
+    </tr>
+    <tr>
+      <th id="T_ca2db_level0_row1" class="row_heading level0 row1" >1</th>
+      <td id="T_ca2db_row1_col0" class="data row1 col0" >Global logistic</td>
+      <td id="T_ca2db_row1_col1" class="data row1 col1" >0.436</td>
+      <td id="T_ca2db_row1_col2" class="data row1 col2" >0.320</td>
+      <td id="T_ca2db_row1_col3" class="data row1 col3" >0.817</td>
+      <td id="T_ca2db_row1_col4" class="data row1 col4" >0.337</td>
+      <td id="T_ca2db_row1_col5" class="data row1 col5" >1.457</td>
+    </tr>
+    <tr>
+      <th id="T_ca2db_level0_row2" class="row_heading level0 row2" >2</th>
+      <td id="T_ca2db_row2_col0" class="data row2 col0" >Pixel logistic</td>
+      <td id="T_ca2db_row2_col1" class="data row2 col1" >0.480</td>
+      <td id="T_ca2db_row2_col2" class="data row2 col2" >0.347</td>
+      <td id="T_ca2db_row2_col3" class="data row2 col3" >0.843</td>
+      <td id="T_ca2db_row2_col4" class="data row2 col4" >0.366</td>
+      <td id="T_ca2db_row2_col5" class="data row2 col5" >1.301</td>
+    </tr>
+    <tr>
+      <th id="T_ca2db_level0_row3" class="row_heading level0 row3" >3</th>
+      <td id="T_ca2db_row3_col0" class="data row3 col0" >MLP</td>
+      <td id="T_ca2db_row3_col1" class="data row3 col1" >0.482</td>
+      <td id="T_ca2db_row3_col2" class="data row3 col2" >0.429</td>
+      <td id="T_ca2db_row3_col3" class="data row3 col3" >0.885</td>
+      <td id="T_ca2db_row3_col4" class="data row3 col4" >0.411</td>
+      <td id="T_ca2db_row3_col5" class="data row3 col5" >0.881</td>
+    </tr>
+    <tr>
+      <th id="T_ca2db_level0_row4" class="row_heading level0 row4" >4</th>
+      <td id="T_ca2db_row4_col0" class="data row4 col0" >Compact CNN</td>
+      <td id="T_ca2db_row4_col1" class="data row4 col1" >0.483</td>
+      <td id="T_ca2db_row4_col2" class="data row4 col2" >0.423</td>
+      <td id="T_ca2db_row4_col3" class="data row4 col3" >0.896</td>
+      <td id="T_ca2db_row4_col4" class="data row4 col4" >0.463</td>
+      <td id="T_ca2db_row4_col5" class="data row4 col5" >0.841</td>
+    </tr>
+  </tbody>
+</table>
+</div><img alt="../_images/9a3375f14f373ea8ab482ccf605f4ead5140fa3bcdf9866107a1b41335f22e5f.png" src="../_images/9a3375f14f373ea8ab482ccf605f4ead5140fa3bcdf9866107a1b41335f22e5f.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Macro AUPRC rises from 0.143 for the class prior to 0.463 for the CNN. Highest balanced accuracy is 0.483 (Compact CNN). These are useful but clearly non-perfect internal results.
+</pre></div>
+</div>
+</div>
+</div>
+<section id="how-to-interpret-these-results">
+<h3>How to interpret these results<a class="headerlink" href="#how-to-interpret-these-results" title="Permalink to this heading">#</a></h3>
+<p>The central result is improvement without fantasy. The class prior cannot distinguish images. Coarse global summaries add dataset signal. Pixel logistic regression uses more of the image while remaining linear. The MLP adds nonlinearity, and the CNN adds a representation designed for local spatial structure. The CNN should be strongest on several macro metrics, but its results remain far from 1.0.</p>
+<p>A perfectly monotonic order is not required. The global model may beat the pixel model on a metric because colour summaries are data-efficient. Pixel PCA may discard low-variance discriminative detail. The MLP may improve macro AUPRC but not balanced accuracy because its probability ranking improves without changing enough argmax decisions. Differences of a few points can easily reflect sampling and training variation.</p>
+<p>Macro AUROC may look much higher than balanced accuracy or macro AUPRC. That is not contradictory. One-vs-rest AUROC asks whether positives tend to rank above a large negative set; it does not require precise probabilities or a correct seven-way argmax. In an imbalanced medical dataset, reporting only AUROC would create an overly flattering impression.</p>
+<p>These are internal benchmark results. They do not show performance for a new hospital, device, skin tone distribution, patient population, or clinical workflow.</p>
+</section>
+</section>
+<section id="per-class-results-reveal-what-macro-averages-hide">
+<h2>14. Per-class results reveal what macro averages hide<a class="headerlink" href="#per-class-results-reveal-what-macro-averages-hide" title="Permalink to this heading">#</a></h2>
+<p>Macro averages weight all classes equally but do not show which classes fail. We calculate each class’s support, argmax recall, and one-vs-rest AUPRC for the CNN. A class with only a few dozen test examples can have an unstable estimate; one error changes recall considerably.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cnn_probabilities</span> <span class="o">=</span> <span class="n">test_probabilities</span><span class="p">[</span><span class="s2">&quot;Compact CNN&quot;</span><span class="p">]</span>
+<span class="n">cnn_predictions</span> <span class="o">=</span> <span class="n">cnn_probabilities</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">one_hot_test</span> <span class="o">=</span> <span class="n">label_binarize</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N_CLASSES</span><span class="p">))</span>
+
+<span class="c1"># Phase 1: compute class-specific recalls from the multiclass confusion matrix.</span>
+<span class="n">matrix</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">cnn_predictions</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N_CLASSES</span><span class="p">))</span>
+<span class="n">per_class_recall</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">matrix</span><span class="p">)</span> <span class="o">/</span> <span class="n">matrix</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="c1"># Phase 2: calculate one-vs-rest AP separately instead of averaging immediately.</span>
+<span class="n">per_class_ap</span> <span class="o">=</span> <span class="n">average_precision_score</span><span class="p">(</span>
+    <span class="n">one_hot_test</span><span class="p">,</span> <span class="n">cnn_probabilities</span><span class="p">,</span> <span class="n">average</span><span class="o">=</span><span class="kc">None</span>
+<span class="p">)</span>
+<span class="n">per_class_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="n">CLASS_NAMES</span><span class="p">,</span>
+        <span class="s2">&quot;test_support&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">bincount</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">minlength</span><span class="o">=</span><span class="n">N_CLASSES</span><span class="p">),</span>
+        <span class="s2">&quot;argmax_recall&quot;</span><span class="p">:</span> <span class="n">per_class_recall</span><span class="p">,</span>
+        <span class="s2">&quot;one_vs_rest_AUPRC&quot;</span><span class="p">:</span> <span class="n">per_class_ap</span><span class="p">,</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+<span class="c1"># Phase 3: display support beside performance so rare-class uncertainty is visible.</span>
+<span class="n">display</span><span class="p">(</span><span class="n">per_class_results</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">format</span><span class="p">({</span><span class="s2">&quot;argmax_recall&quot;</span><span class="p">:</span> <span class="s2">&quot;</span><span class="si">{:.3f}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;one_vs_rest_AUPRC&quot;</span><span class="p">:</span> <span class="s2">&quot;</span><span class="si">{:.3f}</span><span class="s2">&quot;</span><span class="p">}))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style type="text/css">
+</style>
+<table id="T_4771e">
+  <thead>
+    <tr>
+      <th class="blank level0" >&nbsp;</th>
+      <th id="T_4771e_level0_col0" class="col_heading level0 col0" >class</th>
+      <th id="T_4771e_level0_col1" class="col_heading level0 col1" >test_support</th>
+      <th id="T_4771e_level0_col2" class="col_heading level0 col2" >argmax_recall</th>
+      <th id="T_4771e_level0_col3" class="col_heading level0 col3" >one_vs_rest_AUPRC</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th id="T_4771e_level0_row0" class="row_heading level0 row0" >0</th>
+      <td id="T_4771e_row0_col0" class="data row0 col0" >actinic keratoses and intraepithelial carcinoma</td>
+      <td id="T_4771e_row0_col1" class="data row0 col1" >66</td>
+      <td id="T_4771e_row0_col2" class="data row0 col2" >0.576</td>
+      <td id="T_4771e_row0_col3" class="data row0 col3" >0.359</td>
+    </tr>
+    <tr>
+      <th id="T_4771e_level0_row1" class="row_heading level0 row1" >1</th>
+      <td id="T_4771e_row1_col0" class="data row1 col0" >basal cell carcinoma</td>
+      <td id="T_4771e_row1_col1" class="data row1 col1" >103</td>
+      <td id="T_4771e_row1_col2" class="data row1 col2" >0.553</td>
+      <td id="T_4771e_row1_col3" class="data row1 col3" >0.429</td>
+    </tr>
+    <tr>
+      <th id="T_4771e_level0_row2" class="row_heading level0 row2" >2</th>
+      <td id="T_4771e_row2_col0" class="data row2 col0" >benign keratosis-like lesions</td>
+      <td id="T_4771e_row2_col1" class="data row2 col1" >220</td>
+      <td id="T_4771e_row2_col2" class="data row2 col2" >0.309</td>
+      <td id="T_4771e_row2_col3" class="data row2 col3" >0.466</td>
+    </tr>
+    <tr>
+      <th id="T_4771e_level0_row3" class="row_heading level0 row3" >3</th>
+      <td id="T_4771e_row3_col0" class="data row3 col0" >dermatofibroma</td>
+      <td id="T_4771e_row3_col1" class="data row3 col1" >23</td>
+      <td id="T_4771e_row3_col2" class="data row3 col2" >0.043</td>
+      <td id="T_4771e_row3_col3" class="data row3 col3" >0.151</td>
+    </tr>
+    <tr>
+      <th id="T_4771e_level0_row4" class="row_heading level0 row4" >4</th>
+      <td id="T_4771e_row4_col0" class="data row4 col0" >melanoma</td>
+      <td id="T_4771e_row4_col1" class="data row4 col1" >223</td>
+      <td id="T_4771e_row4_col2" class="data row4 col2" >0.305</td>
+      <td id="T_4771e_row4_col3" class="data row4 col3" >0.437</td>
+    </tr>
+    <tr>
+      <th id="T_4771e_level0_row5" class="row_heading level0 row5" >5</th>
+      <td id="T_4771e_row5_col0" class="data row5 col0" >melanocytic nevi</td>
+      <td id="T_4771e_row5_col1" class="data row5 col1" >1341</td>
+      <td id="T_4771e_row5_col2" class="data row5 col2" >0.870</td>
+      <td id="T_4771e_row5_col3" class="data row5 col3" >0.935</td>
+    </tr>
+    <tr>
+      <th id="T_4771e_level0_row6" class="row_heading level0 row6" >6</th>
+      <td id="T_4771e_row6_col0" class="data row6 col0" >vascular lesions</td>
+      <td id="T_4771e_row6_col1" class="data row6 col1" >29</td>
+      <td id="T_4771e_row6_col2" class="data row6 col2" >0.724</td>
+      <td id="T_4771e_row6_col3" class="data row6 col3" >0.461</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Phase 1: normalize rows so each true class contributes equally to the colour scale.</span>
+<span class="n">row_normalized</span> <span class="o">=</span> <span class="n">matrix</span> <span class="o">/</span> <span class="n">matrix</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+<span class="c1"># Phase 2: show confusions using abbreviated numeric class IDs for readability.</span>
+<span class="n">display_object</span> <span class="o">=</span> <span class="n">ConfusionMatrixDisplay</span><span class="p">(</span>
+    <span class="n">confusion_matrix</span><span class="o">=</span><span class="n">row_normalized</span><span class="p">,</span>
+    <span class="n">display_labels</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N_CLASSES</span><span class="p">),</span>
+<span class="p">)</span>
+<span class="n">display_object</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;Blues&quot;</span><span class="p">,</span> <span class="n">values_format</span><span class="o">=</span><span class="s2">&quot;.2f&quot;</span><span class="p">,</span> <span class="n">colorbar</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;CNN row-normalized confusion matrix&quot;</span><span class="p">)</span>
+<span class="c1"># Phase 3: provide the ID-to-name map beside the matrix.</span>
+<span class="n">legend_text</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">index</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">CLASS_NAMES</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">legend_text</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">ax</span><span class="o">.</span><span class="n">transAxes</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/3ec944646165fc24dbd9ea1d128a62ca8cc08557288d2949255268d7aa0499dc.png" src="../_images/3ec944646165fc24dbd9ea1d128a62ca8cc08557288d2949255268d7aa0499dc.png" />
+</div>
+</div>
+<p>The confusion matrix is row-normalized, so a rare class has the same visual row weight as the majority class. This is useful for error pattern inspection but should always be shown with support counts. The matrix describes association on this split; it does not reveal why a model confused two diagnoses or whether the source label was correct.</p>
+</section>
+<section id="inspect-feature-maps-carefully">
+<h2>15. Inspect feature maps carefully<a class="headerlink" href="#inspect-feature-maps-carefully" title="Permalink to this heading">#</a></h2>
+<p>A first-layer feature map shows where a learned filter responds for one image. It can diagnose dead filters or sensitivity to broad edges and colours. It is <strong>not</strong> a causal explanation, lesion segmentation, or proof that the network uses clinically valid evidence.</p>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Phase 1: select the first correctly classified melanoma example by a fixed rule.</span>
+<span class="n">melanoma_id</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">candidate_positions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">((</span><span class="n">y_test</span> <span class="o">==</span> <span class="n">melanoma_id</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">cnn_predictions</span> <span class="o">==</span> <span class="n">melanoma_id</span><span class="p">))</span>
+<span class="n">example_position</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">candidate_positions</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">candidate_positions</span><span class="p">)</span> <span class="k">else</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">(</span><span class="n">y_test</span> <span class="o">==</span> <span class="n">melanoma_id</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">example_tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">X_test_nn</span><span class="p">[</span><span class="n">example_position</span> <span class="p">:</span> <span class="n">example_position</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">DEVICE</span><span class="p">)</span>
+
+<span class="c1"># Phase 2: run only the first convolution and ReLU without storing gradients.</span>
+<span class="n">first_convolution</span> <span class="o">=</span> <span class="n">trained_neural_models</span><span class="p">[</span><span class="s2">&quot;Compact CNN&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">features</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+    <span class="n">maps</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">first_convolution</span><span class="p">(</span><span class="n">example_tensor</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+
+<span class="c1"># Phase 3: place the original image beside nine response maps.</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">))</span>
+<span class="n">axes</span><span class="o">.</span><span class="n">ravel</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">X_test</span><span class="p">[</span><span class="n">example_position</span><span class="p">])</span>
+<span class="n">axes</span><span class="o">.</span><span class="n">ravel</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Input&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="o">.</span><span class="n">ravel</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">map_index</span><span class="p">,</span> <span class="n">feature_map</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">maps</span><span class="p">[:</span><span class="mi">9</span><span class="p">],</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="n">axes</span><span class="o">.</span><span class="n">ravel</span><span class="p">()[</span><span class="n">map_index</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">feature_map</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;viridis&quot;</span><span class="p">)</span>
+    <span class="n">axes</span><span class="o">.</span><span class="n">ravel</span><span class="p">()[</span><span class="n">map_index</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Filter </span><span class="si">{</span><span class="n">map_index</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">axes</span><span class="o">.</span><span class="n">ravel</span><span class="p">()[</span><span class="n">map_index</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;First-layer responses: model diagnostic, not clinical explanation&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">1.02</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/0660d16eab9701e6e7b52f05ad5ddf144a791b41f489fef03bb5e6a344f71908.png" src="../_images/0660d16eab9701e6e7b52f05ad5ddf144a791b41f489fef03bb5e6a344f71908.png" />
+</div>
+</details>
+</div>
+</section>
+<section id="from-an-internal-benchmark-to-clinical-evidence">
+<h2>16. From an internal benchmark to clinical evidence<a class="headerlink" href="#from-an-internal-benchmark-to-clinical-evidence" title="Permalink to this heading">#</a></h2>
+<p>A deployment study would need much more than a higher macro AUPRC:</p>
+<p><strong>Intended use.</strong> Define the user, patient population, acquisition process, decision point, comparator, and consequence of each error. “Classify skin lesions” is not precise enough.</p>
+<p><strong>Data integrity.</strong> Resolve patient- and lesion-level duplicates; audit label verification, device and site metadata, missingness, preprocessing, and temporal leakage. Split at the patient or lesion level when appropriate.</p>
+<p><strong>External validation.</strong> Evaluate independent institutions, devices, geographic regions, later time periods, and relevant demographic and skin-tone groups. Report uncertainty and calibration, not only discrimination.</p>
+<p><strong>Human factors.</strong> Study how clinicians or patients interpret scores, whether automation bias changes decisions, how uncertainty and abstention are displayed, and what happens when the model disagrees with a human.</p>
+<p><strong>Prospective impact.</strong> Compare against actual care, measure downstream biopsies, delays, false reassurance, workload, equity, and patient-centred outcomes. A retrospective label metric is not a clinical benefit.</p>
+<p><strong>Governance and monitoring.</strong> Establish ownership, update control, incident reporting, audit logs, subgroup monitoring, drift thresholds, pause criteria, and retirement processes.</p>
+</section>
+<section id="knowledge-check-and-optional-extensions">
+<h2>17. Knowledge check and optional extensions<a class="headerlink" href="#knowledge-check-and-optional-extensions" title="Permalink to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Why can the majority model have high ordinary accuracy but balanced accuracy of <span class="math notranslate nohighlight">\(1/7\)</span>?</p></li>
+<li><p>What information is lost by the global features? What is lost by PCA?</p></li>
+<li><p>Why is PCA plus logistic regression still linear in the original pixels?</p></li>
+<li><p>Why can macro AUROC be high while macro AUPRC and balanced accuracy remain moderate?</p></li>
+<li><p>Which quantities are learned on training data, and which choices use validation data?</p></li>
+<li><p>Why would a patient- or lesion-level external split be more informative than this internal image split?</p></li>
+</ol>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+Optional coding extensions<div class="sd-summary-down docutils">
+<svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-down" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M5.22 8.72a.75.75 0 000 1.06l6.25 6.25a.75.75 0 001.06 0l6.25-6.25a.75.75 0 00-1.06-1.06L12 14.44 6.28 8.72a.75.75 0 00-1.06 0z"></path></svg></div>
+<div class="sd-summary-up docutils">
+<svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-up" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M18.78 15.28a.75.75 0 000-1.06l-6.25-6.25a.75.75 0 00-1.06 0l-6.25 6.25a.75.75 0 101.06 1.06L12 9.56l5.72 5.72a.75.75 0 001.06 0z"></path></svg></div>
+</summary><div class="sd-summary-content sd-card-body docutils">
+<ul class="simple">
+<li><p class="sd-card-text">Repeat MLP and CNN training over five seeds and plot rank instability.</p></li>
+<li><p class="sd-card-text">Bootstrap test images for an introductory uncertainty interval, then explain why lesion clustering may require cluster bootstrap.</p></li>
+<li><p class="sd-card-text">Add training-only horizontal/vertical flips and compare validation macro AUPRC and log loss.</p></li>
+<li><p class="sd-card-text">Calibrate one frozen model using validation data and assess test log loss.</p></li>
+<li><p class="sd-card-text">Compare macro, weighted, and micro averages and explain whose performance each emphasizes.</p></li>
+<li><p class="sd-card-text">Add an abstention rule selected on validation data, then report coverage and selective risk on test.</p></li>
+</ul>
+</div>
+</details></section>
+<section id="take-home-messages">
+<h2>18. Take-home messages<a class="headerlink" href="#take-home-messages" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Build a ladder that changes one representational capability at a time.</p></li>
+<li><p>Use official data provenance and stop visibly when the intended dataset is unavailable.</p></li>
+<li><p>For imbalanced multiclass tasks, report balanced accuracy, macro F1, per-class results, macro ranking metrics, and probability quality—not accuracy or AUROC alone.</p></li>
+<li><p>PCA, scaling, regularization, neural weights, and stopping epochs must respect train/validation/test roles.</p></li>
+<li><p>A CNN’s image-specific inductive bias can improve performance, but architecture alone does not guarantee a monotonic win.</p></li>
+<li><p>Moderate results with visible rare-class failures are more credible than near-perfect internal metrics.</p></li>
+<li><p>Internal benchmark performance is the beginning of evidence development, not permission for clinical use.</p></li>
+</ul>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Yang, J., Shi, R., Wei, D., et al. (2023). MedMNIST v2: A large-scale lightweight benchmark for 2D and 3D biomedical image classification. <em>Scientific Data, 10</em>, 41. <a class="reference external" href="https://doi.org/10.1038/s41597-022-01721-8">https://doi.org/10.1038/s41597-022-01721-8</a></p></li>
+<li><p>MedMNIST. <em>MedMNIST v2 documentation and dataset cards</em>. <a class="reference external" href="https://medmnist.com/v2">https://medmnist.com/v2</a></p></li>
+<li><p>Tschandl, P., Rosendahl, C., &amp; Kittler, H. (2018). The HAM10000 dataset: A large collection of multi-source dermatoscopic images of common pigmented skin lesions. <em>Scientific Data, 5</em>, 180161. <a class="reference external" href="https://doi.org/10.1038/sdata.2018.161">https://doi.org/10.1038/sdata.2018.161</a></p></li>
+<li><p>LeCun, Y., Bengio, Y., &amp; Hinton, G. (2015). Deep learning. <em>Nature, 521</em>, 436–444. <a class="reference external" href="https://doi.org/10.1038/nature14539">https://doi.org/10.1038/nature14539</a></p></li>
+<li><p>Esteva, A., Kuprel, B., Novoa, R. A., et al. (2017). Dermatologist-level classification of skin cancer with deep neural networks. <em>Nature, 542</em>, 115–118. <a class="reference external" href="https://doi.org/10.1038/nature21056">https://doi.org/10.1038/nature21056</a></p></li>
+<li><p>Winkler, J. K., Fink, C., Toberer, F., et al. (2019). Association between surgical skin markings in dermoscopic images and diagnostic performance of a deep learning convolutional neural network for melanoma recognition. <em>JAMA Dermatology, 155</em>(10), 1135–1141. <a class="reference external" href="https://doi.org/10.1001/jamadermatol.2019.1735">https://doi.org/10.1001/jamadermatol.2019.1735</a></p></li>
+<li><p>Daneshjou, R., Vodrahalli, K., Novoa, R. A., et al. (2022). Disparities in dermatology AI performance on a diverse, curated clinical image set. <em>Science Advances, 8</em>(32), eabq6147. <a class="reference external" href="https://doi.org/10.1126/sciadv.abq6147">https://doi.org/10.1126/sciadv.abq6147</a></p></li>
+<li><p>Collins, G. S., Moons, K. G. M., Dhiman, P., et al. (2024). TRIPOD+AI statement. <em>BMJ, 385</em>, e078378. <a class="reference external" href="https://doi.org/10.1136/bmj-2023-078378">https://doi.org/10.1136/bmj-2023-078378</a></p></li>
+</ol>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./M1S4"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../M1S1/M1S1nb.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Introduction to Machine Learning in Healthcare</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../M1S7/M1S7.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Time-Series Models for Healthcare</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#at-a-glance">At a glance</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">Learning objectives</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-does-each-rung-add">1. What does each rung add?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dataset-provenance-and-why-the-task-is-difficult">2. Dataset provenance and why the task is difficult</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reproducible-setup-and-official-data-only-loading">3. Reproducible setup and official-data-only loading</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#convert-the-package-arrays-and-audit-the-class-distribution">4. Convert the package arrays and audit the class distribution</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inspect-images-without-pretending-to-diagnose-them">5. Inspect images without pretending to diagnose them</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#protect-the-trainvalidationtest-boundary">6. Protect the train–validation–test boundary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#define-multiclass-metrics-once">7. Define multiclass metrics once</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-0-the-training-class-prior">8. Model 0: the training class prior</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-1-coarse-global-colour-texture-logistic-regression">9. Model 1: coarse global colour/texture logistic regression</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-2-regularized-logistic-regression-on-flattened-pixels">10. Model 2: regularized logistic regression on flattened pixels</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prepare-neural-tensors-without-leakage">11. Prepare neural tensors without leakage</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#models-3-and-4-mlp-versus-cnn">12. Models 3 and 4: MLP versus CNN</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#final-locked-test-comparison">13. Final locked-test comparison</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-interpret-these-results">How to interpret these results</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#per-class-results-reveal-what-macro-averages-hide">14. Per-class results reveal what macro averages hide</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inspect-feature-maps-carefully">15. Inspect feature maps carefully</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#from-an-internal-benchmark-to-clinical-evidence">16. From an internal benchmark to clinical evidence</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#knowledge-check-and-optional-extensions">17. Knowledge check and optional extensions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#take-home-messages">18. Take-home messages</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By T-CAIREM Trainee Affiliates
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

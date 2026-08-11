@@ -4,21 +4,28 @@
 format: jb-book
 root: intro
 parts:
-  - caption: Reference
-    chapters:
-    - file: markdown
-    - file: notebooks
-    - file: markdown-notebooks
   - caption: Algorithm Architectures 
     chapters:
-    - file: M2S1/M2S1md
+    - file: M1S0/M1S0
+      title: "Resources and Healthcare Data"
+    - file: M1S1/M1S1nb
       title: "Intro to Machine Learning in Healthcare"
-    - file: M2S1/M2S1nb
-      title: "Intro to Machine Learning in Healthcare NB"
-    - file: M1S6/M1S6md
-      title: "Image-Based Models"
     - file: M1S6/M1S6nb
-      title: "Image-Based Models NB"
+      title: "Image-Based Models"
+    - file: M1S4/M1S4
+      title: "Deep Learning / Feedforward Neural Networks"
+    - file: M1S7/M1S7
+      title: "Time Series Models"
+    - file: M1S12/M1S12
+      title: "Generative Models"
+    - file: M1S14/M1S14
+      title: "Agentic AI"
+  - caption: Model Development
+    chapters:
+    - file: M2S1/M2S1
+      title: "Approach to Model Development"
+    - file: M2S2/M2S2
+      title: "Feature Engineering"
   - caption: End Material
     chapters:
     - file: bibliographypage
