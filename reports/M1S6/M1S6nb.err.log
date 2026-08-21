@@ -26,11 +26,15 @@ nbclient.exceptions.CellExecutionError: An error occurred while executing the fo
 
 import random
 import sys
+from pathlib import Path
 from importlib.metadata import version, PackageNotFoundError
+import textwrap
 
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+from matplotlib.colors import ListedColormap
+from PIL import Image
 
 import torch
 from torch import nn
@@ -50,6 +54,19 @@ from sklearn.metrics import (
     roc_auc_score,
 )
 
+# Set parameters for figures
+plt.rcParams.update({
+    "font.size": 12,
+    "figure.titlesize": 20,
+    "figure.titleweight": "bold",
+    "axes.titlesize": 16,
+    # "axes.titleweight": "bold",
+    "axes.labelsize": 14,
+    "xtick.labelsize": 12,
+    "ytick.labelsize": 12,
+    "legend.fontsize": 12,
+})
+
 
 SEED = 21
 random.seed(SEED)
@@ -67,12 +84,12 @@ print(f"Using device: {device}")
 
 [1;31m---------------------------------------------------------------------------[0m
 [1;31mModuleNotFoundError[0m                       Traceback (most recent call last)
-Cell [1;32mIn[2], line 12[0m
-[0;32m      9[0m [38;5;28;01mimport[39;00m[38;5;250m [39m[38;5;21;01mmatplotlib[39;00m[38;5;21;01m.[39;00m[38;5;21;01mpyplot[39;00m[38;5;250m [39m[38;5;28;01mas[39;00m[38;5;250m [39m[38;5;21;01mplt[39;00m
-[0;32m     11[0m [38;5;28;01mimport[39;00m[38;5;250m [39m[38;5;21;01mtorch[39;00m
-[1;32m---> 12[0m [38;5;28;01mfrom[39;00m[38;5;250m [39m[38;5;21;01mtorch[39;00m[38;5;250m [39m[38;5;28;01mimport[39;00m nn
-[0;32m     13[0m [38;5;28;01mfrom[39;00m[38;5;250m [39m[38;5;21;01mtorch[39;00m[38;5;21;01m.[39;00m[38;5;21;01mutils[39;00m[38;5;21;01m.[39;00m[38;5;21;01mdata[39;00m[38;5;250m [39m[38;5;28;01mimport[39;00m DataLoader
-[0;32m     14[0m [38;5;28;01mfrom[39;00m[38;5;250m [39m[38;5;21;01mtorchvision[39;00m[38;5;250m [39m[38;5;28;01mimport[39;00m transforms
+Cell [1;32mIn[2], line 16[0m
+[0;32m     13[0m [38;5;28;01mfrom[39;00m[38;5;250m [39m[38;5;21;01mPIL[39;00m[38;5;250m [39m[38;5;28;01mimport[39;00m Image
+[0;32m     15[0m [38;5;28;01mimport[39;00m[38;5;250m [39m[38;5;21;01mtorch[39;00m
+[1;32m---> 16[0m [38;5;28;01mfrom[39;00m[38;5;250m [39m[38;5;21;01mtorch[39;00m[38;5;250m [39m[38;5;28;01mimport[39;00m nn
+[0;32m     17[0m [38;5;28;01mfrom[39;00m[38;5;250m [39m[38;5;21;01mtorch[39;00m[38;5;21;01m.[39;00m[38;5;21;01mutils[39;00m[38;5;21;01m.[39;00m[38;5;21;01mdata[39;00m[38;5;250m [39m[38;5;28;01mimport[39;00m DataLoader
+[0;32m     18[0m [38;5;28;01mfrom[39;00m[38;5;250m [39m[38;5;21;01mtorchvision[39;00m[38;5;250m [39m[38;5;28;01mimport[39;00m transforms
 
 File [1;32m~\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.8_qbz5n2kfra8p0\LocalCache\local-packages\Python38\site-packages\torch\nn\__init__.py:2[0m
 [0;32m      1[0m [38;5;66;03m# mypy: allow-untyped-defs[39;00m
