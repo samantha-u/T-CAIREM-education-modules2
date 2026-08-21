@@ -754,11 +754,11 @@ captum        : 0.9.0
 </div>
 <section id="visualize-an-image-and-its-pixel-values">
 <h3>Visualize an Image and Its Pixel Values<a class="headerlink" href="#visualize-an-image-and-its-pixel-values" title="Permalink to this heading">#</a></h3>
-<div class="cell tag_hide-cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell content</span>
-<span class="expanded">Hide code cell content</span>
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#| label: pixel-values-output</span>
@@ -809,16 +809,16 @@ captum        : 0.9.0
 </pre></div>
 </div>
 </div>
+</details>
 <div class="cell_output docutils container">
 <img alt="../_images/91ac73f9de17e62fec59c2bb69b007557ef67aea0bb5d0bb13a252dcab071673.png" src="../_images/91ac73f9de17e62fec59c2bb69b007557ef67aea0bb5d0bb13a252dcab071673.png" />
 </div>
-</details>
 </div>
-<div class="cell tag_hide-cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell content</span>
-<span class="expanded">Hide code cell content</span>
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#| label: pixel-range-output</span>
@@ -853,10 +853,10 @@ captum        : 0.9.0
 </pre></div>
 </div>
 </div>
+</details>
 <div class="cell_output docutils container">
 <img alt="../_images/dcfc707dff312941fc2b6aa2915b39310676bad53336423ce6861266d61d9a8b.png" src="../_images/dcfc707dff312941fc2b6aa2915b39310676bad53336423ce6861266d61d9a8b.png" />
 </div>
-</details>
 </div>
 <p>Images can be represented using different numerical ranges. For example, an 8-bit image commonly uses integer values from <strong>0 to 255</strong>, while the same image can be converted to floating-point values and scaled to <strong>0 to 1</strong>.</p>
 <p>Although the numerical values are different, the two images in <code class="xref std std-numref docutils literal notranslate"><span class="pre">fig-pixel-range</span></code> look the same because each range is mapped appropriately to grayscale when displayed.</p>
@@ -953,11 +953,11 @@ Answer<div class="sd-summary-down docutils">
 </div>
 <section id="compare-classification-detection-and-segmentation">
 <h3>Compare Classification, Detection, and Segmentation<a class="headerlink" href="#compare-classification-detection-and-segmentation" title="Permalink to this heading">#</a></h3>
-<div class="cell tag_hide-cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell content</span>
-<span class="expanded">Hide code cell content</span>
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#| label: image-tasks-output</span>
@@ -1124,10 +1124,10 @@ Answer<div class="sd-summary-down docutils">
 </pre></div>
 </div>
 </div>
+</details>
 <div class="cell_output docutils container">
 <img alt="../_images/a02319494e909dd28373c9d0e8f8a0b480365fe20706fa3409847adb27b5bd02.png" src="../_images/a02319494e909dd28373c9d0e8f8a0b480365fe20706fa3409847adb27b5bd02.png" />
 </div>
-</details>
 </div>
 <div class="info admonition">
 <p class="admonition-title">Important distinction</p>
@@ -1316,11 +1316,11 @@ Raw label:         [1]
 </section>
 <section id="visualize-examples-from-each-class">
 <h4>Visualize Examples from Each Class<a class="headerlink" href="#visualize-examples-from-each-class" title="Permalink to this heading">#</a></h4>
-<div class="cell tag_hide-cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell content</span>
-<span class="expanded">Hide code cell content</span>
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#| label: pneumoniamnist-examples-output</span>
@@ -1351,10 +1351,10 @@ Raw label:         [1]
 </pre></div>
 </div>
 </div>
+</details>
 <div class="cell_output docutils container">
 <img alt="../_images/d95c611008b0a9a04b55d2c2a61b0a712af69e7111c4121a6ae3329deaf63616.png" src="../_images/d95c611008b0a9a04b55d2c2a61b0a712af69e7111c4121a6ae3329deaf63616.png" />
 </div>
-</details>
 </div>
 <p>At a resolution of <span class="math notranslate nohighlight">\(28 \times 28\)</span> pixels, these images contain substantially less detail than the original clinical chest X-rays. Therefore, strong performance on this benchmark should not be interpreted as evidence that the model is ready for clinical use.</p>
 </section>
@@ -1447,11 +1447,11 @@ Raw label:         [1]
 </section>
 <section id="visualize-the-training-set-class-balance">
 <h4>Visualize the Training-Set Class Balance<a class="headerlink" href="#visualize-the-training-set-class-balance" title="Permalink to this heading">#</a></h4>
-<div class="cell tag_hide-cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell content</span>
-<span class="expanded">Hide code cell content</span>
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#| label: class-balance-output</span>
@@ -1505,10 +1505,10 @@ Raw label:         [1]
 </pre></div>
 </div>
 </div>
+</details>
 <div class="cell_output docutils container">
 <img alt="../_images/432e1ccb192ec8b9923a0173806daa7ec4c1e05626fe6ad6f2fb7b6f33958f09.png" src="../_images/432e1ccb192ec8b9923a0173806daa7ec4c1e05626fe6ad6f2fb7b6f33958f09.png" />
 </div>
-</details>
 </div>
 <div class="tip admonition">
 <p class="admonition-title">Check your understanding</p>
@@ -1620,11 +1620,11 @@ X_{i+m,j+n}K_{m,n} + b\]</div>
 </div>
 <section id="apply-example-kernels-to-an-image">
 <h3>Apply Example Kernels to an Image<a class="headerlink" href="#apply-example-kernels-to-an-image" title="Permalink to this heading">#</a></h3>
-<div class="cell tag_hide-cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell content</span>
-<span class="expanded">Hide code cell content</span>
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#| label: fixed-kernels-output</span>
@@ -1723,10 +1723,10 @@ X_{i+m,j+n}K_{m,n} + b\]</div>
 </pre></div>
 </div>
 </div>
+</details>
 <div class="cell_output docutils container">
 <img alt="../_images/068f261e6b6329cd3c348c40e36ca1c6b8b8e09b448621ea36612952efd8d183.png" src="../_images/068f261e6b6329cd3c348c40e36ca1c6b8b8e09b448621ea36612952efd8d183.png" />
 </div>
-</details>
 </div>
 <p>After convolution, CNNs commonly use:</p>
 <ul class="simple">
@@ -2158,11 +2158,11 @@ Epoch 10/10 | training loss: 0.0899 | validation loss: 0.0954
 <p>A widening gap in which training loss continues to improve while validation loss worsens can indicate overfitting. Loss curves are useful, but they do not replace evaluation using clinically relevant metrics.</p>
 <section id="visualize-training-and-validation-loss">
 <h4>Visualize Training and Validation Loss<a class="headerlink" href="#visualize-training-and-validation-loss" title="Permalink to this heading">#</a></h4>
-<div class="cell tag_hide-cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell content</span>
-<span class="expanded">Hide code cell content</span>
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#| label: training-curves-output</span>
@@ -2217,10 +2217,10 @@ Epoch 10/10 | training loss: 0.0899 | validation loss: 0.0954
 </pre></div>
 </div>
 </div>
+</details>
 <div class="cell_output docutils container">
 <img alt="../_images/908b9bf6fd56722abdc81434731101bea88d0418d6ac6b0774743d1d4fc8825d.png" src="../_images/908b9bf6fd56722abdc81434731101bea88d0418d6ac6b0774743d1d4fc8825d.png" />
 </div>
-</details>
 </div>
 <div class="question admonition">
 <p class="admonition-title">Reflection</p>
@@ -2475,11 +2475,11 @@ Probability range: 0.000 to 1.000
 </section>
 <section id="visualize-the-confusion-matrix">
 <h3>Visualize the Confusion Matrix<a class="headerlink" href="#visualize-the-confusion-matrix" title="Permalink to this heading">#</a></h3>
-<div class="cell tag_hide-cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell content</span>
-<span class="expanded">Hide code cell content</span>
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#| label: confusion-matrix-output</span>
@@ -2540,19 +2540,19 @@ Probability range: 0.000 to 1.000
 </pre></div>
 </div>
 </div>
+</details>
 <div class="cell_output docutils container">
 <img alt="../_images/4f101ee92253e6d344e20fa4931b6cdedaaa7ef445a8638ddf752bb0fa077817.png" src="../_images/4f101ee92253e6d344e20fa4931b6cdedaaa7ef445a8638ddf752bb0fa077817.png" />
 </div>
-</details>
 </div>
 </section>
 <section id="visualize-the-receiver-operating-characteristic-curve">
 <h3>Visualize the Receiver Operating Characteristic Curve<a class="headerlink" href="#visualize-the-receiver-operating-characteristic-curve" title="Permalink to this heading">#</a></h3>
-<div class="cell tag_hide-cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell content</span>
-<span class="expanded">Hide code cell content</span>
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#| label: roc-curve-output</span>
@@ -2605,10 +2605,10 @@ Probability range: 0.000 to 1.000
 </pre></div>
 </div>
 </div>
+</details>
 <div class="cell_output docutils container">
 <img alt="../_images/0a86f26e9da062f88ba037ff49ebe81d34d76abab97e2b52aa6de6d55a62704f.png" src="../_images/0a86f26e9da062f88ba037ff49ebe81d34d76abab97e2b52aa6de6d55a62704f.png" />
 </div>
-</details>
 </div>
 </section>
 <section id="examine-the-decision-threshold">
@@ -2616,11 +2616,11 @@ Probability range: 0.000 to 1.000
 <p>The predicted probability must be converted into a class decision using a threshold. Changing the threshold changes the balance between sensitivity and specificity.</p>
 <section id="examine-sensitivity-and-specificity-across-thresholds">
 <h4>Examine Sensitivity and Specificity Across Thresholds<a class="headerlink" href="#examine-sensitivity-and-specificity-across-thresholds" title="Permalink to this heading">#</a></h4>
-<div class="cell tag_hide-cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell content</span>
-<span class="expanded">Hide code cell content</span>
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#| label: threshold-tradeoff-output</span>
@@ -2702,10 +2702,10 @@ Probability range: 0.000 to 1.000
 </pre></div>
 </div>
 </div>
+</details>
 <div class="cell_output docutils container">
 <img alt="../_images/2483bcac58dc804dcecf3340fb53370fb2d3544926456678adfcc76d9e256293.png" src="../_images/2483bcac58dc804dcecf3340fb53370fb2d3544926456678adfcc76d9e256293.png" />
 </div>
-</details>
 </div>
 </section>
 </section>
@@ -2813,11 +2813,11 @@ Answer<div class="sd-summary-down docutils">
 </section>
 <section id="review-false-positive-predictions">
 <h4>Review False-Positive Predictions<a class="headerlink" href="#review-false-positive-predictions" title="Permalink to this heading">#</a></h4>
-<div class="cell tag_hide-cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell content</span>
-<span class="expanded">Hide code cell content</span>
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#| label: false-positive-predictions-output</span>
@@ -2832,19 +2832,19 @@ Answer<div class="sd-summary-down docutils">
 </pre></div>
 </div>
 </div>
+</details>
 <div class="cell_output docutils container">
 <img alt="../_images/799fd7e59fbb508062dab03a3edca90fa4d958d186a5dd7490db8bac545cead2.png" src="../_images/799fd7e59fbb508062dab03a3edca90fa4d958d186a5dd7490db8bac545cead2.png" />
 </div>
-</details>
 </div>
 </section>
 <section id="review-false-negative-predictions">
 <h4>Review False-Negative Predictions<a class="headerlink" href="#review-false-negative-predictions" title="Permalink to this heading">#</a></h4>
-<div class="cell tag_hide-cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell content</span>
-<span class="expanded">Hide code cell content</span>
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#| label: false-negative-predictions-output</span>
@@ -2860,10 +2860,10 @@ Answer<div class="sd-summary-down docutils">
 </pre></div>
 </div>
 </div>
+</details>
 <div class="cell_output docutils container">
 <img alt="../_images/867c7b46400651bc21d066461244933065fbbe09d5697f012d5a037eb7b2f4b3.png" src="../_images/867c7b46400651bc21d066461244933065fbbe09d5697f012d5a037eb7b2f4b3.png" />
 </div>
-</details>
 </div>
 <div class="question admonition">
 <p class="admonition-title">Reflection</p>
@@ -2886,11 +2886,11 @@ Answer<div class="sd-summary-down docutils">
 <p>The code below uses <a class="reference external" href="https://captum.ai/">Captum</a> to generate a Grad-CAM map for one test image.</p>
 <section id="generate-and-visualize-a-grad-cam-heatmap">
 <h3>Generate and Visualize a Grad-CAM Heatmap<a class="headerlink" href="#generate-and-visualize-a-grad-cam-heatmap" title="Permalink to this heading">#</a></h3>
-<div class="cell tag_hide-cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell content</span>
-<span class="expanded">Hide code cell content</span>
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#| label: gradcam-output</span>
@@ -2967,11 +2967,11 @@ Answer<div class="sd-summary-down docutils">
 </pre></div>
 </div>
 </div>
+</details>
 <div class="cell_output docutils container">
 <img alt="../_images/7b96f6be8e1de48e3ba34cb40b51709bcfbd98545406db59bceaa07df6640954.png" src="../_images/7b96f6be8e1de48e3ba34cb40b51709bcfbd98545406db59bceaa07df6640954.png" />
 <img alt="../_images/7b96f6be8e1de48e3ba34cb40b51709bcfbd98545406db59bceaa07df6640954.png" src="../_images/7b96f6be8e1de48e3ba34cb40b51709bcfbd98545406db59bceaa07df6640954.png" />
 </div>
-</details>
 </div>
 </section>
 </section>
