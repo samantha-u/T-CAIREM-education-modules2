@@ -415,7 +415,7 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#inspect-image-dimensions-and-pixel-values">3.2 Inspect image dimensions and pixel values</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Inspect Image Dimensions and Pixel Values</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Inspect Image Dimensions and Pixel Values</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#visualize-examples-from-each-class">Visualize Examples from Each Class</a></li>
 </ul>
 </li>
@@ -435,7 +435,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calculate-the-convolutional-output-size">Calculate the Convolutional Output Size</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modern-image-model-families">5. Modern Image Model Families</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#image-based-model-families">5. Image-Based Model Families</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transfer-learning">6. Transfer Learning</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#guided-pneumoniamnist-classification-workflow">7. Guided PneumoniaMNIST Classification Workflow</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-data-loaders">7.1 Create data loaders</a><ul class="nav section-nav flex-column">
@@ -471,6 +471,7 @@ document.write(`
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#examine-sensitivity-and-specificity-across-thresholds">Examine Sensitivity and Specificity Across Thresholds</a></li>
 </ul>
 </li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#choosing-a-decision-threshold">Choosing a Decision Threshold</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#review-false-positives-and-false-negatives">8.2 Review false positives and false negatives</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#define-helper-functions-for-reviewing-classification-errors">Define Helper Functions for Reviewing Classification Errors</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#review-false-positive-predictions">Review False-Positive Predictions</a></li>
@@ -513,10 +514,10 @@ document.write(`
 <p><strong>Content creators:</strong> <a class="reference external" href="https://github.com/electronjia">Mahri</a></p>
 <div class="tip admonition">
 <p class="admonition-title">Chapter Overview</p>
-<p>By the end of this module, learners should be able to:</p>
+<p>By the end of this module, you should be able to:</p>
 <ul class="simple">
 <li><p>Describe how digital images are represented as pixel arrays or tensors, including height, width, channels, and batch dimensions.</p></li>
-<li><p>Differentiate <strong>image classification</strong>, <strong>object detection</strong>, and <strong>image segmentation</strong>, and connect each task to a healthcare use case.</p></li>
+<li><p>Differentiate image classification, object detection, and image segmentation, and connect each task to a healthcare use case.</p></li>
 <li><p>Explain at a high level how convolutional neural networks (CNNs) learn spatial features and how transfer learning can reduce the amount of task-specific training data required.</p></li>
 <li><p>Build and evaluate a basic image classifier using a small, public biomedical image dataset.</p></li>
 <li><p>Critically assess image-based models for data leakage, class imbalance, shortcut learning, domain shift, interpretability limitations, and lack of clinical generalizability.</p></li>
@@ -583,11 +584,15 @@ document.write(`
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">importlib.metadata</span><span class="w"> </span><span class="kn">import</span> <span class="n">version</span><span class="p">,</span> <span class="n">PackageNotFoundError</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">textwrap</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.colors</span><span class="w"> </span><span class="kn">import</span> <span class="n">ListedColormap</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">PIL</span><span class="w"> </span><span class="kn">import</span> <span class="n">Image</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">torch</span><span class="w"> </span><span class="kn">import</span> <span class="n">nn</span>
@@ -607,6 +612,19 @@ document.write(`
     <span class="n">roc_auc_score</span><span class="p">,</span>
 <span class="p">)</span>
 
+<span class="c1"># Set parameters for figures</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+    <span class="s2">&quot;font.size&quot;</span><span class="p">:</span> <span class="mi">12</span><span class="p">,</span>
+    <span class="s2">&quot;figure.titlesize&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
+    <span class="s2">&quot;figure.titleweight&quot;</span><span class="p">:</span> <span class="s2">&quot;bold&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;axes.titlesize&quot;</span><span class="p">:</span> <span class="mi">16</span><span class="p">,</span>
+    <span class="c1"># &quot;axes.titleweight&quot;: &quot;bold&quot;,</span>
+    <span class="s2">&quot;axes.labelsize&quot;</span><span class="p">:</span> <span class="mi">14</span><span class="p">,</span>
+    <span class="s2">&quot;xtick.labelsize&quot;</span><span class="p">:</span> <span class="mi">12</span><span class="p">,</span>
+    <span class="s2">&quot;ytick.labelsize&quot;</span><span class="p">:</span> <span class="mi">12</span><span class="p">,</span>
+    <span class="s2">&quot;legend.fontsize&quot;</span><span class="p">:</span> <span class="mi">12</span><span class="p">,</span>
+<span class="p">})</span>
+
 
 <span class="n">SEED</span> <span class="o">=</span> <span class="mi">21</span>
 <span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">SEED</span><span class="p">)</span>
@@ -624,12 +642,12 @@ document.write(`
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">line</span> <span class="mi">12</span>
-<span class="g g-Whitespace">      </span><span class="mi">9</span> <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
-<span class="g g-Whitespace">     </span><span class="mi">11</span> <span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
-<span class="ne">---&gt; </span><span class="mi">12</span> <span class="kn">from</span><span class="w"> </span><span class="nn">torch</span><span class="w"> </span><span class="kn">import</span> <span class="n">nn</span>
-<span class="g g-Whitespace">     </span><span class="mi">13</span> <span class="kn">from</span><span class="w"> </span><span class="nn">torch.utils.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataLoader</span>
-<span class="g g-Whitespace">     </span><span class="mi">14</span> <span class="kn">from</span><span class="w"> </span><span class="nn">torchvision</span><span class="w"> </span><span class="kn">import</span> <span class="n">transforms</span>
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">line</span> <span class="mi">16</span>
+<span class="g g-Whitespace">     </span><span class="mi">13</span> <span class="kn">from</span><span class="w"> </span><span class="nn">PIL</span><span class="w"> </span><span class="kn">import</span> <span class="n">Image</span>
+<span class="g g-Whitespace">     </span><span class="mi">15</span> <span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="ne">---&gt; </span><span class="mi">16</span> <span class="kn">from</span><span class="w"> </span><span class="nn">torch</span><span class="w"> </span><span class="kn">import</span> <span class="n">nn</span>
+<span class="g g-Whitespace">     </span><span class="mi">17</span> <span class="kn">from</span><span class="w"> </span><span class="nn">torch.utils.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataLoader</span>
+<span class="g g-Whitespace">     </span><span class="mi">18</span> <span class="kn">from</span><span class="w"> </span><span class="nn">torchvision</span><span class="w"> </span><span class="kn">import</span> <span class="n">transforms</span>
 
 <span class="n">File</span> <span class="o">~</span>\<span class="n">AppData</span>\<span class="n">Local</span>\<span class="n">Packages</span>\<span class="n">PythonSoftwareFoundation</span><span class="o">.</span><span class="n">Python</span><span class="mf">.3.8</span><span class="n">_qbz5n2kfra8p0</span>\<span class="n">LocalCache</span>\<span class="n">local</span><span class="o">-</span><span class="n">packages</span>\<span class="n">Python38</span>\<span class="n">site</span><span class="o">-</span><span class="n">packages</span>\<span class="n">torch</span>\<span class="n">nn</span>\<span class="fm">__init__</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">2</span>
 <span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># mypy: allow-untyped-defs</span>
@@ -709,6 +727,13 @@ captum        : 0.9.0
 </section>
 <section id="what-makes-image-data-different">
 <h2>1. What Makes Image Data Different?<a class="headerlink" href="#what-makes-image-data-different" title="Permalink to this heading">#</a></h2>
+<p>Image data are widely used in healthcare and biomedical research. Examples include radiological imaging, histopathology, clinical photography, endoscopy, and dental imaging. Although these images come from different clinical settings and imaging technologies, machine-learning models ultimately process them as numerical arrays.</p>
+<figure class="align-center" id="fig-medmnist-examples">
+<a class="reference internal image-reference" href="../_images/medmnist_examples_224.png"><img alt="../_images/medmnist_examples_224.png" src="../_images/medmnist_examples_224.png" style="width: 95%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 4 </span><span class="caption-text">Examples of healthcare and biomedical image data from MedMNIST. Sources: <span id="id1">[<a class="reference internal" href="../bibliographypage.html#id15" title="Jiancheng Yang, Rui Shi, Donglai Wei, Zequan Liu, Lin Zhao, Bilian Ke, Hanspeter Pfister, and Bingbing Ni. Medmnist v2-a large-scale lightweight benchmark for 2d and 3d biomedical image classification. Scientific Data, 10(1):41, 2023.">Yang <em>et al.</em>, 2023</a>, <a class="reference internal" href="../bibliographypage.html#id16" title="Daniel S. Kermany, Michael Goldbaum, Wenjia Cai, Carolina C. S. Valentim, Huiying Liang, Sally L. Baxter, Alex McKeown, Ge Yang, Xiaokang Wu, Fangbing Yan, Justin Dong, Made K. Prasadha, Jacqueline Pei, Magdalene Y. L. Ting, Jie Zhu, Christina Li, Sierra Hewett, Jason Dong, Ian Ziyar, Alexander Shi, Runze Zhang, Lianghong Zheng, Rui Hou, William Shi, Xin Fu, Yaou Duan, Van Anh Nguyen Huu, Cindy Wen, Edward D. Zhang, Charlotte L. Zhang, Oulan Li, Xiaobo Wang, Michael A. Singer, Xiaodong Sun, Jie Xu, Ali Tafreshi, M. A. Lewis, Huimin Xia, and Kang Zhang. Identifying medical diagnoses and treatable diseases by image-based deep learning. Cell, 172(5):1122–1131.e9, February 2018.">Kermany <em>et al.</em>, 2018</a>]</span>.</span><a class="headerlink" href="#fig-medmnist-examples" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
 <p>Images consist of <strong>spatially organized pixels</strong>. Neighbouring pixels are often related, and the location of a visual pattern within an image may be important.</p>
 <p>A grayscale image can be represented as a two-dimensional array:</p>
 <div class="math notranslate nohighlight" id="equation-grayscale-image-shape">
@@ -729,16 +754,17 @@ captum        : 0.9.0
 </div>
 <section id="visualize-an-image-and-its-pixel-values">
 <h3>Visualize an Image and Its Pixel Values<a class="headerlink" href="#visualize-an-image-and-its-pixel-values" title="Permalink to this heading">#</a></h3>
-<div class="cell tag_hide-cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell content</span>
-<span class="expanded">Hide code cell content</span>
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#| label: pixel-values-output</span>
 <span class="c1"># Create a small synthetic grayscale image to connect pixel values,</span>
 <span class="c1"># array dimensions, and displayed intensity.</span>
+
 
 <span class="n">example_image</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
     <span class="p">[</span>
@@ -752,6 +778,8 @@ captum        : 0.9.0
     <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">,</span>
 <span class="p">)</span>
 
+<span class="n">threshold</span> <span class="o">=</span> <span class="mi">150</span>
+
 <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
 
 <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">example_image</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">255</span><span class="p">)</span>
@@ -759,33 +787,80 @@ captum        : 0.9.0
 <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
 
 <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">example_image</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">255</span><span class="p">)</span>
+
 <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">example_image</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
     <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">example_image</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">example_image</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">]</span>
+
         <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">(</span>
-            <span class="n">col</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">example_image</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">]),</span>
-            <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span>
+            <span class="n">col</span><span class="p">,</span>
+            <span class="n">row</span><span class="p">,</span>
+            <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">),</span>
+            <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span>
+            <span class="n">va</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span>
+            <span class="n">color</span><span class="o">=</span><span class="s2">&quot;white&quot;</span> <span class="k">if</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="n">threshold</span> <span class="k">else</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span>
         <span class="p">)</span>
+
 <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Underlying pixel values&quot;</span><span class="p">)</span>
 <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([])</span>
 <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([])</span>
 
 <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
-<span class="n">fig</span>
 </pre></div>
 </div>
 </div>
+</details>
 <div class="cell_output docutils container">
-<img alt="../_images/2aca3e32b4d94aeb28ddb31d1ae8cb1e3ad1f8e8d8ccbd19040f07a0732ea330.png" src="../_images/2aca3e32b4d94aeb28ddb31d1ae8cb1e3ad1f8e8d8ccbd19040f07a0732ea330.png" />
+<img alt="../_images/91ac73f9de17e62fec59c2bb69b007557ef67aea0bb5d0bb13a252dcab071673.png" src="../_images/91ac73f9de17e62fec59c2bb69b007557ef67aea0bb5d0bb13a252dcab071673.png" />
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#| label: pixel-range-output</span>
+<span class="c1"># Load a higher-resolution PneumoniaMNIST image for visualization only</span>
+<span class="n">pneumonia_224</span> <span class="o">=</span> <span class="n">medmnist</span><span class="o">.</span><span class="n">PneumoniaMNIST</span><span class="p">(</span>
+    <span class="n">split</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">,</span>
+    <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">size</span><span class="o">=</span><span class="mi">224</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">image</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="n">pneumonia_224</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="c1"># Convert PIL image to NumPy array</span>
+<span class="n">image_255</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+
+<span class="c1"># Scale from 0–255 to 0–1</span>
+<span class="n">image_01</span> <span class="o">=</span> <span class="n">image_255</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> <span class="o">/</span> <span class="mf">255.0</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image_255</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">255</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Stored range: 0–255&quot;</span><span class="p">)</span>
+
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image_01</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Stored range: 0–1&quot;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">axes</span><span class="p">:</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="c1"># fig</span>
+</pre></div>
+</div>
 </div>
 </details>
+<div class="cell_output docutils container">
+<img alt="../_images/dcfc707dff312941fc2b6aa2915b39310676bad53336423ce6861266d61d9a8b.png" src="../_images/dcfc707dff312941fc2b6aa2915b39310676bad53336423ce6861266d61d9a8b.png" />
 </div>
-<p>Pixel values may be stored using different data types and ranges. For example:</p>
-<ul class="simple">
-<li><p>An 8-bit unsigned integer image commonly uses values from 0 to 255.</p></li>
-<li><p>A floating-point image may use values from 0 to 1.</p></li>
-<li><p>Medical images can use other ranges and may require modality-specific display settings.</p></li>
-</ul>
-<p>The appearance of an image on screen does not fully describe the values stored in the image. This distinction matters when images are normalized, thresholded, or compared.</p>
+</div>
+<p>Images can be represented using different numerical ranges. For example, an 8-bit image commonly uses integer values from <strong>0 to 255</strong>, while the same image can be converted to floating-point values and scaled to <strong>0 to 1</strong>.</p>
+<p>Although the numerical values are different, the two images in <code class="xref std std-numref docutils literal notranslate"><span class="pre">fig-pixel-range</span></code> look the same because each range is mapped appropriately to grayscale when displayed.</p>
+<p>Medical images may use other intensity ranges depending on the imaging modality and acquisition process. Knowing the underlying pixel-value range is important when normalizing, thresholding, or comparing images.</p>
 </section>
 <section id="convert-an-image-array-into-a-pytorch-tensor">
 <h3>Convert an Image Array into a PyTorch Tensor<a class="headerlink" href="#convert-an-image-array-into-a-pytorch-tensor" title="Permalink to this heading">#</a></h3>
@@ -857,61 +932,202 @@ Answer<div class="sd-summary-down docutils">
 <tr class="row-odd"><td><p><strong>Object detection</strong></p></td>
 <td><p>One image</p></td>
 <td><p>Bounding boxes and class labels</p></td>
-<td><p>Locate nodules or lesions</p></td>
+<td><p>Locate a brain tumour in an MRI or CT scan</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Segmentation</strong></p></td>
 <td><p>One image or image volume</p></td>
 <td><p>Pixel- or voxel-level mask</p></td>
-<td><p>Outline a tumour or organ</p></td>
+<td><p>Segment the spleen in a CT volume</p></td>
 </tr>
 </tbody>
 </table>
-<p>Deep learning has been applied to classification, detection, segmentation, and other tasks across a range of medical imaging modalities <span id="id1">[<a class="reference internal" href="../bibliographypage.html#id20" title="Geert Litjens, Thijs Kooi, Babak Ehteshami Bejnordi, Arnaud Arindra Adiyoso Setio, Francesco Ciompi, Mohsen Ghafoorian, Jeroen A.W.M. van der Laak, Bram van Ginneken, and Clara I. Sánchez. A survey on deep learning in medical image analysis. Medical Image Analysis, 42:60-88, 2017.">Litjens <em>et al.</em>, 2017</a>]</span>.This module introduces all three tasks conceptually, but the practical example focuses on <strong>binary image classification</strong>.</p>
+<p>Deep learning has been applied to classification, detection, segmentation, and other tasks across a range of medical imaging modalities <span id="id2">[<a class="reference internal" href="../bibliographypage.html#id20" title="Geert Litjens, Thijs Kooi, Babak Ehteshami Bejnordi, Arnaud Arindra Adiyoso Setio, Francesco Ciompi, Mohsen Ghafoorian, Jeroen A.W.M. van der Laak, Bram van Ginneken, and Clara I. Sánchez. A survey on deep learning in medical image analysis. Medical Image Analysis, 42:60-88, 2017.">Litjens <em>et al.</em>, 2017</a>]</span>.</p>
+<p>Different tasks generally require different model architectures and outputs. For example, <strong>YOLO</strong> models can be used for object detection by predicting the location and class of objects within an image, while architectures such as <strong>U-Net</strong> can be used for segmentation by assigning a class label to individual pixels or voxels.</p>
+<div class="tip admonition">
+<p class="admonition-title">Explore detection and segmentation</p>
+<p>This module focuses on <strong>binary image classification</strong>, but if you are interested in the other image-based tasks, you can explore these healthcare-focused examples:</p>
+<ul class="simple">
+<li><p><strong>Object detection:</strong> <a class="reference external" href="https://colab.research.google.com/github/ultralytics/notebooks/blob/main/notebooks/how-to-train-ultralytics-yolo-on-brain-tumor-detection-dataset.ipynb">Brain tumour detection with Ultralytics YOLO</a>, which demonstrates training an object-detection model on annotated brain MRI and CT images.</p></li>
+<li><p><strong>Segmentation:</strong> <a class="reference external" href="https://github.com/Project-MONAI/tutorials/blob/main/3d_segmentation/spleen_segmentation_3d.ipynb">3D spleen segmentation with MONAI</a>, which demonstrates 3D U-Net segmentation of the spleen from CT volumes.</p></li>
+</ul>
+</div>
 <section id="compare-classification-detection-and-segmentation">
 <h3>Compare Classification, Detection, and Segmentation<a class="headerlink" href="#compare-classification-detection-and-segmentation" title="Permalink to this heading">#</a></h3>
-<div class="cell tag_hide-cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell content</span>
-<span class="expanded">Hide code cell content</span>
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#| label: image-tasks-output</span>
-<span class="c1"># Generate a simplified conceptual comparison of classification,</span>
-<span class="c1"># object detection, and segmentation outputs.</span>
+<span class="c1"># Compare classification, object detection, and segmentation using</span>
+<span class="c1"># a real chest X-ray from the Montgomery County CXR dataset.</span>
 
-<span class="n">task_image</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
-<span class="n">yy</span><span class="p">,</span> <span class="n">xx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ogrid</span><span class="p">[:</span><span class="mi">64</span><span class="p">,</span> <span class="p">:</span><span class="mi">64</span><span class="p">]</span>
-<span class="n">lesion_mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">xx</span> <span class="o">-</span> <span class="mi">39</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">yy</span> <span class="o">-</span> <span class="mi">29</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">&lt;=</span> <span class="mi">9</span> <span class="o">**</span> <span class="mi">2</span>
-<span class="n">task_image</span> <span class="o">+=</span> <span class="mf">0.15</span>
-<span class="n">task_image</span><span class="p">[</span><span class="n">lesion_mask</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.85</span>
 
-<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
 
-<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">task_image</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Classification</span><span class="se">\n</span><span class="s2">Label: lesion present&quot;</span><span class="p">)</span>
+<span class="c1"># &quot;_1&quot; indicates an abnormal image with TB-consistent manifestations.</span>
+<span class="n">filename</span> <span class="o">=</span> <span class="s2">&quot;MCUCXR_0104_1.png&quot;</span>
+
+<span class="n">data_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;data/montgomery_example&quot;</span><span class="p">)</span>
+<span class="n">data_dir</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">image_path</span> <span class="o">=</span> <span class="n">data_dir</span> <span class="o">/</span> <span class="n">filename</span>
+<span class="n">left_mask_path</span> <span class="o">=</span> <span class="n">data_dir</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;left_</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="n">right_mask_path</span> <span class="o">=</span> <span class="n">data_dir</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;right_</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">&quot;</span>
+
+<span class="c1"># ------------------------------------------------------------------</span>
+<span class="c1"># Load and resize the image and masks</span>
+<span class="c1"># ------------------------------------------------------------------</span>
+
+<span class="n">display_size</span> <span class="o">=</span> <span class="p">(</span><span class="mi">512</span><span class="p">,</span> <span class="mi">512</span><span class="p">)</span>
+<span class="n">pastel_red</span> <span class="o">=</span> <span class="s2">&quot;#6CCA53&quot;</span>
+
+<span class="n">cxr</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">image_path</span><span class="p">)</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span>
+    <span class="n">display_size</span><span class="p">,</span>
+    <span class="n">Image</span><span class="o">.</span><span class="n">Resampling</span><span class="o">.</span><span class="n">LANCZOS</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">left_mask</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">left_mask_path</span><span class="p">)</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s2">&quot;L&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span>
+    <span class="n">display_size</span><span class="p">,</span>
+    <span class="n">Image</span><span class="o">.</span><span class="n">Resampling</span><span class="o">.</span><span class="n">NEAREST</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">right_mask</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">right_mask_path</span><span class="p">)</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s2">&quot;L&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span>
+    <span class="n">display_size</span><span class="p">,</span>
+    <span class="n">Image</span><span class="o">.</span><span class="n">Resampling</span><span class="o">.</span><span class="n">NEAREST</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">cxr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">cxr</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+<span class="n">left_mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">left_mask</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+<span class="n">right_mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">right_mask</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+
+<span class="n">lung_mask</span> <span class="o">=</span> <span class="n">left_mask</span> <span class="o">|</span> <span class="n">right_mask</span>
+
+
+<span class="c1"># Normalize the chest X-ray for display.</span>
+<span class="n">low</span><span class="p">,</span> <span class="n">high</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">cxr</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">99</span><span class="p">])</span>
+
+<span class="n">cxr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span>
+    <span class="p">(</span><span class="n">cxr</span> <span class="o">-</span> <span class="n">low</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">high</span> <span class="o">-</span> <span class="n">low</span> <span class="o">+</span> <span class="mf">1e-8</span><span class="p">),</span>
+    <span class="mi">0</span><span class="p">,</span>
+    <span class="mi">1</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<span class="c1"># ------------------------------------------------------------------</span>
+<span class="c1"># Derive detection-style bounding boxes from the manual masks</span>
+<span class="c1"># ------------------------------------------------------------------</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">bounding_box</span><span class="p">(</span><span class="n">mask</span><span class="p">):</span>
+    <span class="n">rows</span><span class="p">,</span> <span class="n">cols</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span>
+
+    <span class="n">x_min</span> <span class="o">=</span> <span class="n">cols</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+    <span class="n">x_max</span> <span class="o">=</span> <span class="n">cols</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+    <span class="n">y_min</span> <span class="o">=</span> <span class="n">rows</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+    <span class="n">y_max</span> <span class="o">=</span> <span class="n">rows</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">x_min</span><span class="p">,</span> <span class="n">y_min</span><span class="p">,</span> <span class="n">x_max</span><span class="p">,</span> <span class="n">y_max</span>
+
+
+<span class="n">left_box</span> <span class="o">=</span> <span class="n">bounding_box</span><span class="p">(</span><span class="n">left_mask</span><span class="p">)</span>
+<span class="n">right_box</span> <span class="o">=</span> <span class="n">bounding_box</span><span class="p">(</span><span class="n">right_mask</span><span class="p">)</span>
+
+
+<span class="c1"># ------------------------------------------------------------------</span>
+<span class="c1"># Visualize the three prediction tasks</span>
+<span class="c1"># ------------------------------------------------------------------</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">))</span>
+
+
+<span class="c1"># Classification ---------------------------------------------------</span>
+
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">cxr</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span>
+    <span class="s2">&quot;Classification</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="s2">&quot;Label: TB-consistent abnormality&quot;</span>
+<span class="p">)</span>
+
 <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
 
-<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">task_image</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">rectangle</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">Rectangle</span><span class="p">((</span><span class="mi">30</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">rectangle</span><span class="p">)</span>
-<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Detection of lesion</span><span class="se">\n</span><span class="s2">Bounding box + label&quot;</span><span class="p">)</span>
+
+<span class="c1"># Object detection -------------------------------------------------</span>
+
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">cxr</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">box</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="p">[</span>
+    <span class="p">(</span><span class="n">left_box</span><span class="p">,</span> <span class="s2">&quot;Lung&quot;</span><span class="p">),</span>
+    <span class="p">(</span><span class="n">right_box</span><span class="p">,</span> <span class="s2">&quot;Lung&quot;</span><span class="p">),</span>
+<span class="p">]:</span>
+    <span class="n">x_min</span><span class="p">,</span> <span class="n">y_min</span><span class="p">,</span> <span class="n">x_max</span><span class="p">,</span> <span class="n">y_max</span> <span class="o">=</span> <span class="n">box</span>
+
+    <span class="n">rectangle</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">Rectangle</span><span class="p">(</span>
+        <span class="p">(</span><span class="n">x_min</span><span class="p">,</span> <span class="n">y_min</span><span class="p">),</span>
+        <span class="n">x_max</span> <span class="o">-</span> <span class="n">x_min</span><span class="p">,</span>
+        <span class="n">y_max</span> <span class="o">-</span> <span class="n">y_min</span><span class="p">,</span>
+        <span class="n">fill</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">linewidth</span><span class="o">=</span><span class="mf">2.5</span><span class="p">,</span>
+        <span class="n">edgecolor</span><span class="o">=</span><span class="n">pastel_red</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">rectangle</span><span class="p">)</span>
+
+    <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">(</span>
+        <span class="n">x_min</span><span class="p">,</span>
+        <span class="n">y_min</span><span class="p">,</span>
+        <span class="n">label</span><span class="p">,</span>
+        <span class="n">color</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span>
+        <span class="n">fontweight</span><span class="o">=</span><span class="s2">&quot;bold&quot;</span><span class="p">,</span>
+        <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;left&quot;</span><span class="p">,</span>
+        <span class="n">va</span><span class="o">=</span><span class="s2">&quot;bottom&quot;</span><span class="p">,</span>
+        <span class="n">bbox</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;facecolor&quot;</span><span class="p">:</span> <span class="n">pastel_red</span><span class="p">,</span>
+            <span class="s2">&quot;edgecolor&quot;</span><span class="p">:</span> <span class="n">pastel_red</span><span class="p">,</span>
+            <span class="s2">&quot;pad&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">)</span>
+
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span>
+    <span class="s2">&quot;Object detection</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="s2">&quot;Bounding boxes + labels&quot;</span>
+<span class="p">)</span>
+
 <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
 
-<span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">task_image</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">masked_where</span><span class="p">(</span><span class="o">~</span><span class="n">lesion_mask</span><span class="p">,</span> <span class="n">lesion_mask</span><span class="p">),</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.45</span><span class="p">)</span>
-<span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Segmentation of lesion</span><span class="se">\n</span><span class="s2">Pixel-level mask&quot;</span><span class="p">)</span>
+
+<span class="c1"># Segmentation -----------------------------------------------------</span>
+
+<span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">cxr</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">segmentation_overlay</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">masked_where</span><span class="p">(</span>
+    <span class="o">~</span><span class="n">lung_mask</span><span class="p">,</span>
+    <span class="n">lung_mask</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span>
+    <span class="n">segmentation_overlay</span><span class="p">,</span>
+    <span class="n">cmap</span><span class="o">=</span><span class="n">ListedColormap</span><span class="p">([</span><span class="n">pastel_red</span><span class="p">]),</span>
+    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span>
+    <span class="s2">&quot;Segmentation</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="s2">&quot;Pixel-level lung mask&quot;</span>
+<span class="p">)</span>
+
 <span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
 
+
 <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
-<span class="n">fig</span>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="../_images/f87846ffbb8123692d42d38e901e1b1134f6bf90d923aa880359a688121c8b63.png" src="../_images/f87846ffbb8123692d42d38e901e1b1134f6bf90d923aa880359a688121c8b63.png" />
-</div>
 </details>
+<div class="cell_output docutils container">
+<img alt="../_images/a02319494e909dd28373c9d0e8f8a0b480365fe20706fa3409847adb27b5bd02.png" src="../_images/a02319494e909dd28373c9d0e8f8a0b480365fe20706fa3409847adb27b5bd02.png" />
+</div>
 </div>
 <div class="info admonition">
 <p class="admonition-title">Important distinction</p>
@@ -926,6 +1142,7 @@ Answer<div class="sd-summary-down docutils">
 <li><p><strong>Resizing:</strong> changing the spatial dimensions of an image</p></li>
 <li><p><strong>Cropping:</strong> selecting part of an image</p></li>
 <li><p><strong>Normalization:</strong> transforming pixel values to a consistent scale</p></li>
+<li><p><strong>Registration:</strong> spatially aligning images to a common coordinate system</p></li>
 <li><p><strong>Augmentation:</strong> introducing realistic training-time variation</p></li>
 <li><p><strong>Batching:</strong> grouping images for efficient computation</p></li>
 <li><p><strong>Data loading:</strong> reading and transforming data during training</p></li>
@@ -937,7 +1154,7 @@ Answer<div class="sd-summary-down docutils">
 </div>
 <section id="load-pneumoniamnist">
 <h3>3.1 Load PneumoniaMNIST<a class="headerlink" href="#load-pneumoniamnist" title="Permalink to this heading">#</a></h3>
-<p><a class="reference external" href="https://medmnist.com/">PneumoniaMNIST</a> is one of the standardized biomedical image-classification datasets included in MedMNIST v2 <span id="id2">[<a class="reference internal" href="../bibliographypage.html#id15" title="Jiancheng Yang, Rui Shi, Donglai Wei, Zequan Liu, Lin Zhao, Bilian Ke, Hanspeter Pfister, and Bingbing Ni. Medmnist v2-a large-scale lightweight benchmark for 2d and 3d biomedical image classification. Scientific Data, 10(1):41, 2023.">Yang <em>et al.</em>, 2023</a>]</span>. It was constructed from the pediatric chest X-ray dataset reported by Kermany et al. <span id="id3">[<a class="reference internal" href="../bibliographypage.html#id16" title="Daniel S. Kermany, Michael Goldbaum, Wenjia Cai, Carolina C. S. Valentim, Huiying Liang, Sally L. Baxter, Alex McKeown, Ge Yang, Xiaokang Wu, Fangbing Yan, Justin Dong, Made K. Prasadha, Jacqueline Pei, Magdalene Y. L. Ting, Jie Zhu, Christina Li, Sierra Hewett, Jason Dong, Ian Ziyar, Alexander Shi, Runze Zhang, Lianghong Zheng, Rui Hou, William Shi, Xin Fu, Yaou Duan, Van Anh Nguyen Huu, Cindy Wen, Edward D. Zhang, Charlotte L. Zhang, Oulan Li, Xiaobo Wang, Michael A. Singer, Xiaodong Sun, Jie Xu, Ali Tafreshi, M. A. Lewis, Huimin Xia, and Kang Zhang. Identifying medical diagnoses and treatable diseases by image-based deep learning. Cell, 172(5):1122–1131.e9, February 2018.">Kermany <em>et al.</em>, 2018</a>]</span>.</p>
+<p><a class="reference external" href="https://medmnist.com/">PneumoniaMNIST</a> is one of the standardized biomedical image-classification datasets included in MedMNIST v2 <span id="id3">[<a class="reference internal" href="../bibliographypage.html#id15" title="Jiancheng Yang, Rui Shi, Donglai Wei, Zequan Liu, Lin Zhao, Bilian Ke, Hanspeter Pfister, and Bingbing Ni. Medmnist v2-a large-scale lightweight benchmark for 2d and 3d biomedical image classification. Scientific Data, 10(1):41, 2023.">Yang <em>et al.</em>, 2023</a>]</span>. It was constructed from the pediatric chest X-ray dataset reported by Kermany et al. <span id="id4">[<a class="reference internal" href="../bibliographypage.html#id16" title="Daniel S. Kermany, Michael Goldbaum, Wenjia Cai, Carolina C. S. Valentim, Huiying Liang, Sally L. Baxter, Alex McKeown, Ge Yang, Xiaokang Wu, Fangbing Yan, Justin Dong, Made K. Prasadha, Jacqueline Pei, Magdalene Y. L. Ting, Jie Zhu, Christina Li, Sierra Hewett, Jason Dong, Ian Ziyar, Alexander Shi, Runze Zhang, Lianghong Zheng, Rui Hou, William Shi, Xin Fu, Yaou Duan, Van Anh Nguyen Huu, Cindy Wen, Edward D. Zhang, Charlotte L. Zhang, Oulan Li, Xiaobo Wang, Michael A. Singer, Xiaodong Sun, Jie Xu, Ali Tafreshi, M. A. Lewis, Huimin Xia, and Kang Zhang. Identifying medical diagnoses and treatable diseases by image-based deep learning. Cell, 172(5):1122–1131.e9, February 2018.">Kermany <em>et al.</em>, 2018</a>]</span>.</p>
 <p>PneumoniaMNIST includes predefined training, validation, and test splits. The version used in this module contains grayscale images standardized to a resolution of <span class="math notranslate nohighlight">\(28 \times 28\)</span> pixels.</p>
 <p>This low resolution makes the dataset computationally accessible for teaching and benchmarking, but it also removes much of the detail available in the original clinical chest X-rays.</p>
 <section id="review-the-pneumoniamnist-dataset-information">
@@ -958,7 +1175,14 @@ Answer<div class="sd-summary-down docutils">
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Task:           &quot;</span><span class="p">,</span> <span class="n">info</span><span class="p">[</span><span class="s2">&quot;task&quot;</span><span class="p">])</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Number channels:&quot;</span><span class="p">,</span> <span class="n">info</span><span class="p">[</span><span class="s2">&quot;n_channels&quot;</span><span class="p">])</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Labels:         &quot;</span><span class="p">,</span> <span class="n">info</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">])</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Description:    &quot;</span><span class="p">,</span> <span class="n">info</span><span class="p">[</span><span class="s2">&quot;description&quot;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="n">textwrap</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span>
+        <span class="n">info</span><span class="p">[</span><span class="s2">&quot;description&quot;</span><span class="p">],</span>
+        <span class="n">width</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span>
+        <span class="n">initial_indent</span><span class="o">=</span><span class="s2">&quot;Description: &quot;</span><span class="p">,</span>
+        <span class="n">subsequent_indent</span><span class="o">=</span><span class="s2">&quot;             &quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -967,7 +1191,13 @@ Answer<div class="sd-summary-down docutils">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Task:            binary-class
 Number channels: 1
 Labels:          {&#39;0&#39;: &#39;normal&#39;, &#39;1&#39;: &#39;pneumonia&#39;}
-Description:     The PneumoniaMNIST is based on a prior dataset of 5,856 pediatric chest X-Ray images. The task is binary-class classification of pneumonia against normal. We split the source training set with a ratio of 9:1 into training and validation set and use its source validation set as the test set. The source images are gray-scale, and their sizes are (384−2,916)×(127−2,713). We center-crop the images and resize them into 1×28×28.
+Description: The PneumoniaMNIST is based on a prior dataset of 5,856 pediatric
+             chest X-Ray images. The task is binary-class classification of
+             pneumonia against normal. We split the source training set with a
+             ratio of 9:1 into training and validation set and use its source
+             validation set as the test set. The source images are gray-scale,
+             and their sizes are (384−2,916)×(127−2,713). We center-crop the
+             images and resize them into 1×28×28.
 </pre></div>
 </div>
 </div>
@@ -982,77 +1212,76 @@ Description:     The PneumoniaMNIST is based on a prior dataset of 5,856 pediatr
 <span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load raw datasets first so that we can inspect their original arrays.</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load raw datasets so that we can inspect the original arrays.</span>
 <span class="n">raw_train_dataset</span> <span class="o">=</span> <span class="n">DataClass</span><span class="p">(</span><span class="n">split</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="n">DOWNLOAD</span><span class="p">)</span>
 <span class="n">raw_val_dataset</span> <span class="o">=</span> <span class="n">DataClass</span><span class="p">(</span><span class="n">split</span><span class="o">=</span><span class="s2">&quot;val&quot;</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="n">DOWNLOAD</span><span class="p">)</span>
 <span class="n">raw_test_dataset</span> <span class="o">=</span> <span class="n">DataClass</span><span class="p">(</span><span class="n">split</span><span class="o">=</span><span class="s2">&quot;test&quot;</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="n">DOWNLOAD</span><span class="p">)</span>
 
-<span class="n">split_summary</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
-    <span class="p">{</span>
-        <span class="s2">&quot;Split&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Training&quot;</span><span class="p">,</span> <span class="s2">&quot;Validation&quot;</span><span class="p">,</span> <span class="s2">&quot;Test&quot;</span><span class="p">],</span>
-        <span class="s2">&quot;Number of images&quot;</span><span class="p">:</span> <span class="p">[</span>
-            <span class="nb">len</span><span class="p">(</span><span class="n">raw_train_dataset</span><span class="p">),</span>
-            <span class="nb">len</span><span class="p">(</span><span class="n">raw_val_dataset</span><span class="p">),</span>
-            <span class="nb">len</span><span class="p">(</span><span class="n">raw_test_dataset</span><span class="p">),</span>
-        <span class="p">],</span>
-    <span class="p">}</span>
-<span class="p">)</span>
+<span class="n">split_names</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Training&quot;</span><span class="p">,</span> <span class="s2">&quot;Validation&quot;</span><span class="p">,</span> <span class="s2">&quot;Test&quot;</span><span class="p">]</span>
+<span class="n">split_sizes</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="nb">len</span><span class="p">(</span><span class="n">raw_train_dataset</span><span class="p">),</span>
+    <span class="nb">len</span><span class="p">(</span><span class="n">raw_val_dataset</span><span class="p">),</span>
+    <span class="nb">len</span><span class="p">(</span><span class="n">raw_test_dataset</span><span class="p">),</span>
+<span class="p">]</span>
 
-<span class="n">split_summary</span>
+<span class="n">total</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">split_sizes</span><span class="p">)</span>
+
+<span class="n">split_summary</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">&quot;Split&quot;</span><span class="p">:</span> <span class="n">split_names</span><span class="p">,</span>
+    <span class="s2">&quot;Number of images&quot;</span><span class="p">:</span> <span class="n">split_sizes</span><span class="p">,</span>
+    <span class="s2">&quot;Percentage&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">size</span> <span class="o">/</span> <span class="n">total</span> <span class="k">for</span> <span class="n">size</span> <span class="ow">in</span> <span class="n">split_sizes</span><span class="p">],</span>
+<span class="p">})</span>
+
+<span class="n">split_summary</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">format</span><span class="p">({</span>
+    <span class="s2">&quot;Number of images&quot;</span><span class="p">:</span> <span class="s2">&quot;</span><span class="si">{:,}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Percentage&quot;</span><span class="p">:</span> <span class="s2">&quot;</span><span class="si">{:.1%}</span><span class="s2">&quot;</span><span class="p">,</span>
+<span class="p">})</span>
 </pre></div>
 </div>
 </div>
 </details>
 <div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
+<div class="output text_html"><style type="text/css">
 </style>
-<table border="1" class="dataframe">
+<table id="T_e3e6f">
   <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Split</th>
-      <th>Number of images</th>
+    <tr>
+      <th class="blank level0" >&nbsp;</th>
+      <th id="T_e3e6f_level0_col0" class="col_heading level0 col0" >Split</th>
+      <th id="T_e3e6f_level0_col1" class="col_heading level0 col1" >Number of images</th>
+      <th id="T_e3e6f_level0_col2" class="col_heading level0 col2" >Percentage</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>0</th>
-      <td>Training</td>
-      <td>4708</td>
+      <th id="T_e3e6f_level0_row0" class="row_heading level0 row0" >0</th>
+      <td id="T_e3e6f_row0_col0" class="data row0 col0" >Training</td>
+      <td id="T_e3e6f_row0_col1" class="data row0 col1" >4,708</td>
+      <td id="T_e3e6f_row0_col2" class="data row0 col2" >80.4%</td>
     </tr>
     <tr>
-      <th>1</th>
-      <td>Validation</td>
-      <td>524</td>
+      <th id="T_e3e6f_level0_row1" class="row_heading level0 row1" >1</th>
+      <td id="T_e3e6f_row1_col0" class="data row1 col0" >Validation</td>
+      <td id="T_e3e6f_row1_col1" class="data row1 col1" >524</td>
+      <td id="T_e3e6f_row1_col2" class="data row1 col2" >8.9%</td>
     </tr>
     <tr>
-      <th>2</th>
-      <td>Test</td>
-      <td>624</td>
+      <th id="T_e3e6f_level0_row2" class="row_heading level0 row2" >2</th>
+      <td id="T_e3e6f_row2_col0" class="data row2 col0" >Test</td>
+      <td id="T_e3e6f_row2_col1" class="data row2 col1" >624</td>
+      <td id="T_e3e6f_row2_col2" class="data row2 col2" >10.7%</td>
     </tr>
   </tbody>
 </table>
-</div></div></div>
+</div></div>
 </div>
 </section>
 </section>
 <section id="inspect-image-dimensions-and-pixel-values">
 <h3>3.2 Inspect image dimensions and pixel values<a class="headerlink" href="#inspect-image-dimensions-and-pixel-values" title="Permalink to this heading">#</a></h3>
 <p>Before training, inspect the dataset rather than assuming that the input has the expected format.</p>
-<section id="id4">
-<h4>Inspect Image Dimensions and Pixel Values<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h4>
+<section id="id5">
+<h4>Inspect Image Dimensions and Pixel Values<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h4>
 <div class="cell tag_hide-input docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -1087,15 +1316,21 @@ Raw label:         [1]
 </section>
 <section id="visualize-examples-from-each-class">
 <h4>Visualize Examples from Each Class<a class="headerlink" href="#visualize-examples-from-each-class" title="Permalink to this heading">#</a></h4>
-<div class="cell tag_hide-cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell content</span>
-<span class="expanded">Hide code cell content</span>
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#| label: pneumoniamnist-examples-output</span>
 <span class="c1"># Display representative images from each class.</span>
+
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">DataClass</span><span class="p">(</span>
+    <span class="n">split</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">,</span>
+    <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">size</span><span class="o">=</span><span class="mi">224</span><span class="p">,</span>
+<span class="p">)</span>
 
 <span class="n">label_map</span> <span class="o">=</span> <span class="p">{</span><span class="nb">int</span><span class="p">(</span><span class="n">key</span><span class="p">):</span> <span class="n">value</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">info</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
 <span class="n">train_labels_raw</span> <span class="o">=</span> <span class="n">raw_train_dataset</span><span class="o">.</span><span class="n">labels</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
@@ -1112,14 +1347,14 @@ Raw label:         [1]
 
 <span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Representative PneumoniaMNIST training images&quot;</span><span class="p">)</span>
 <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
-<span class="n">fig</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="../_images/078a5f186bab5767de7e3c14223d1b601a5013e6ec25b320e0f377c8af430b41.png" src="../_images/078a5f186bab5767de7e3c14223d1b601a5013e6ec25b320e0f377c8af430b41.png" />
-</div>
 </details>
+<div class="cell_output docutils container">
+<img alt="../_images/d95c611008b0a9a04b55d2c2a61b0a712af69e7111c4121a6ae3329deaf63616.png" src="../_images/d95c611008b0a9a04b55d2c2a61b0a712af69e7111c4121a6ae3329deaf63616.png" />
+</div>
 </div>
 <p>At a resolution of <span class="math notranslate nohighlight">\(28 \times 28\)</span> pixels, these images contain substantially less detail than the original clinical chest X-rays. Therefore, strong performance on this benchmark should not be interpreted as evidence that the model is ready for clinical use.</p>
 </section>
@@ -1145,77 +1380,141 @@ Raw label:         [1]
     <span class="o">.</span><span class="n">to_frame</span><span class="p">()</span>
 <span class="p">)</span>
 
-<span class="n">class_counts</span><span class="p">[</span><span class="s2">&quot;Percentage&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">100</span> <span class="o">*</span> <span class="n">class_counts</span><span class="p">[</span><span class="s2">&quot;Count&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">class_counts</span><span class="p">[</span><span class="s2">&quot;Count&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-<span class="n">class_counts</span>
+<span class="n">class_counts</span><span class="p">[</span><span class="s2">&quot;Percentage&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">class_counts</span><span class="p">[</span><span class="s2">&quot;Count&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">class_counts</span><span class="p">[</span><span class="s2">&quot;Count&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="p">)</span>
+
+<span class="n">display</span><span class="p">(</span>
+    <span class="n">class_counts</span><span class="o">.</span><span class="n">style</span>
+    <span class="o">.</span><span class="n">format</span><span class="p">({</span>
+        <span class="s2">&quot;Count&quot;</span><span class="p">:</span> <span class="s2">&quot;</span><span class="si">{:,}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Percentage&quot;</span><span class="p">:</span> <span class="s2">&quot;</span><span class="si">{:.1%}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="p">})</span>
+    <span class="o">.</span><span class="n">set_properties</span><span class="p">(</span><span class="o">**</span><span class="p">{</span>
+        <span class="s2">&quot;text-align&quot;</span><span class="p">:</span> <span class="s2">&quot;center&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;padding&quot;</span><span class="p">:</span> <span class="s2">&quot;8px&quot;</span><span class="p">,</span>
+    <span class="p">})</span>
+    <span class="o">.</span><span class="n">set_table_styles</span><span class="p">([</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;selector&quot;</span><span class="p">:</span> <span class="s2">&quot;th&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;props&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">(</span><span class="s2">&quot;text-align&quot;</span><span class="p">,</span> <span class="s2">&quot;center&quot;</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;font-weight&quot;</span><span class="p">,</span> <span class="s2">&quot;bold&quot;</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;padding&quot;</span><span class="p">,</span> <span class="s2">&quot;8px&quot;</span><span class="p">),</span>
+            <span class="p">],</span>
+        <span class="p">}</span>
+    <span class="p">])</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </details>
 <div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
+<div class="output text_html"><style type="text/css">
+#T_d1f73 th {
+  text-align: center;
+  font-weight: bold;
+  padding: 8px;
+}
+#T_d1f73_row0_col0, #T_d1f73_row0_col1, #T_d1f73_row1_col0, #T_d1f73_row1_col1 {
+  text-align: center;
+  padding: 8px;
+}
 </style>
-<table border="1" class="dataframe">
+<table id="T_d1f73">
   <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Count</th>
-      <th>Percentage</th>
+    <tr>
+      <th class="blank level0" >&nbsp;</th>
+      <th id="T_d1f73_level0_col0" class="col_heading level0 col0" >Count</th>
+      <th id="T_d1f73_level0_col1" class="col_heading level0 col1" >Percentage</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>normal</th>
-      <td>1214</td>
-      <td>25.785896</td>
+      <th id="T_d1f73_level0_row0" class="row_heading level0 row0" >normal</th>
+      <td id="T_d1f73_row0_col0" class="data row0 col0" >1,214</td>
+      <td id="T_d1f73_row0_col1" class="data row0 col1" >25.8%</td>
     </tr>
     <tr>
-      <th>pneumonia</th>
-      <td>3494</td>
-      <td>74.214104</td>
+      <th id="T_d1f73_level0_row1" class="row_heading level0 row1" >pneumonia</th>
+      <td id="T_d1f73_row1_col0" class="data row1 col0" >3,494</td>
+      <td id="T_d1f73_row1_col1" class="data row1 col1" >74.2%</td>
     </tr>
   </tbody>
 </table>
-</div></div></div>
+</div></div>
 </div>
 </section>
 <section id="visualize-the-training-set-class-balance">
 <h4>Visualize the Training-Set Class Balance<a class="headerlink" href="#visualize-the-training-set-class-balance" title="Permalink to this heading">#</a></h4>
-<div class="cell tag_hide-cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell content</span>
-<span class="expanded">Hide code cell content</span>
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#| label: class-balance-output</span>
+
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
-<span class="n">class_counts</span><span class="p">[</span><span class="s2">&quot;Count&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s2">&quot;bar&quot;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Training-set class balance&quot;</span><span class="p">)</span>
+
+<span class="n">bars</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span>
+    <span class="n">class_counts</span><span class="o">.</span><span class="n">index</span><span class="p">,</span>
+    <span class="n">class_counts</span><span class="p">[</span><span class="s2">&quot;Count&quot;</span><span class="p">],</span>
+<span class="p">)</span>
+
+<span class="c1"># Add count and percentage above each bar</span>
+<span class="k">for</span> <span class="n">bar</span><span class="p">,</span> <span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">row</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">bars</span><span class="p">,</span> <span class="n">class_counts</span><span class="o">.</span><span class="n">iterrows</span><span class="p">()):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span>
+        <span class="n">bar</span><span class="o">.</span><span class="n">get_x</span><span class="p">()</span> <span class="o">+</span> <span class="n">bar</span><span class="o">.</span><span class="n">get_width</span><span class="p">()</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="n">bar</span><span class="o">.</span><span class="n">get_height</span><span class="p">(),</span>
+        <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;Count&quot;</span><span class="p">])</span><span class="si">:</span><span class="s1">,</span><span class="si">}</span><span class="se">\n</span><span class="s1">(</span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;Percentage&quot;</span><span class="p">]</span><span class="si">:</span><span class="s1">.1%</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">,</span>
+        <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span>
+        <span class="n">va</span><span class="o">=</span><span class="s2">&quot;bottom&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span>
+    <span class="s2">&quot;Training-Set Class Distribution&quot;</span><span class="p">,</span>
+    <span class="n">fontweight</span><span class="o">=</span><span class="s2">&quot;bold&quot;</span><span class="p">,</span>
+    <span class="n">pad</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span>
+<span class="p">)</span>
+
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Class&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Number of images&quot;</span><span class="p">)</span>
+
 <span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># Give labels above bars some breathing room</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span>
+    <span class="mi">0</span><span class="p">,</span>
+    <span class="n">class_counts</span><span class="p">[</span><span class="s2">&quot;Count&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">*</span> <span class="mf">1.18</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># Subtle horizontal reference lines</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span>
+    <span class="n">axis</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">,</span>
+    <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span>
+    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># Remove unnecessary borders</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s2">&quot;top&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s2">&quot;right&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
 <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
-<span class="n">fig</span>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="../_images/d6a0d71e4e6da2eed67ec545b7d160c90775c63b07d068af06d880ffeab7cd76.png" src="../_images/d6a0d71e4e6da2eed67ec545b7d160c90775c63b07d068af06d880ffeab7cd76.png" />
-</div>
 </details>
+<div class="cell_output docutils container">
+<img alt="../_images/432e1ccb192ec8b9923a0173806daa7ec4c1e05626fe6ad6f2fb7b6f33958f09.png" src="../_images/432e1ccb192ec8b9923a0173806daa7ec4c1e05626fe6ad6f2fb7b6f33958f09.png" />
 </div>
+</div>
+<div class="tip admonition">
+<p class="admonition-title">Check your understanding</p>
+<p>Would you consider this dataset to be class imbalanced? What problems could arise if one class were much more common than the other?</p>
+</div>
+<p>The training set contains more pneumonia images than normal images, so the classes are not perfectly balanced. However, class imbalance exists on a spectrum rather than as a strict yes-or-no property. When one class substantially outnumbers another, accuracy alone can become misleading because a model may perform well by favouring the majority class.</p>
 </section>
 </section>
 <section id="define-training-and-evaluation-transformations">
@@ -1294,7 +1593,15 @@ Suggested response<div class="sd-summary-down docutils">
 </section>
 <section id="how-convolutional-neural-networks-work">
 <h2>4. How Convolutional Neural Networks Work<a class="headerlink" href="#how-convolutional-neural-networks-work" title="Permalink to this heading">#</a></h2>
-<p>A fully connected layer treats each input value as a separate feature. In contrast, a convolutional layer applies a small, learnable filter to local regions of an image. Early convolutional neural networks demonstrated how local connectivity and shared weights could support image recognition <span id="id5">[<a class="reference internal" href="../bibliographypage.html#id17" title="Y. Lecun, L. Bottou, Y. Bengio, and P. Haffner. Gradient-based learning applied to document recognition. Proceedings of the IEEE, 86(11):2278-2324, 1998.">Lecun <em>et al.</em>, 1998</a>]</span>. Later work showed that deeper CNNs trained on large image datasets could achieve major improvements in image-classification performance <span id="id6">[<a class="reference internal" href="../bibliographypage.html#id18" title="Alex Krizhevsky, Ilya Sutskever, and Geoffrey E Hinton. Imagenet classification with deep convolutional neural networks. In F. Pereira, C.J. Burges, L. Bottou, and K. Weinberger, editors, Advances in Neural Information Processing Systems, volume 25. Curran Associates, Inc., 2012.">Krizhevsky <em>et al.</em>, 2012</a>]</span>. This provides three important properties:</p>
+<p>Convolutional neural networks (CNNs) learn spatial patterns by applying small filters, or <strong>kernels</strong>, across an image. As a kernel moves across the image, it combines values from a local region of the input to produce one value in an output feature map.</p>
+<p>The animation below illustrates this process for a two-dimensional convolution with no padding and a stride of one.</p>
+<figure class="align-center" id="fig-convolution-animation">
+<a class="reference internal image-reference" href="../_images/no_padding_no_strides.gif"><img alt="../_images/no_padding_no_strides.gif" src="../_images/no_padding_no_strides.gif" style="width: 55%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 5 </span><span class="caption-text">A two-dimensional convolution with no padding and a stride of one. The blue grid represents the input and the green grid represents the output. Reproduced from Dumoulin and Visin <span id="id6">[]</span>, available under the MIT License.</span><a class="headerlink" href="#fig-convolution-animation" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Early convolutional neural networks demonstrated how local connectivity and shared weights could support image recognition <span id="id7">[<a class="reference internal" href="../bibliographypage.html#id17" title="Y. Lecun, L. Bottou, Y. Bengio, and P. Haffner. Gradient-based learning applied to document recognition. Proceedings of the IEEE, 86(11):2278-2324, 1998.">Lecun <em>et al.</em>, 1998</a>]</span>. Later work showed that deeper CNNs trained on large image datasets could achieve major improvements in image-classification performance <span id="id8">[<a class="reference internal" href="../bibliographypage.html#id18" title="Alex Krizhevsky, Ilya Sutskever, and Geoffrey E Hinton. Imagenet classification with deep convolutional neural networks. In F. Pereira, C.J. Burges, L. Bottou, and K. Weinberger, editors, Advances in Neural Information Processing Systems, volume 25. Curran Associates, Inc., 2012.">Krizhevsky <em>et al.</em>, 2012</a>]</span>. This provides three important properties:</p>
 <ol class="arabic simple">
 <li><p><strong>Local connectivity:</strong> Each feature is computed from a local neighbourhood of pixels.</p></li>
 <li><p><strong>Weight sharing:</strong> The same filter is applied across multiple spatial locations.</p></li>
@@ -1313,56 +1620,113 @@ X_{i+m,j+n}K_{m,n} + b\]</div>
 </div>
 <section id="apply-example-kernels-to-an-image">
 <h3>Apply Example Kernels to an Image<a class="headerlink" href="#apply-example-kernels-to-an-image" title="Permalink to this heading">#</a></h3>
-<div class="cell tag_hide-cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell content</span>
-<span class="expanded">Hide code cell content</span>
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#| label: fixed-kernels-output</span>
-<span class="c1"># Apply fixed kernels to a synthetic image to illustrate how local filters</span>
-<span class="c1"># can produce different feature maps. In a CNN, kernel values are learned.</span>
+<span class="c1"># Apply fixed kernels to a PneumoniaMNIST image to illustrate how</span>
+<span class="c1"># different local filters produce different feature maps.</span>
+<span class="c1"># In a CNN, these kernel values are learned during training.</span>
 
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">torch.nn.functional</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">F</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
-<span class="n">synthetic</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
-<span class="n">synthetic</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">8</span><span class="p">:</span><span class="mi">24</span><span class="p">,</span> <span class="mi">10</span><span class="p">:</span><span class="mi">22</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="c1"># Select one PneumoniaMNIST image</span>
+<span class="c1"># Load a higher-resolution PneumoniaMNIST image for visualization only</span>
+<span class="n">pneumonia_224</span> <span class="o">=</span> <span class="n">medmnist</span><span class="o">.</span><span class="n">PneumoniaMNIST</span><span class="p">(</span>
+    <span class="n">split</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">,</span>
+    <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">size</span><span class="o">=</span><span class="mi">224</span><span class="p">,</span>
+<span class="p">)</span>
 
+<span class="n">image</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="n">pneumonia_224</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="c1"># Convert to a single-channel float tensor if needed</span>
+<span class="n">image</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="n">image</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">image</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
+
+
+<span class="n">image_tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span>
+    <span class="n">image</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span>
+<span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># Normalize pixel values for visualization</span>
+<span class="n">image_tensor</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">image_tensor</span> <span class="o">-</span> <span class="n">image_tensor</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+<span class="p">)</span> <span class="o">/</span> <span class="p">(</span>
+    <span class="n">image_tensor</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">-</span> <span class="n">image_tensor</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">+</span> <span class="mf">1e-8</span>
+<span class="p">)</span>
+
+<span class="c1"># Fixed example kernels</span>
 <span class="n">vertical_edge_kernel</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span>
-    <span class="p">[[[</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span>
-      <span class="p">[</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span>
-      <span class="p">[</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]]]</span>
+    <span class="p">[[</span>
+        <span class="p">[</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span>
+        <span class="p">[</span><span class="o">-</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">],</span>
+        <span class="p">[</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span>
+    <span class="p">]]</span>
 <span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 
-<span class="n">blur_kernel</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> <span class="o">/</span> <span class="mf">9.0</span>
+<span class="n">horizontal_edge_kernel</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span>
+    <span class="p">[[</span>
+        <span class="p">[</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">],</span>
+        <span class="p">[</span> <span class="mf">0.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">],</span>
+        <span class="p">[</span> <span class="mf">1.0</span><span class="p">,</span>  <span class="mf">2.0</span><span class="p">,</span>  <span class="mf">1.0</span><span class="p">],</span>
+    <span class="p">]]</span>
+<span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 
-<span class="n">vertical_features</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">conv2d</span><span class="p">(</span><span class="n">synthetic</span><span class="p">,</span> <span class="n">vertical_edge_kernel</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">blurred_features</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">conv2d</span><span class="p">(</span><span class="n">synthetic</span><span class="p">,</span> <span class="n">blur_kernel</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">blur_kernel</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> <span class="o">/</span> <span class="mf">9.0</span>
+<span class="p">)</span>
 
-<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">))</span>
+<span class="c1"># Apply convolution</span>
+<span class="n">vertical_features</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">conv2d</span><span class="p">(</span>
+    <span class="n">image_tensor</span><span class="p">,</span> <span class="n">vertical_edge_kernel</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">1</span>
+<span class="p">)</span>
 
-<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">synthetic</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(),</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">)</span>
-<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Input image&quot;</span><span class="p">)</span>
+<span class="n">horizontal_features</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">conv2d</span><span class="p">(</span>
+    <span class="n">image_tensor</span><span class="p">,</span> <span class="n">horizontal_edge_kernel</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">1</span>
+<span class="p">)</span>
+
+<span class="n">blurred_features</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">conv2d</span><span class="p">(</span>
+    <span class="n">image_tensor</span><span class="p">,</span> <span class="n">blur_kernel</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">1</span>
+<span class="p">)</span>
+
+
+<span class="c1"># Visualize</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">))</span>
+
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image_tensor</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(),</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Input chest X-ray&quot;</span><span class="p">)</span>
 
 <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">vertical_features</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(),</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">)</span>
 <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Vertical-edge response&quot;</span><span class="p">)</span>
 
-<span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">blurred_features</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(),</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">)</span>
-<span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Local averaging response&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">horizontal_features</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(),</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Horizontal-edge response&quot;</span><span class="p">)</span>
+
+<span class="n">axes</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">blurred_features</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(),</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Local averaging response&quot;</span><span class="p">)</span>
 
 <span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">axes</span><span class="p">:</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
 
 <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
-<span class="n">fig</span>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="../_images/2e23f1d8212065f3ce6935488dd545b74cf6a87660e844bc3d87801372b4cf08.png" src="../_images/2e23f1d8212065f3ce6935488dd545b74cf6a87660e844bc3d87801372b4cf08.png" />
-</div>
 </details>
+<div class="cell_output docutils container">
+<img alt="../_images/068f261e6b6329cd3c348c40e36ca1c6b8b8e09b448621ea36612952efd8d183.png" src="../_images/068f261e6b6329cd3c348c40e36ca1c6b8b8e09b448621ea36612952efd8d183.png" />
+</div>
 </div>
 <p>After convolution, CNNs commonly use:</p>
 <ul class="simple">
@@ -1423,51 +1787,47 @@ X_{i+m,j+n}K_{m,n} + b\]</div>
 </div>
 </section>
 </section>
-<section id="modern-image-model-families">
-<h2>5. Modern Image Model Families<a class="headerlink" href="#modern-image-model-families" title="Permalink to this heading">#</a></h2>
-<p>This module uses a small CNN because its components can be inspected directly. Current image-based systems may use several model families.</p>
+<section id="image-based-model-families">
+<h2>5. Image-Based Model Families<a class="headerlink" href="#image-based-model-families" title="Permalink to this heading">#</a></h2>
+<p>This module uses a small convolutional neural network (CNN) because its components can be inspected directly. However, modern image-based systems span several major model families and pretraining paradigms.</p>
 <table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>Model family</p></th>
-<th class="head"><p>Main idea</p></th>
-<th class="head"><p>Potential strength</p></th>
-<th class="head"><p>Important limitation</p></th>
+<th class="head"><p>Core idea</p></th>
+<th class="head"><p>Popular architectures or models</p></th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><strong>CNN</strong></p></td>
-<td><p>Learn local filters using convolution</p></td>
-<td><p>Efficient spatial feature learning</p></td>
-<td><p>May learn shortcuts and may not generalize across sites</p></td>
+<tr class="row-even"><td><p><strong>Convolutional neural networks (CNNs)</strong></p></td>
+<td><p>Learn increasingly complex spatial features by applying convolutional filters across an image</p></td>
+<td><p>AlexNet, VGGNet, GoogLeNet/Inception, ResNet, EfficientNet</p></td>
 </tr>
-<tr class="row-odd"><td><p><strong>Residual network (ResNet)</strong></p></td>
-<td><p>Add skip connections to support deeper networks</p></td>
-<td><p>Strong, widely used baseline</p></td>
-<td><p>More complex than a small teaching CNN</p></td>
+<tr class="row-odd"><td><p><strong>Vision transformers (ViTs)</strong></p></td>
+<td><p>Divide an image into patches and use self-attention to model relationships between image regions</p></td>
+<td><p>ViT, DeiT, Swin Transformer</p></td>
 </tr>
-<tr class="row-even"><td><p><strong>Vision transformer (ViT)</strong></p></td>
-<td><p>Represent an image as patches and use attention</p></td>
-<td><p>Can model long-range relationships</p></td>
-<td><p>Often data- and compute-intensive</p></td>
-</tr>
-<tr class="row-odd"><td><p><strong>Image foundation model</strong></p></td>
-<td><p>Pretrain on large and potentially diverse image collections</p></td>
-<td><p>Can be adapted to many downstream tasks</p></td>
-<td><p>Provenance, bias, validation, and deployment concerns remain</p></td>
+<tr class="row-even"><td><p><strong>Vision foundation models</strong></p></td>
+<td><p>Pretrain large models on broad image datasets so that learned visual representations can be reused or adapted across downstream tasks</p></td>
+<td><p>DINOv2, Segment Anything Model (SAM), CLIP*</p></td>
 </tr>
 </tbody>
 </table>
-<p>Residual networks introduced skip connections that allow information and gradients to pass more directly through deep networks, making substantially deeper CNN architectures easier to train <span id="id7">[<a class="reference internal" href="../bibliographypage.html#id19" title="Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun. Deep residual learning for image recognition. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition (CVPR). June 2016.">He <em>et al.</em>, 2016</a>]</span>. Architecture choice does not replace careful dataset design, evaluation, and clinical validation.</p>
+<p>*CLIP jointly learns from images and text and is therefore a multimodal vision-language model rather than a purely image-only model.</p>
 </section>
 <section id="transfer-learning">
 <h2>6. Transfer Learning<a class="headerlink" href="#transfer-learning" title="Permalink to this heading">#</a></h2>
-<p>Transfer learning begins with a model that was pretrained on another dataset. The model can then be adapted to a new task by replacing the final prediction layer and either:</p>
+<p>Transfer learning begins with a model that was pretrained on another dataset. Pretraining is often performed on large image datasets so that the model learns broadly useful visual features before being adapted to a more specific downstream task.</p>
+<p>A common example is <strong>ImageNet</strong>, which contains approximately 1.2 million natural images across 1,000 object categories and is widely used for pretraining computer-vision models. These pretrained features can then be adapted to a new task by replacing the final prediction layer and either:</p>
 <ul class="simple">
 <li><p><strong>Freezing</strong> the pretrained feature extractor and training only the new prediction layer, or</p></li>
 <li><p><strong>Fine-tuning</strong> some or all pretrained layers using the new dataset.</p></li>
 </ul>
 <p>Transfer learning can reduce the amount of task-specific data and training time required. However, features learned from natural images may not transfer perfectly to medical images, and successful internal evaluation does not establish clinical validity.</p>
 <p>The official <a class="reference external" href="https://docs.pytorch.org/tutorials/beginner/transfer_learning_tutorial.html">PyTorch transfer-learning tutorial</a> provides a complete implementation.</p>
+<p>For a healthcare-specific example, see the
+<a class="reference external" href="https://mlmed.org/torchxrayvision/index.html">TorchXRayVision documentation</a>.
+TorchXRayVision provides pretrained deep-learning models for chest X-ray analysis, including DenseNet and ResNet architectures, as well as standardized preprocessing and access to several public chest X-ray datasets.</p>
+<p>These pretrained models can be reused as feature extractors or adapted to downstream chest X-ray tasks, illustrating how transfer learning can be applied within a medical-imaging domain.</p>
 </section>
 <section id="guided-pneumoniamnist-classification-workflow">
 <h2>7. Guided PneumoniaMNIST Classification Workflow<a class="headerlink" href="#guided-pneumoniamnist-classification-workflow" title="Permalink to this heading">#</a></h2>
@@ -1632,10 +1992,10 @@ Logits:       [0.0680497  0.06548157 0.07516152 0.07773104]
 y\log(p) + (1-y)\log(1-p)
 \right]\]</div>
 <p>where <span class="math notranslate nohighlight">\(y \in {0,1}\)</span> is the true binary label and <span class="math notranslate nohighlight">\(p\)</span> is the predicted probability of the positive class.</p>
-<p>In the implementation, the model produces an unbounded output called a <strong>logit</strong>, rather than a probability. PyTorch’s <code class="docutils literal notranslate"><span class="pre">BCEWithLogitsLoss</span></code> combines the sigmoid transformation and binary cross-entropy in a single, numerically stable function.</p>
+<p>In the implementation, the model produces an unbounded output called a <strong>logit</strong>, rather than a probability. PyTorch’s <code class="docutils literal notranslate"><span class="pre">BCEWithLogitsLoss</span></code> combines the sigmoid transformation and binary cross-entropy in a single function. This formulation is preferred because it is more <strong>numerically stable</strong> than applying a sigmoid first and then computing binary cross-entropy separately, particularly when logits have very large positive or negative values.</p>
 <div class="note admonition">
 <p class="admonition-title">Why use <code class="docutils literal notranslate"><span class="pre">BCEWithLogitsLoss</span></code>?</p>
-<p>Do not apply a sigmoid function to the model output before passing it to <code class="docutils literal notranslate"><span class="pre">BCEWithLogitsLoss</span></code>. The loss function applies the required transformation internally.</p>
+<p>Do not apply a sigmoid function to the model output before passing it to <code class="docutils literal notranslate"><span class="pre">BCEWithLogitsLoss</span></code>. The loss function applies the required transformation internally and uses a numerically stable formulation that avoids issues that can arise when probabilities become extremely close to 0 or 1.</p>
 <p>The sigmoid function is applied later when converting logits into probabilities for evaluation or interpretation.</p>
 </div>
 <section id="define-the-loss-function-and-optimizer">
@@ -1776,16 +2136,16 @@ Positive-class weight: 0.347
 </div>
 </details>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 1/10 | training loss: 0.2888 | validation loss: 0.2028
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 1/10 | training loss: 0.2888 | validation loss: 0.2027
 Epoch 2/10 | training loss: 0.1668 | validation loss: 0.1561
 Epoch 3/10 | training loss: 0.1443 | validation loss: 0.1375
-Epoch 4/10 | training loss: 0.1257 | validation loss: 0.1221
+Epoch 4/10 | training loss: 0.1256 | validation loss: 0.1221
 Epoch 5/10 | training loss: 0.1220 | validation loss: 0.1146
-Epoch 6/10 | training loss: 0.1219 | validation loss: 0.1432
-Epoch 7/10 | training loss: 0.1050 | validation loss: 0.1389
-Epoch 8/10 | training loss: 0.0954 | validation loss: 0.1446
-Epoch 9/10 | training loss: 0.0939 | validation loss: 0.1086
-Epoch 10/10 | training loss: 0.0902 | validation loss: 0.0958
+Epoch 6/10 | training loss: 0.1218 | validation loss: 0.1432
+Epoch 7/10 | training loss: 0.1050 | validation loss: 0.1390
+Epoch 8/10 | training loss: 0.0953 | validation loss: 0.1437
+Epoch 9/10 | training loss: 0.0936 | validation loss: 0.1084
+Epoch 10/10 | training loss: 0.0899 | validation loss: 0.0954
 </pre></div>
 </div>
 </div>
@@ -1798,33 +2158,69 @@ Epoch 10/10 | training loss: 0.0902 | validation loss: 0.0958
 <p>A widening gap in which training loss continues to improve while validation loss worsens can indicate overfitting. Loss curves are useful, but they do not replace evaluation using clinically relevant metrics.</p>
 <section id="visualize-training-and-validation-loss">
 <h4>Visualize Training and Validation Loss<a class="headerlink" href="#visualize-training-and-validation-loss" title="Permalink to this heading">#</a></h4>
-<div class="cell tag_hide-cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell content</span>
-<span class="expanded">Hide code cell content</span>
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#| label: training-curves-output</span>
+
 <span class="n">epochs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">NUM_EPOCHS</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
 
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">))</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">epochs</span><span class="p">,</span> <span class="n">history</span><span class="p">[</span><span class="s2">&quot;training_loss&quot;</span><span class="p">],</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Training loss&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">epochs</span><span class="p">,</span> <span class="n">history</span><span class="p">[</span><span class="s2">&quot;validation_loss&quot;</span><span class="p">],</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Validation loss&quot;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+    <span class="n">epochs</span><span class="p">,</span>
+    <span class="n">history</span><span class="p">[</span><span class="s2">&quot;training_loss&quot;</span><span class="p">],</span>
+    <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span>
+    <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">markersize</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Training loss&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+    <span class="n">epochs</span><span class="p">,</span>
+    <span class="n">history</span><span class="p">[</span><span class="s2">&quot;validation_loss&quot;</span><span class="p">],</span>
+    <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span>
+    <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">markersize</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Validation loss&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span>
+    <span class="s2">&quot;Training and Validation Loss&quot;</span><span class="p">,</span>
+    <span class="n">fontweight</span><span class="o">=</span><span class="s2">&quot;bold&quot;</span><span class="p">,</span>
+    <span class="n">pad</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span>
+<span class="p">)</span>
+
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Epoch&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Binary cross-entropy loss&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Training and validation loss&quot;</span><span class="p">)</span>
+
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">epochs</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span>
+    <span class="n">axis</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">,</span>
+    <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span>
+    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s2">&quot;top&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s2">&quot;right&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span>
+    <span class="n">frameon</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span>
+
 <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
-<span class="n">fig</span>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="../_images/d8f5a8cd2a9b485cb995ba6e4cf52bdf4507264185b649a0673596cacecb39bd.png" src="../_images/d8f5a8cd2a9b485cb995ba6e4cf52bdf4507264185b649a0673596cacecb39bd.png" />
-</div>
 </details>
+<div class="cell_output docutils container">
+<img alt="../_images/908b9bf6fd56722abdc81434731101bea88d0418d6ac6b0774743d1d4fc8825d.png" src="../_images/908b9bf6fd56722abdc81434731101bea88d0418d6ac6b0774743d1d4fc8825d.png" />
+</div>
 </div>
 <div class="question admonition">
 <p class="admonition-title">Reflection</p>
@@ -1844,21 +2240,37 @@ Suggested response<div class="sd-summary-down docutils">
 </section>
 <section id="evaluating-an-image-classifier-in-healthcare">
 <h2>8. Evaluating an Image Classifier in Healthcare<a class="headerlink" href="#evaluating-an-image-classifier-in-healthcare" title="Permalink to this heading">#</a></h2>
-<p>Accuracy alone is often insufficient for evaluating healthcare classifiers, especially when the classes are imbalanced or different types of errors have different clinical consequences.</p>
-<p>For a positive class such as pneumonia, sensitivity is calculated as:</p>
+<p>Accuracy alone is often insufficient for evaluating healthcare classifiers, especially when the classes are imbalanced or when different types of errors have different clinical consequences.</p>
+<p>For a positive class such as pneumonia, <strong>precision</strong>, also called <strong>positive predictive value (PPV)</strong>, is calculated as:</p>
+<div class="math notranslate nohighlight" id="equation-precision">
+<span class="eqno">(8)<a class="headerlink" href="#equation-precision" title="Permalink to this equation">#</a></span>\[\mathrm{Precision}
+=
+\mathrm{PPV}
+=
+\frac{TP}{TP + FP}\]</div>
+<p><strong>Sensitivity</strong>, also called <strong>recall</strong> or the <strong>true positive rate</strong>, is calculated as:</p>
 <div class="math notranslate nohighlight" id="equation-sensitivity">
-<span class="eqno">(8)<a class="headerlink" href="#equation-sensitivity" title="Permalink to this equation">#</a></span>\[\mathrm{Sensitivity}
+<span class="eqno">(9)<a class="headerlink" href="#equation-sensitivity" title="Permalink to this equation">#</a></span>\[\mathrm{Sensitivity}
+=
+\mathrm{Recall}
 =
 \frac{TP}{TP + FN}\]</div>
-<p>Specificity is calculated as:</p>
+<p><strong>Specificity</strong>, also called the <strong>true negative rate</strong>, is calculated as:</p>
 <div class="math notranslate nohighlight" id="equation-specificity">
-<span class="eqno">(9)<a class="headerlink" href="#equation-specificity" title="Permalink to this equation">#</a></span>\[\mathrm{Specificity}
+<span class="eqno">(10)<a class="headerlink" href="#equation-specificity" title="Permalink to this equation">#</a></span>\[\mathrm{Specificity}
 =
 \frac{TN}{TN + FP}\]</div>
+<p><strong>Negative predictive value (NPV)</strong> is calculated as:</p>
+<div class="math notranslate nohighlight" id="equation-npv">
+<span class="eqno">(11)<a class="headerlink" href="#equation-npv" title="Permalink to this equation">#</a></span>\[\mathrm{NPV}
+=
+\frac{TN}{TN + FN}\]</div>
 <p>where <span class="math notranslate nohighlight">\(TP\)</span> represents true positives, <span class="math notranslate nohighlight">\(FN\)</span> represents false negatives, <span class="math notranslate nohighlight">\(TN\)</span> represents true negatives, and <span class="math notranslate nohighlight">\(FP\)</span> represents false positives.</p>
 <ul class="simple">
 <li><p><strong>Sensitivity</strong> is the proportion of positive cases that the model correctly identifies.</p></li>
 <li><p><strong>Specificity</strong> is the proportion of negative cases that the model correctly identifies.</p></li>
+<li><p><strong>PPV</strong> describes how often a positive prediction corresponds to a true positive.</p></li>
+<li><p><strong>NPV</strong> describes how often a negative prediction corresponds to a true negative.</p></li>
 </ul>
 <div class="note admonition">
 <p class="admonition-title">Why accuracy may be misleading</p>
@@ -1927,13 +2339,18 @@ Probability range: 0.000 to 1.000
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">binary_classification_metrics</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">probabilities</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.5</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate threshold-dependent and threshold-independent metrics.&quot;&quot;&quot;</span>
+
     <span class="n">predictions</span> <span class="o">=</span> <span class="p">(</span><span class="n">probabilities</span> <span class="o">&gt;=</span> <span class="n">threshold</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
     <span class="n">tn</span><span class="p">,</span> <span class="n">fp</span><span class="p">,</span> <span class="n">fn</span><span class="p">,</span> <span class="n">tp</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span>
-        <span class="n">labels</span><span class="p">,</span> <span class="n">predictions</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">labels</span><span class="p">,</span>
+        <span class="n">predictions</span><span class="p">,</span>
+        <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
     <span class="p">)</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
 
     <span class="n">sensitivity</span> <span class="o">=</span> <span class="n">tp</span> <span class="o">/</span> <span class="p">(</span><span class="n">tp</span> <span class="o">+</span> <span class="n">fn</span><span class="p">)</span> <span class="k">if</span> <span class="p">(</span><span class="n">tp</span> <span class="o">+</span> <span class="n">fn</span><span class="p">)</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
     <span class="n">specificity</span> <span class="o">=</span> <span class="n">tn</span> <span class="o">/</span> <span class="p">(</span><span class="n">tn</span> <span class="o">+</span> <span class="n">fp</span><span class="p">)</span> <span class="k">if</span> <span class="p">(</span><span class="n">tn</span> <span class="o">+</span> <span class="n">fp</span><span class="p">)</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+    <span class="n">npv</span> <span class="o">=</span> <span class="n">tn</span> <span class="o">/</span> <span class="p">(</span><span class="n">tn</span> <span class="o">+</span> <span class="n">fn</span><span class="p">)</span> <span class="k">if</span> <span class="p">(</span><span class="n">tn</span> <span class="o">+</span> <span class="n">fn</span><span class="p">)</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
 
     <span class="k">return</span> <span class="p">{</span>
         <span class="s2">&quot;Threshold&quot;</span><span class="p">:</span> <span class="n">threshold</span><span class="p">,</span>
@@ -1941,8 +2358,17 @@ Probability range: 0.000 to 1.000
         <span class="s2">&quot;AUROC&quot;</span><span class="p">:</span> <span class="n">roc_auc_score</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">probabilities</span><span class="p">),</span>
         <span class="s2">&quot;Sensitivity&quot;</span><span class="p">:</span> <span class="n">sensitivity</span><span class="p">,</span>
         <span class="s2">&quot;Specificity&quot;</span><span class="p">:</span> <span class="n">specificity</span><span class="p">,</span>
-        <span class="s2">&quot;Precision&quot;</span><span class="p">:</span> <span class="n">precision_score</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">predictions</span><span class="p">,</span> <span class="n">zero_division</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
-        <span class="s2">&quot;F1 score&quot;</span><span class="p">:</span> <span class="n">f1_score</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">predictions</span><span class="p">,</span> <span class="n">zero_division</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+        <span class="s2">&quot;Precision (PPV)&quot;</span><span class="p">:</span> <span class="n">precision_score</span><span class="p">(</span>
+            <span class="n">labels</span><span class="p">,</span>
+            <span class="n">predictions</span><span class="p">,</span>
+            <span class="n">zero_division</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="p">),</span>
+        <span class="s2">&quot;NPV&quot;</span><span class="p">:</span> <span class="n">npv</span><span class="p">,</span>
+        <span class="s2">&quot;F1 score&quot;</span><span class="p">:</span> <span class="n">f1_score</span><span class="p">(</span>
+            <span class="n">labels</span><span class="p">,</span>
+            <span class="n">predictions</span><span class="p">,</span>
+            <span class="n">zero_division</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="p">),</span>
         <span class="s2">&quot;True negatives&quot;</span><span class="p">:</span> <span class="n">tn</span><span class="p">,</span>
         <span class="s2">&quot;False positives&quot;</span><span class="p">:</span> <span class="n">fp</span><span class="p">,</span>
         <span class="s2">&quot;False negatives&quot;</span><span class="p">:</span> <span class="n">fn</span><span class="p">,</span>
@@ -1951,64 +2377,96 @@ Probability range: 0.000 to 1.000
 
 
 <span class="n">metrics_at_05</span> <span class="o">=</span> <span class="n">binary_classification_metrics</span><span class="p">(</span>
-    <span class="n">test_labels</span><span class="p">,</span> <span class="n">test_probabilities</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.5</span>
+    <span class="n">test_labels</span><span class="p">,</span>
+    <span class="n">test_probabilities</span><span class="p">,</span>
+    <span class="n">threshold</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
 <span class="p">)</span>
 
-<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="n">metrics_at_05</span><span class="p">])</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">metrics_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="n">metrics_at_05</span><span class="p">])</span>
+
+<span class="n">performance_cols</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;Threshold&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Accuracy&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;AUROC&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Sensitivity&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Specificity&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Precision (PPV)&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;NPV&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;F1 score&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="n">count_cols</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;True negatives&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;False positives&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;False negatives&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;True positives&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="n">display</span><span class="p">(</span>
+    <span class="n">metrics_df</span><span class="p">[</span><span class="n">performance_cols</span><span class="p">]</span><span class="o">.</span><span class="n">style</span>
+    <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{:.3f}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">hide</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;index&quot;</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">display</span><span class="p">(</span>
+    <span class="n">metrics_df</span><span class="p">[</span><span class="n">count_cols</span><span class="p">]</span><span class="o">.</span><span class="n">style</span>
+    <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{:.0f}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">hide</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;index&quot;</span><span class="p">)</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </details>
 <div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
+<div class="output text_html"><style type="text/css">
 </style>
-<table border="1" class="dataframe">
+<table id="T_7c33d">
   <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Threshold</th>
-      <th>Accuracy</th>
-      <th>AUROC</th>
-      <th>Sensitivity</th>
-      <th>Specificity</th>
-      <th>Precision</th>
-      <th>F1 score</th>
-      <th>True negatives</th>
-      <th>False positives</th>
-      <th>False negatives</th>
-      <th>True positives</th>
+    <tr>
+      <th id="T_7c33d_level0_col0" class="col_heading level0 col0" >Threshold</th>
+      <th id="T_7c33d_level0_col1" class="col_heading level0 col1" >Accuracy</th>
+      <th id="T_7c33d_level0_col2" class="col_heading level0 col2" >AUROC</th>
+      <th id="T_7c33d_level0_col3" class="col_heading level0 col3" >Sensitivity</th>
+      <th id="T_7c33d_level0_col4" class="col_heading level0 col4" >Specificity</th>
+      <th id="T_7c33d_level0_col5" class="col_heading level0 col5" >Precision (PPV)</th>
+      <th id="T_7c33d_level0_col6" class="col_heading level0 col6" >NPV</th>
+      <th id="T_7c33d_level0_col7" class="col_heading level0 col7" >F1 score</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>0</th>
-      <td>0.5</td>
-      <td>0.894</td>
-      <td>0.951</td>
-      <td>0.944</td>
-      <td>0.812</td>
-      <td>0.893</td>
-      <td>0.918</td>
-      <td>190</td>
-      <td>44</td>
-      <td>22</td>
-      <td>368</td>
+      <td id="T_7c33d_row0_col0" class="data row0 col0" >0.500</td>
+      <td id="T_7c33d_row0_col1" class="data row0 col1" >0.896</td>
+      <td id="T_7c33d_row0_col2" class="data row0 col2" >0.951</td>
+      <td id="T_7c33d_row0_col3" class="data row0 col3" >0.946</td>
+      <td id="T_7c33d_row0_col4" class="data row0 col4" >0.812</td>
+      <td id="T_7c33d_row0_col5" class="data row0 col5" >0.893</td>
+      <td id="T_7c33d_row0_col6" class="data row0 col6" >0.900</td>
+      <td id="T_7c33d_row0_col7" class="data row0 col7" >0.919</td>
     </tr>
   </tbody>
 </table>
-</div></div></div>
+</div><div class="output text_html"><style type="text/css">
+</style>
+<table id="T_6f080">
+  <thead>
+    <tr>
+      <th id="T_6f080_level0_col0" class="col_heading level0 col0" >True negatives</th>
+      <th id="T_6f080_level0_col1" class="col_heading level0 col1" >False positives</th>
+      <th id="T_6f080_level0_col2" class="col_heading level0 col2" >False negatives</th>
+      <th id="T_6f080_level0_col3" class="col_heading level0 col3" >True positives</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td id="T_6f080_row0_col0" class="data row0 col0" >190</td>
+      <td id="T_6f080_row0_col1" class="data row0 col1" >44</td>
+      <td id="T_6f080_row0_col2" class="data row0 col2" >21</td>
+      <td id="T_6f080_row0_col3" class="data row0 col3" >369</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
 </div>
 <div class="note admonition">
 <p class="admonition-title">Interpretation</p>
@@ -2017,64 +2475,140 @@ Probability range: 0.000 to 1.000
 </section>
 <section id="visualize-the-confusion-matrix">
 <h3>Visualize the Confusion Matrix<a class="headerlink" href="#visualize-the-confusion-matrix" title="Permalink to this heading">#</a></h3>
-<div class="cell tag_hide-cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell content</span>
-<span class="expanded">Hide code cell content</span>
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#| label: confusion-matrix-output</span>
+
 <span class="n">test_predictions</span> <span class="o">=</span> <span class="p">(</span><span class="n">test_probabilities</span> <span class="o">&gt;=</span> <span class="mf">0.5</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
-<span class="n">cm</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">test_labels</span><span class="p">,</span> <span class="n">test_predictions</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+
+<span class="n">cm</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span>
+    <span class="n">test_labels</span><span class="p">,</span>
+    <span class="n">test_predictions</span><span class="p">,</span>
+    <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<span class="p">)</span>
 
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">5.5</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
-<span class="n">ConfusionMatrixDisplay</span><span class="p">(</span>
+
+<span class="n">cm_display</span> <span class="o">=</span> <span class="n">ConfusionMatrixDisplay</span><span class="p">(</span>
     <span class="n">confusion_matrix</span><span class="o">=</span><span class="n">cm</span><span class="p">,</span>
     <span class="n">display_labels</span><span class="o">=</span><span class="p">[</span><span class="n">label_map</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">label_map</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span>
-<span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;Blues&quot;</span><span class="p">,</span> <span class="n">colorbar</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="p">)</span>
 
-<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Test-set confusion matrix at threshold 0.5&quot;</span><span class="p">)</span>
+<span class="n">cm_display</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+    <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span>
+    <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;Blues&quot;</span><span class="p">,</span>
+    <span class="n">colorbar</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">values_format</span><span class="o">=</span><span class="s2">&quot;d&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span>
+    <span class="s2">&quot;Test-Set Confusion Matrix&quot;</span><span class="p">,</span>
+    <span class="n">fontweight</span><span class="o">=</span><span class="s2">&quot;bold&quot;</span><span class="p">,</span>
+    <span class="n">pad</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span>
+    <span class="s2">&quot;Predicted class&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span>
+    <span class="s2">&quot;True class&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span>
+    <span class="n">axis</span><span class="o">=</span><span class="s2">&quot;both&quot;</span><span class="p">,</span>
+    <span class="n">labelsize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># Make the counts easier to read</span>
+<span class="k">for</span> <span class="n">text</span> <span class="ow">in</span> <span class="n">ax</span><span class="o">.</span><span class="n">texts</span><span class="p">:</span>
+    <span class="n">text</span><span class="o">.</span><span class="n">set_fontweight</span><span class="p">(</span><span class="s2">&quot;bold&quot;</span><span class="p">)</span>
+
+<span class="c1"># Remove the small tick marks</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span>
+    <span class="n">axis</span><span class="o">=</span><span class="s2">&quot;both&quot;</span><span class="p">,</span>
+    <span class="n">which</span><span class="o">=</span><span class="s2">&quot;both&quot;</span><span class="p">,</span>
+    <span class="n">length</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+<span class="p">)</span>
+
 <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
-<span class="n">fig</span>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="../_images/ab165d7026c599fbdfcf5f7d71909123bf9fba11c1b78cf5b2d777047cb9fa03.png" src="../_images/ab165d7026c599fbdfcf5f7d71909123bf9fba11c1b78cf5b2d777047cb9fa03.png" />
-</div>
 </details>
+<div class="cell_output docutils container">
+<img alt="../_images/4f101ee92253e6d344e20fa4931b6cdedaaa7ef445a8638ddf752bb0fa077817.png" src="../_images/4f101ee92253e6d344e20fa4931b6cdedaaa7ef445a8638ddf752bb0fa077817.png" />
+</div>
 </div>
 </section>
 <section id="visualize-the-receiver-operating-characteristic-curve">
 <h3>Visualize the Receiver Operating Characteristic Curve<a class="headerlink" href="#visualize-the-receiver-operating-characteristic-curve" title="Permalink to this heading">#</a></h3>
-<div class="cell tag_hide-cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell content</span>
-<span class="expanded">Hide code cell content</span>
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#| label: roc-curve-output</span>
+
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
 <span class="n">RocCurveDisplay</span><span class="o">.</span><span class="n">from_predictions</span><span class="p">(</span>
     <span class="n">test_labels</span><span class="p">,</span>
     <span class="n">test_probabilities</span><span class="p">,</span>
     <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Small CNN&quot;</span><span class="p">,</span>
     <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span>
+    <span class="c1"># linewidth=2.5,</span>
 <span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Chance&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Test-set ROC curve&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+<span class="c1"># Chance-level classifier</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+    <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span>
+    <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Chance&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span>
+    <span class="s2">&quot;Test-Set ROC Curve&quot;</span><span class="p">,</span>
+    <span class="n">fontweight</span><span class="o">=</span><span class="s2">&quot;bold&quot;</span><span class="p">,</span>
+    <span class="n">pad</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;False positive rate&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;True positive rate (sensitivity)&quot;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span>
+    <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span>
+    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s2">&quot;top&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s2">&quot;right&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span>
+    <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;lower right&quot;</span><span class="p">,</span>
+    <span class="n">frameon</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.02</span><span class="p">)</span>
+
 <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
-<span class="n">fig</span>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="../_images/d4e79c8519bca654e152dec1780f08038cea4ccd254043e8d05660b635157e5b.png" src="../_images/d4e79c8519bca654e152dec1780f08038cea4ccd254043e8d05660b635157e5b.png" />
-</div>
 </details>
+<div class="cell_output docutils container">
+<img alt="../_images/0a86f26e9da062f88ba037ff49ebe81d34d76abab97e2b52aa6de6d55a62704f.png" src="../_images/0a86f26e9da062f88ba037ff49ebe81d34d76abab97e2b52aa6de6d55a62704f.png" />
+</div>
 </div>
 </section>
 <section id="examine-the-decision-threshold">
@@ -2082,14 +2616,15 @@ Probability range: 0.000 to 1.000
 <p>The predicted probability must be converted into a class decision using a threshold. Changing the threshold changes the balance between sensitivity and specificity.</p>
 <section id="examine-sensitivity-and-specificity-across-thresholds">
 <h4>Examine Sensitivity and Specificity Across Thresholds<a class="headerlink" href="#examine-sensitivity-and-specificity-across-thresholds" title="Permalink to this heading">#</a></h4>
-<div class="cell tag_hide-cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell content</span>
-<span class="expanded">Hide code cell content</span>
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#| label: threshold-tradeoff-output</span>
+
 <span class="n">threshold_rows</span> <span class="o">=</span> <span class="p">[]</span>
 
 <span class="k">for</span> <span class="n">threshold</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.95</span><span class="p">,</span> <span class="mi">19</span><span class="p">):</span>
@@ -2104,32 +2639,88 @@ Probability range: 0.000 to 1.000
 <span class="n">threshold_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">threshold_rows</span><span class="p">)</span>
 
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">))</span>
+
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
     <span class="n">threshold_results</span><span class="p">[</span><span class="s2">&quot;Threshold&quot;</span><span class="p">],</span>
     <span class="n">threshold_results</span><span class="p">[</span><span class="s2">&quot;Sensitivity&quot;</span><span class="p">],</span>
     <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span>
+    <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">markersize</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
     <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Sensitivity&quot;</span><span class="p">,</span>
 <span class="p">)</span>
+
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
     <span class="n">threshold_results</span><span class="p">[</span><span class="s2">&quot;Threshold&quot;</span><span class="p">],</span>
     <span class="n">threshold_results</span><span class="p">[</span><span class="s2">&quot;Specificity&quot;</span><span class="p">],</span>
     <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span>
+    <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">markersize</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
     <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Specificity&quot;</span><span class="p">,</span>
 <span class="p">)</span>
+
+<span class="c1"># Highlight the commonly used threshold of 0.5</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span>
+    <span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span>
+    <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span>
+    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span>
+    <span class="mf">0.5</span><span class="p">,</span>
+    <span class="mf">1.02</span><span class="p">,</span>
+    <span class="s2">&quot;Threshold = 0.5&quot;</span><span class="p">,</span>
+    <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span>
+    <span class="n">va</span><span class="o">=</span><span class="s2">&quot;bottom&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span>
+    <span class="s2">&quot;Sensitivity and Specificity Across Thresholds&quot;</span><span class="p">,</span>
+    <span class="n">fontweight</span><span class="o">=</span><span class="s2">&quot;bold&quot;</span><span class="p">,</span>
+    <span class="n">pad</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span>
+<span class="p">)</span>
+
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Probability threshold&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Metric value&quot;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.95</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.05</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Sensitivity and specificity across thresholds&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span>
+    <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span>
+    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s2">&quot;top&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s2">&quot;right&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span>
+    <span class="n">frameon</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;best&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
 <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
-<span class="n">fig</span>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="../_images/6c3ca20a78079e48dde70cdec2678e6549f204594b92b15a59b0c5be95a34b8a.png" src="../_images/6c3ca20a78079e48dde70cdec2678e6549f204594b92b15a59b0c5be95a34b8a.png" />
-</div>
 </details>
+<div class="cell_output docutils container">
+<img alt="../_images/2483bcac58dc804dcecf3340fb53370fb2d3544926456678adfcc76d9e256293.png" src="../_images/2483bcac58dc804dcecf3340fb53370fb2d3544926456678adfcc76d9e256293.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="choosing-a-decision-threshold">
+<h3>Choosing a Decision Threshold<a class="headerlink" href="#choosing-a-decision-threshold" title="Permalink to this heading">#</a></h3>
+<p>A binary classifier converts predicted probabilities into class labels using a <strong>decision threshold</strong>. A threshold of 0.5 is common, but it is not necessarily the most appropriate choice for every application. The threshold should reflect the intended use of the model and the relative consequences of false-positive and false-negative predictions.</p>
+<p>For example:</p>
+<ul class="simple">
+<li><p>If the goal is to <strong>minimize missed pneumonia cases</strong>, a lower threshold may be selected to increase <strong>sensitivity</strong>. More images will be classified as positive, which can reduce false negatives but usually increases false positives.</p></li>
+<li><p>If the goal is to <strong>avoid unnecessary follow-up for patients without pneumonia</strong>, a higher threshold may be selected to increase <strong>specificity</strong>, although this may increase the number of missed positive cases.</p></li>
+</ul>
+<div class="note admonition">
+<p class="admonition-title">Threshold selection depends on the intended use</p>
+<p>There is no universally optimal probability threshold. A threshold should be selected using validation data based on the intended application and relevant performance requirements, and then evaluated on an independent test set.</p>
+<p>PPV and NPV also depend on disease prevalence, so values observed in one dataset may change when the model is applied to a population with a different prevalence.</p>
 </div>
 <div class="question admonition">
 <p class="admonition-title">Check your understanding</p>
@@ -2144,7 +2735,6 @@ Answer<div class="sd-summary-down docutils">
 <p class="sd-card-text">Repeatedly selecting a threshold based on test performance leaks information from the test set into model development. The threshold should be selected using validation data and justified using the intended clinical context. The untouched test set should be used for final evaluation.</p>
 </div>
 </details></div>
-</section>
 </section>
 <section id="review-false-positives-and-false-negatives">
 <h3>8.2 Review false positives and false negatives<a class="headerlink" href="#review-false-positives-and-false-negatives" title="Permalink to this heading">#</a></h3>
@@ -2209,7 +2799,6 @@ Answer<div class="sd-summary-down docutils">
         <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span>
             <span class="sa">f</span><span class="s2">&quot;True: </span><span class="si">{</span><span class="n">label_map</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">labels</span><span class="p">[</span><span class="n">idx</span><span class="p">])]</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
             <span class="sa">f</span><span class="s2">&quot;P(pneumonia): </span><span class="si">{</span><span class="n">probabilities</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
-            <span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
 
@@ -2224,11 +2813,11 @@ Answer<div class="sd-summary-down docutils">
 </section>
 <section id="review-false-positive-predictions">
 <h4>Review False-Positive Predictions<a class="headerlink" href="#review-false-positive-predictions" title="Permalink to this heading">#</a></h4>
-<div class="cell tag_hide-cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell content</span>
-<span class="expanded">Hide code cell content</span>
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#| label: false-positive-predictions-output</span>
@@ -2243,19 +2832,19 @@ Answer<div class="sd-summary-down docutils">
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="../_images/b8997211362d8749cfb8692efb0e2d9a66148e428d3e613a71aa32065008d879.png" src="../_images/b8997211362d8749cfb8692efb0e2d9a66148e428d3e613a71aa32065008d879.png" />
-</div>
 </details>
+<div class="cell_output docutils container">
+<img alt="../_images/799fd7e59fbb508062dab03a3edca90fa4d958d186a5dd7490db8bac545cead2.png" src="../_images/799fd7e59fbb508062dab03a3edca90fa4d958d186a5dd7490db8bac545cead2.png" />
+</div>
 </div>
 </section>
 <section id="review-false-negative-predictions">
 <h4>Review False-Negative Predictions<a class="headerlink" href="#review-false-negative-predictions" title="Permalink to this heading">#</a></h4>
-<div class="cell tag_hide-cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell content</span>
-<span class="expanded">Hide code cell content</span>
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#| label: false-negative-predictions-output</span>
@@ -2271,10 +2860,10 @@ Answer<div class="sd-summary-down docutils">
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="../_images/9e5789c272618e6d9b1d61ae628f8ba1fc6e6f7d2559601d192421bd751c68b6.png" src="../_images/9e5789c272618e6d9b1d61ae628f8ba1fc6e6f7d2559601d192421bd751c68b6.png" />
-</div>
 </details>
+<div class="cell_output docutils container">
+<img alt="../_images/867c7b46400651bc21d066461244933065fbbe09d5697f012d5a037eb7b2f4b3.png" src="../_images/867c7b46400651bc21d066461244933065fbbe09d5697f012d5a037eb7b2f4b3.png" />
+</div>
 </div>
 <div class="question admonition">
 <p class="admonition-title">Reflection</p>
@@ -2285,7 +2874,7 @@ Answer<div class="sd-summary-down docutils">
 </section>
 <section id="interpretation-and-grad-cam">
 <h2>9. Interpretation and Grad-CAM<a class="headerlink" href="#interpretation-and-grad-cam" title="Permalink to this heading">#</a></h2>
-<p>Grad-CAM uses gradients flowing into a convolutional layer to produce a coarse, class-specific localization map associated with a model output <span id="id8">[<a class="reference internal" href="../bibliographypage.html#id21" title="Ramprasaath R. Selvaraju, Abhishek Das, Ramakrishna Vedantam, Michael Cogswell, Devi Parikh, and Dhruv Batra. Grad-cam: why did you say that? visual explanations from deep networks via gradient-based localization. CoRR, 2016. arXiv:1610.02391.">Selvaraju <em>et al.</em>, 2016</a>]</span>. It can be useful for exploratory interpretation and error analysis.</p>
+<p>Grad-CAM uses gradients flowing into a convolutional layer to produce a coarse, class-specific localization map associated with a model output <span id="id9">[<a class="reference internal" href="../bibliographypage.html#id21" title="Ramprasaath R. Selvaraju, Abhishek Das, Ramakrishna Vedantam, Michael Cogswell, Devi Parikh, and Dhruv Batra. Grad-cam: why did you say that? visual explanations from deep networks via gradient-based localization. CoRR, 2016. arXiv:1610.02391.">Selvaraju <em>et al.</em>, 2016</a>]</span>. It can be useful for exploratory interpretation and error analysis.</p>
 <p>However, a Grad-CAM heatmap:</p>
 <ul class="simple">
 <li><p>Is not a validated segmentation mask</p></li>
@@ -2297,11 +2886,11 @@ Answer<div class="sd-summary-down docutils">
 <p>The code below uses <a class="reference external" href="https://captum.ai/">Captum</a> to generate a Grad-CAM map for one test image.</p>
 <section id="generate-and-visualize-a-grad-cam-heatmap">
 <h3>Generate and Visualize a Grad-CAM Heatmap<a class="headerlink" href="#generate-and-visualize-a-grad-cam-heatmap" title="Permalink to this heading">#</a></h3>
-<div class="cell tag_hide-cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell content</span>
-<span class="expanded">Hide code cell content</span>
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#| label: gradcam-output</span>
@@ -2378,17 +2967,18 @@ Answer<div class="sd-summary-down docutils">
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="../_images/7d8a466bb2dd5fe938525f87ff134de483ec451461e34865daa30921c10cab1a.png" src="../_images/7d8a466bb2dd5fe938525f87ff134de483ec451461e34865daa30921c10cab1a.png" />
-</div>
 </details>
+<div class="cell_output docutils container">
+<img alt="../_images/7b96f6be8e1de48e3ba34cb40b51709bcfbd98545406db59bceaa07df6640954.png" src="../_images/7b96f6be8e1de48e3ba34cb40b51709bcfbd98545406db59bceaa07df6640954.png" />
+<img alt="../_images/7b96f6be8e1de48e3ba34cb40b51709bcfbd98545406db59bceaa07df6640954.png" src="../_images/7b96f6be8e1de48e3ba34cb40b51709bcfbd98545406db59bceaa07df6640954.png" />
+</div>
 </div>
 </section>
 </section>
 <section id="failure-modes-and-clinical-generalizability">
 <h2>10. Failure Modes and Clinical Generalizability<a class="headerlink" href="#failure-modes-and-clinical-generalizability" title="Permalink to this heading">#</a></h2>
-<p>Image-based models can perform well on an internal benchmark and still fail in clinical use.A model may learn shortcuts—patterns that are predictive within the development dataset but do not represent the intended clinical features <span id="id9">[<a class="reference internal" href="../bibliographypage.html#id23" title="Robert Geirhos, Jörn-Henrik Jacobsen, Claudio Michaelis, Richard Zemel, Wieland Brendel, Matthias Bethge, and Felix A. Wichmann. Shortcut learning in deep neural networks. Nature Machine Intelligence, 2(11):665–673, 2020.">Geirhos <em>et al.</em>, 2020</a>]</span>.</p>
-<p>In chest radiography, pneumonia-detection performance has been shown to vary across institutions, demonstrating that strong internal performance may not transfer to different hospitals, populations, or acquisition environments <span id="id10">[<a class="reference internal" href="../bibliographypage.html#id22" title="John R. Zech, Marcus A. Badgeley, Manway Liu, Anthony B. Costa, Joseph J. Titano, and Eric Karl Oermann. Variable generalization performance of a deep learning model to detect pneumonia in chest radiographs: a cross-sectional study. PLOS Medicine, 15(11):1-17, 11 2018.">Zech <em>et al.</em>, 2018</a>]</span>.</p>
+<p>Image-based models can perform well on an internal benchmark and still fail in clinical use.A model may learn shortcuts—patterns that are predictive within the development dataset but do not represent the intended clinical features <span id="id10">[<a class="reference internal" href="../bibliographypage.html#id23" title="Robert Geirhos, Jörn-Henrik Jacobsen, Claudio Michaelis, Richard Zemel, Wieland Brendel, Matthias Bethge, and Felix A. Wichmann. Shortcut learning in deep neural networks. Nature Machine Intelligence, 2(11):665–673, 2020.">Geirhos <em>et al.</em>, 2020</a>]</span>.</p>
+<p>In chest radiography, pneumonia-detection performance has been shown to vary across institutions, demonstrating that strong internal performance may not transfer to different hospitals, populations, or acquisition environments <span id="id11">[<a class="reference internal" href="../bibliographypage.html#id22" title="John R. Zech, Marcus A. Badgeley, Manway Liu, Anthony B. Costa, Joseph J. Titano, and Eric Karl Oermann. Variable generalization performance of a deep learning model to detect pneumonia in chest radiographs: a cross-sectional study. PLOS Medicine, 15(11):1-17, 11 2018.">Zech <em>et al.</em>, 2018</a>]</span>.</p>
 <table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>Risk</p></th>
@@ -2441,7 +3031,7 @@ Answer<div class="sd-summary-down docutils">
 <li><p><strong>Workflow:</strong> Who will use the output, and how will it affect care?</p></li>
 <li><p><strong>Monitoring:</strong> How will performance and failure modes be monitored after deployment?</p></li>
 </ol>
-<p>Transparent reporting is also necessary for evaluating whether a medical imaging study is reproducible and clinically meaningful. The Checklist for Artificial Intelligence in Medical Imaging, or CLAIM, provides reporting recommendations for artificial-intelligence studies involving medical images <span id="id11">[<a class="reference internal" href="../bibliographypage.html#id24" title="John Mongan, Linda Moy, and Charles E. Kahn. Checklist for artificial intelligence in medical imaging (claim): a guide for authors and reviewers. Radiology: Artificial Intelligence, 2(2):e200029, 2020.">Mongan <em>et al.</em>, 2020</a>]</span>.</p>
+<p>Transparent reporting is also necessary for evaluating whether a medical imaging study is reproducible and clinically meaningful. The Checklist for Artificial Intelligence in Medical Imaging, or CLAIM, provides reporting recommendations for artificial-intelligence studies involving medical images <span id="id12">[<a class="reference internal" href="../bibliographypage.html#id24" title="John Mongan, Linda Moy, and Charles E. Kahn. Checklist for artificial intelligence in medical imaging (claim): a guide for authors and reviewers. Radiology: Artificial Intelligence, 2(2):e200029, 2020.">Mongan <em>et al.</em>, 2020</a>]</span>.</p>
 <div class="question admonition">
 <p class="admonition-title">Activity</p>
 <p>Write a two- or three-sentence limitation statement for the model trained in this notebook. It should mention the source population, image resolution, and why the test result does not establish clinical validity.</p>
@@ -2459,9 +3049,8 @@ Example response<div class="sd-summary-down docutils">
 </section>
 <section id="optional-extension-transfer-learning-with-resnet-18">
 <h2>11. Optional Extension: Transfer Learning with ResNet-18<a class="headerlink" href="#optional-extension-transfer-learning-with-resnet-18" title="Permalink to this heading">#</a></h2>
-<p>The main example trains a small CNN from scratch. As an extension, learners can adapt a pretrained ResNet-18.</p>
+<p>The main example trains a small CNN from scratch. As an extension, you can adapt a pretrained ResNet-18.</p>
 <p>A pretrained ResNet generally expects three-channel inputs and preprocessing compatible with its pretrained weights. For grayscale images, one simple educational approach is to repeat the grayscale channel three times. This does not create new image information.</p>
-<p>The following cell is intentionally not run by default because it increases compute and download requirements.</p>
 <section id="prepare-the-optional-resnet-18-transfer-learning-model">
 <h3>Prepare the Optional ResNet-18 Transfer-Learning Model<a class="headerlink" href="#prepare-the-optional-resnet-18-transfer-learning-model" title="Permalink to this heading">#</a></h3>
 <div class="cell tag_hide-input docutils container">
@@ -2472,7 +3061,7 @@ Example response<div class="sd-summary-down docutils">
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># OPTIONAL EXTENSION — set RUN_TRANSFER_LEARNING = True to prepare the model.</span>
-<span class="n">RUN_TRANSFER_LEARNING</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">RUN_TRANSFER_LEARNING</span> <span class="o">=</span> <span class="kc">False</span>
 
 <span class="k">if</span> <span class="n">RUN_TRANSFER_LEARNING</span><span class="p">:</span>
     <span class="kn">from</span><span class="w"> </span><span class="nn">torchvision.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">ResNet18_Weights</span><span class="p">,</span> <span class="n">resnet18</span>
@@ -2506,13 +3095,13 @@ Example response<div class="sd-summary-down docutils">
     <span class="n">transfer_model</span> <span class="o">=</span> <span class="n">transfer_model</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">transfer_model</span><span class="o">.</span><span class="n">fc</span><span class="p">)</span>
 <span class="k">else</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Transfer-learning extension skipped.&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Transfer-learning extension skipped because it increases compute.&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </details>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Linear(in_features=512, out_features=1, bias=True)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Transfer-learning extension skipped because it increases compute.
 </pre></div>
 </div>
 </div>
@@ -2658,7 +3247,7 @@ Example response<div class="sd-summary-down docutils">
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#inspect-image-dimensions-and-pixel-values">3.2 Inspect image dimensions and pixel values</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Inspect Image Dimensions and Pixel Values</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Inspect Image Dimensions and Pixel Values</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#visualize-examples-from-each-class">Visualize Examples from Each Class</a></li>
 </ul>
 </li>
@@ -2678,7 +3267,7 @@ Example response<div class="sd-summary-down docutils">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calculate-the-convolutional-output-size">Calculate the Convolutional Output Size</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modern-image-model-families">5. Modern Image Model Families</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#image-based-model-families">5. Image-Based Model Families</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transfer-learning">6. Transfer Learning</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#guided-pneumoniamnist-classification-workflow">7. Guided PneumoniaMNIST Classification Workflow</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-data-loaders">7.1 Create data loaders</a><ul class="nav section-nav flex-column">
@@ -2714,6 +3303,7 @@ Example response<div class="sd-summary-down docutils">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#examine-sensitivity-and-specificity-across-thresholds">Examine Sensitivity and Specificity Across Thresholds</a></li>
 </ul>
 </li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#choosing-a-decision-threshold">Choosing a Decision Threshold</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#review-false-positives-and-false-negatives">8.2 Review false positives and false negatives</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#define-helper-functions-for-reviewing-classification-errors">Define Helper Functions for Reviewing Classification Errors</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#review-false-positive-predictions">Review False-Positive Predictions</a></li>
