@@ -7,7 +7,7 @@
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
     <title>From Clinical Question to Credible Model: A Development Workflow &#8212; T-CAIREM AI in Medicine</title>
   
@@ -424,7 +424,7 @@ document.write(`
 <p>Clinical machine-learning projects rarely fail because nobody tried a sufficiently complicated algorithm. More often, the intended use was vague, the prediction time was not fixed, information leaked across splits, a threshold was chosen after examining the test set, or performance was summarized with one attractive number. This tutorial builds a small but complete workflow around those failure points.</p>
 <section id="at-a-glance">
 <h2>At a glance<a class="headerlink" href="#at-a-glance" title="Permalink to this heading">#</a></h2>
-<table class="table">
+<table class="colwidths-auto table">
 <thead>
 <tr class="row-odd"><th class="head"><p>Item</p></th>
 <th class="head"><p>What this tutorial uses</p></th>
@@ -547,7 +547,7 @@ document.write(`
 <section id="make-the-intended-use-testable">
 <h2>2. Make the intended use testable<a class="headerlink" href="#make-the-intended-use-testable" title="Permalink to this heading">#</a></h2>
 <p>We will develop a <strong>decision-support</strong> model for adult inpatients. At an index time four hours after admission, the model estimates whether a composite deterioration outcome will occur in the next 24 hours. The estimate could support review by a trained care team; it is not an autonomous diagnosis or treatment recommendation.</p>
-<table class="table">
+<table class="colwidths-auto table">
 <thead>
 <tr class="row-odd"><th class="head"><p>Design element</p></th>
 <th class="head"><p>Teaching specification</p></th>
@@ -999,7 +999,7 @@ document.write(`
 <h2>6. Keep preprocessing inside the model pipeline<a class="headerlink" href="#keep-preprocessing-inside-the-model-pipeline" title="Permalink to this heading">#</a></h2>
 <p>Median imputation, standardization, and one-hot encoding all learn from data. Fitting them before the split would let validation and test distributions influence the representation. A <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> makes the training boundary explicit: every candidate learns preprocessing from training rows only, and the fitted transformations are reused unchanged elsewhere.</p>
 <p>The model ladder has a purpose:</p>
-<table class="table">
+<table class="colwidths-auto table">
 <thead>
 <tr class="row-odd"><th class="head"><p>Candidate</p></th>
 <th class="head"><p>What it can learn</p></th>
@@ -1870,7 +1870,7 @@ Name: validation, dtype: float64
 <section id="plan-monitoring-before-deployment">
 <h2>13. Plan monitoring before deployment<a class="headerlink" href="#plan-monitoring-before-deployment" title="Permalink to this heading">#</a></h2>
 <p>Monitoring is not a dashboard added after launch. Each signal needs an owner, a review frequency, a comparison window, and an action threshold. Useful categories include:</p>
-<table class="table">
+<table class="colwidths-auto table">
 <thead>
 <tr class="row-odd"><th class="head"><p>Monitoring layer</p></th>
 <th class="head"><p>Example question</p></th>

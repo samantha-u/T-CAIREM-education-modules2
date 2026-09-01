@@ -7,7 +7,7 @@
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
     <title>Feature Engineering in Healthcare Without Time Travel &#8212; T-CAIREM AI in Medicine</title>
   
@@ -434,7 +434,7 @@ document.write(`
 <strong>Compute:</strong> CPU only; no download, GPU, or external service is required</p>
 <section id="at-a-glance">
 <h2>At a glance<a class="headerlink" href="#at-a-glance" title="Permalink to this heading">#</a></h2>
-<table class="table">
+<table class="colwidths-auto table">
 <thead>
 <tr class="row-odd"><th class="head"><p>Question</p></th>
 <th class="head"><p>This notebook’s answer</p></th>
@@ -528,7 +528,7 @@ document.write(`
 <section id="freeze-the-prediction-contract-before-writing-features">
 <h2>1. Freeze the prediction contract before writing features<a class="headerlink" href="#freeze-the-prediction-contract-before-writing-features" title="Permalink to this heading">#</a></h2>
 <p>A feature is not “available” merely because it exists somewhere in a database. Its validity depends on the exact prediction moment. We will use this contract:</p>
-<table class="table">
+<table class="colwidths-auto table">
 <thead>
 <tr class="row-odd"><th class="head"><p>Contract element</p></th>
 <th class="head"><p>Definition in this tutorial</p></th>
@@ -1009,7 +1009,7 @@ available_hour   &lt;= 0
 <section id="turn-irregular-events-into-auditable-encounter-level-features">
 <h2>5. Turn irregular events into auditable encounter-level features<a class="headerlink" href="#turn-irregular-events-into-auditable-encounter-level-features" title="Permalink to this heading">#</a></h2>
 <p>We will calculate the following for each patient–variable pair:</p>
-<table class="table">
+<table class="colwidths-auto table">
 <thead>
 <tr class="row-odd"><th class="head"><p>Feature</p></th>
 <th class="head"><p>Plain-language meaning</p></th>
@@ -1470,7 +1470,7 @@ available_hour   &lt;= 0
 <section id="define-a-weaker-to-stronger-model-ladder">
 <h2>7. Define a weaker-to-stronger model ladder<a class="headerlink" href="#define-a-weaker-to-stronger-model-ladder" title="Permalink to this heading">#</a></h2>
 <p>We compare five candidates. The first isolates the information in prevalence alone. The next two isolate the value of feature engineering while keeping the model family fixed. The final two ask whether nonlinear models can recover interactions that logistic regression cannot represent without manually adding interaction terms.</p>
-<table class="table">
+<table class="colwidths-auto table">
 <thead>
 <tr class="row-odd"><th class="head"><p>Candidate</p></th>
 <th class="head"><p>Inputs</p></th>
@@ -2249,7 +2249,7 @@ Calibration F1 at threshold: 0.500
 <section id="extending-the-same-reasoning-across-modalities">
 <h2>12. Extending the same reasoning across modalities<a class="headerlink" href="#extending-the-same-reasoning-across-modalities" title="Permalink to this heading">#</a></h2>
 <p>The feature contract generalizes beyond vital signs:</p>
-<table class="table">
+<table class="colwidths-auto table">
 <thead>
 <tr class="row-odd"><th class="head"><p>Modality</p></th>
 <th class="head"><p>Candidate feature</p></th>
